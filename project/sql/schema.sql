@@ -77,7 +77,6 @@ CREATE TABLE users (
     is_public BOOLEAN NOT NULL DEFAULT TRUE,
     admin BOOLEAN NOT NULL DEFAULT FALSE,
     type profile_type NOT NULL,
-    deleted BOOLEAN NOT NULL DEFAULT FALSE,
     profile_picture INT NOT NULL,
     FOREIGN KEY (profile_picture) REFERENCES picture(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
