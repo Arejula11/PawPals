@@ -8,7 +8,7 @@
 -- CREATE SCHEMA lba2425;
 -- SET search_path TO lbaw2425;
 -----------------------------------------
-create schema if not exists lbaw2425;
+CREATE SCHEMA if NOT EXISTS lbaw2425;
 
 SET DateStyle TO European;
 
@@ -16,34 +16,34 @@ SET DateStyle TO European;
 -- Drop old schema
 -----------------------------------------
 
-DROP TYPE IF EXISTS profile_type;
-DROP TYPE IF EXISTS response_type;
-DROP TYPE IF EXISTS user_notification_type;
-DROP TYPE IF EXISTS post_notification_type;
-DROP TYPE IF EXISTS comment_notification_type;
-DROP TYPE IF EXISTS group_owner_notification_type;
-DROP TYPE IF EXISTS group_member_notification_type;
+-- DROP TYPE IF EXISTS profile_type;
+-- DROP TYPE IF EXISTS response_type;
+-- DROP TYPE IF EXISTS user_notification_type;
+-- DROP TYPE IF EXISTS post_notification_type;
+-- DROP TYPE IF EXISTS comment_notification_type;
+-- DROP TYPE IF EXISTS group_owner_notification_type;
+-- DROP TYPE IF EXISTS group_member_notification_type;
 
-DROP TABLE IF EXISTS picture;
-DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS groups;
-DROP TABLE IF EXISTS group_participant;
-DROP TABLE IF EXISTS post;
-DROP TABLE IF EXISTS comment;
-DROP TABLE IF EXISTS post_like;
-DROP TABLE IF EXISTS comment_like;
-DROP TABLE IF EXISTS post_tag;
-DROP TABLE IF EXISTS comment_tag;
-DROP TABLE IF EXISTS message;
-DROP TABLE IF EXISTS ban;
-DROP TABLE IF EXISTS appeal;
-DROP TABLE IF EXISTS notification;
-DROP TABLE IF EXISTS user_notification;
-DROP TABLE IF EXISTS post_notification;
-DROP TABLE IF EXISTS comment_notification;
-DROP TABLE IF EXISTS group_owner_notification;
-DROP TABLE IF EXISTS group_member_notification;
-DROP TABLE IF EXISTS follows;
+-- DROP TABLE IF EXISTS picture;
+-- DROP TABLE IF EXISTS users;
+-- DROP TABLE IF EXISTS groups;
+-- DROP TABLE IF EXISTS group_participant;
+-- DROP TABLE IF EXISTS post;
+-- DROP TABLE IF EXISTS comment;
+-- DROP TABLE IF EXISTS post_like;
+-- DROP TABLE IF EXISTS comment_like;
+-- DROP TABLE IF EXISTS post_tag;
+-- DROP TABLE IF EXISTS comment_tag;
+-- DROP TABLE IF EXISTS message;
+-- DROP TABLE IF EXISTS ban;
+-- DROP TABLE IF EXISTS appeal;
+-- DROP TABLE IF EXISTS notification;
+-- DROP TABLE IF EXISTS user_notification;
+-- DROP TABLE IF EXISTS post_notification;
+-- DROP TABLE IF EXISTS comment_notification;
+-- DROP TABLE IF EXISTS group_owner_notification;
+-- DROP TABLE IF EXISTS group_member_notification;
+-- DROP TABLE IF EXISTS follows;
 
 -----------------------------
 --------TYPES---------------
@@ -81,7 +81,7 @@ CREATE TABLE users (
     FOREIGN KEY (profile_picture) REFERENCES picture(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-CREATE TABLE group (
+CREATE TABLE groups (
     id SERIAL PRIMARY KEY,
     name TEXT NOT NULL,
     description TEXT NOT NULL,
@@ -197,7 +197,7 @@ CREATE TABLE user_notification (
     trigger_user_id INT NOT NULL,
     response_type response_type NOT NULL,
     user_notification_type user_notification_type NOT NULL,
-    FOREIGN KEY (notification_id) REFERENCES notification(id ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (notification_id) REFERENCES notification(id) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (trigger_user_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
@@ -205,7 +205,7 @@ CREATE TABLE post_notification (
     notification_id INT PRIMARY KEY,
     trigger_post_id INT NOT NULL,
     post_notification_type post_notification_type NOT NULL,
-    FOREIGN KEY (notification_id) REFERENCES notification ON UPDATE CASCADE ON DELETE CASCADE(id),
+    FOREIGN KEY (notification_id) REFERENCES notification(id) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (trigger_post_id) REFERENCES post(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
