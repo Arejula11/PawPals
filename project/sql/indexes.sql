@@ -1,3 +1,7 @@
+--------------------------------------------
+-- CREATE AND CLUSTER PERFORMANCE INDEXES --
+--------------------------------------------
+
 CREATE INDEX index_post ON post USING btree (creation_date,user_id);
 CLUSTER post USING index_post;
 
