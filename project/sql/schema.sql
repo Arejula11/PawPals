@@ -17,35 +17,37 @@ SET DateStyle TO European;
 -- Drop old schema
 -----------------------------------------
 
--- DROP TYPE IF EXISTS profile_type;
--- DROP TYPE IF EXISTS response_type;
--- DROP TYPE IF EXISTS user_notification_type;
--- DROP TYPE IF EXISTS post_notification_type;
--- DROP TYPE IF EXISTS comment_notification_type;
--- DROP TYPE IF EXISTS group_owner_notification_type;
--- DROP TYPE IF EXISTS group_member_notification_type;
 
--- DROP TABLE IF EXISTS picture;
--- DROP TABLE IF EXISTS users;
--- DROP TABLE IF EXISTS groups;
--- DROP TABLE IF EXISTS group_participant;
--- DROP TABLE IF EXISTS post;
--- DROP TABLE IF EXISTS comment;
--- DROP TABLE IF EXISTS post_like;
--- DROP TABLE IF EXISTS comment_like;
--- DROP TABLE IF EXISTS post_tag;
--- DROP TABLE IF EXISTS comment_tag;
--- DROP TABLE IF EXISTS message;
--- DROP TABLE IF EXISTS ban;
--- DROP TABLE IF EXISTS appeal;
--- DROP TABLE IF EXISTS notification;
--- DROP TABLE IF EXISTS user_notification;
--- DROP TABLE IF EXISTS post_notification;
--- DROP TABLE IF EXISTS comment_notification;
--- DROP TABLE IF EXISTS group_owner_notification;
--- DROP TABLE IF EXISTS group_member_notification;
--- DROP TABLE IF EXISTS follows;
 
+
+DROP TABLE IF EXISTS groups;
+DROP TABLE IF EXISTS group_participant;
+DROP TABLE IF EXISTS post;
+DROP TABLE IF EXISTS comment;
+DROP TABLE IF EXISTS post_like;
+DROP TABLE IF EXISTS comment_like;
+DROP TABLE IF EXISTS post_tag;
+DROP TABLE IF EXISTS comment_tag;
+DROP TABLE IF EXISTS message;
+DROP TABLE IF EXISTS ban;
+DROP TABLE IF EXISTS appeal;
+DROP TABLE IF EXISTS notification;
+DROP TABLE IF EXISTS user_notification;
+DROP TABLE IF EXISTS post_notification;
+DROP TABLE IF EXISTS comment_notification;
+DROP TABLE IF EXISTS group_owner_notification;
+DROP TABLE IF EXISTS group_member_notification;
+DROP TABLE IF EXISTS follows;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS picture;
+
+DROP TYPE IF EXISTS profile_type;
+DROP TYPE IF EXISTS response_type;
+DROP TYPE IF EXISTS user_notification_type;
+DROP TYPE IF EXISTS post_notification_type;
+DROP TYPE IF EXISTS comment_notification_type;
+DROP TYPE IF EXISTS group_owner_notification_type;
+DROP TYPE IF EXISTS group_member_notification_type;
 -----------------------------
 --------TYPES---------------
 -----------------------------

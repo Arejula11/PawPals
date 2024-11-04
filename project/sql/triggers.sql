@@ -203,18 +203,21 @@ CREATE TRIGGER follow_request_notification
 
 ----------------------------------------
 -- Group join request notification
-CREATE FUNCTION notify_group_join_request() 
-RETURNS TRIGGER AS 
+CREATE FUNCTION notify_group_join_request()
+RETURNS TRIGGER AS
 $BODY$
 BEGIN
-    -- Insert a notification for the group owner
-    INSERT INTO notification (description, date, user_id)
-    VALUES ('A user has requested to join your group.', CURRENT_DATE, (SELECT owner_id FROM groups WHERE id = NEW.group_id));
+    -- Check if the group is public
+    IF NOT (SELECT is_public FROM groups WHERE id = NEW.group_id) THEN
+        -- Insert a notification for the group owner
+        INSERT INTO notification (description, date, user_id)
+        VALUES ('A user has requested to join your group.', CURRENT_DATE, (SELECT owner_id FROM groups WHERE id = NEW.group_id));
 
-    -- Insert group-owner-specific notification
-    INSERT INTO group_owner_notification (notification_id, trigger_group_id, group_owner_notification_type)
-    VALUES (currval('notification_id_seq'), NEW.group_id, 'join_request');
-    
+        -- Insert group-owner-specific notification
+        INSERT INTO group_owner_notification (notification_id, trigger_group_id, group_owner_notification_type)
+        VALUES (currval('notification_id_seq'), NEW.group_id, 'join_request');
+    END IF;
+
     RETURN NEW;
 END;
 $BODY$
@@ -223,7 +226,6 @@ LANGUAGE plpgsql;
 CREATE TRIGGER group_join_request_notification
     AFTER INSERT ON group_participant
     FOR EACH ROW
-    WHEN (SELECT is_public FROM groups WHERE id = NEW.group_id) = FALSE
     EXECUTE FUNCTION notify_group_join_request();
 
 
