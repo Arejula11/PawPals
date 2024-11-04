@@ -9,6 +9,7 @@
 -- SET search_path TO lbaw2425;
 -----------------------------------------
 CREATE SCHEMA if NOT EXISTS lbaw2425;
+SET search_path TO lbaw2425;
 
 SET DateStyle TO European;
 
@@ -49,7 +50,7 @@ SET DateStyle TO European;
 --------TYPES---------------
 -----------------------------
 
-CREATE TYPE profile_type AS ENUM ('veterinarian', 'pet owner', 'adoption organization', 'rescue organization');
+CREATE TYPE profile_type AS ENUM ('pet owner', 'admin', 'veterinarian', 'adoption organization', 'rescue organization');
 CREATE TYPE response_type AS ENUM ('accepted', 'rejected', 'pending');
 CREATE TYPE user_notification_type AS ENUM('follow_request', 'follow_response', 'start_following');
 CREATE TYPE post_notification_type AS ENUM('post_likes', 'post_comments', 'post_tags');
@@ -195,7 +196,7 @@ CREATE TABLE notification (
 CREATE TABLE user_notification (
     notification_id INT PRIMARY KEY,
     trigger_user_id INT NOT NULL,
-    response_type response_type NOT NULL,
+    response_type response_type,
     user_notification_type user_notification_type NOT NULL,
     FOREIGN KEY (notification_id) REFERENCES notification(id) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (trigger_user_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE
@@ -228,8 +229,8 @@ CREATE TABLE group_owner_notification (
 CREATE TABLE group_member_notification (
     notification_id INT PRIMARY KEY,
     trigger_group_id INT NOT NULL,
-    response_type response_type NOT NULL,
-    group_member_notification_type group_member_notification_type NOT NULL,
+    response_type response_type,
+    group_member_notification_type group_member_notification_type,
     FOREIGN KEY (notification_id) REFERENCES notification(id) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (trigger_group_id) REFERENCES groups(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
