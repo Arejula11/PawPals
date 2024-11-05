@@ -28,10 +28,10 @@ BEGIN
     -- Set weights and create the tsvector for new records
     IF TG_OP = 'INSERT' THEN
         NEW.tsvectors := (
-            setweight(to_tsvector('portuguese', COALESCE(NEW.username, '')), 'A') ||
-            setweight(to_tsvector('portuguese', COALESCE(NEW.firstname, '')), 'B') ||
-            setweight(to_tsvector('portuguese', COALESCE(NEW.surname, '')), 'B') ||
-            setweight(to_tsvector('portuguese', COALESCE(NEW.type, '')), 'C')
+            setweight(to_tsvector('english', COALESCE(NEW.username, '')), 'A') ||
+            setweight(to_tsvector('english', COALESCE(NEW.firstname, '')), 'B') ||
+            setweight(to_tsvector('english', COALESCE(NEW.surname, '')), 'B') ||
+            setweight(to_tsvector('english', COALESCE(NEW.type, '')), 'C')
         );
     END IF;
 
@@ -40,10 +40,10 @@ BEGIN
         IF (NEW.username <> OLD.username OR NEW.firstname <> OLD.firstname OR
             NEW.surname <> OLD.surname OR NEW.type <> OLD.type) THEN
             NEW.tsvectors := (
-                setweight(to_tsvector('portuguese', COALESCE(NEW.username, '')), 'A') ||
-                setweight(to_tsvector('portuguese', COALESCE(NEW.firstname, '')), 'B') ||
-                setweight(to_tsvector('portuguese', COALESCE(NEW.surname, '')), 'B') ||
-                setweight(to_tsvector('portuguese', COALESCE(NEW.type, '')), 'C')
+                setweight(to_tsvector('english', COALESCE(NEW.username, '')), 'A') ||
+                setweight(to_tsvector('english', COALESCE(NEW.firstname, '')), 'B') ||
+                setweight(to_tsvector('english', COALESCE(NEW.surname, '')), 'B') ||
+                setweight(to_tsvector('english', COALESCE(NEW.type, '')), 'C')
             );
         END IF;
     END IF;
