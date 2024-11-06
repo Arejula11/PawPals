@@ -240,6 +240,7 @@ CREATE TABLE group_member_notification (
 CREATE TABLE follows (
     user1_id INT NOT NULL,
     user2_id INT NOT NULL,
+    request_status response_type NOT NULL,
     PRIMARY KEY (user1_id, user2_id),
     FOREIGN KEY (user1_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (user2_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE
