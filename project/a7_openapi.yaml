@@ -25,9 +25,6 @@ tags:
   
 paths:
 
-### M01: Authentication
-######## Registration
-
   /register:
   
    get:
@@ -102,8 +99,6 @@ paths:
                   description: 'Failed registration. Redirect to login form.'
                   value: '/login'
 
-######## Login
-
   /login:
   
     get:
@@ -155,8 +150,6 @@ paths:
                   description: 'Failed login. Redirect to login form.'
                   value: '/login'
 
-######## Logout
-
   /logout:
   
     post:
@@ -176,8 +169,6 @@ paths:
                 302Success:
                   description: 'Successful logout. Redirect to homepage.'
                   value: '/home'
-
-######## Password recovery
 
   /password/reset:
   
@@ -250,10 +241,6 @@ paths:
         '500':
           description: 'Failure. Internal Server Error - Unable to process request'
 
-### M02: Users
-
-######## User profiles
-
   /users/{username}:
   
     get:
@@ -275,8 +262,6 @@ paths:
           description: 'Success. Show User Profile.'
         '404':
           description: 'Failure. User Profile not found.'
-
-######## Edit profile
 
   /user/edit:
 
@@ -363,8 +348,6 @@ paths:
                   description: 'Failed update. Redirect profile edit page.'
                   value: '/user/edit'
 
-######## Delete profile
-
   /user/delete:
   
     post:
@@ -399,10 +382,6 @@ paths:
         '403':
           description: 'Failure. Unauthorized action.'
 
-### M03: Posts
-
-######## Homepage
-
   /home
   
     get:
@@ -415,8 +394,6 @@ paths:
       responses:
         '200':
           description: 'Ok. Show the home page.'
-
-######## See, Create, Edit and Delete Posts
 
    /post/{post_id}:
       
@@ -534,16 +511,6 @@ paths:
           description: 'Redirect after deleting post.'
         '403':
           description: 'Failure. Unauthorized action.'
-
-### M04: Comments
-### M05: Groups
-### M06: Search
-### M07: Admin
-### M08: Pictures
-### M09: Messages
-
-
-### M10: Bans
 
   /bans:
     post:
