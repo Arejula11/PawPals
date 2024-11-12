@@ -3,9 +3,11 @@ info:
   version: 1.0.0
   title: PawPals API
   description: API for the LBAW 2024/2025 project
+  
 externalDocs:
   description: Find more info here.
   url: 'https://gitlab.up.pt/lbaw/lbaw2425/lbaw24121'
+  
 tags:
   - name: 'M01: Authentication'
   - name: 'M02: Users'
@@ -19,7 +21,530 @@ tags:
   - name: 'M10: Bans'
   - name: 'M11: Appeals'
   - name: 'M12: Notifications'
+  - name: 'M13: Static pages'
+  
 paths:
+
+### M01: Authentication
+######## Registration
+
+  /register:
+  
+   get:
+      operationId: R101
+      summary: 'R101: Register Form'
+      description: 'Provide new user registration form. Access: PUB'
+      tags:
+       - 'M01: Authentication'
+      responses:
+       '200':
+        description: 'Show Registration Form.'
+
+   post:
+      operationId: R102
+      summary: 'R102: Register Action'
+      description: 'Processes the new user registration form submission. Access: PUB'
+      tags:
+       - 'M01: Authentication'
+       
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                firstname:
+                  type: string
+                surname:
+                  type: string
+                password:
+                  type: string
+                  format: password
+                confirmPassword:
+                  type: string
+                  format: password
+                email:
+                  type: string
+                  format: email
+                bio_description:
+                  type: string
+                is_public:
+                  type: boolean
+                type:
+                  type: string
+                picture:
+                  type: string
+                  format: binary
+              required:
+                - username
+                - firstname
+                - surname
+                - password
+                - confirmPassword
+                - email
+                - type
+                
+      responses:
+        '302':
+          description: 'Redirect after processing the new user information.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: 'Successful registration. Redirect to homepage.'
+                  value: '/home'
+                302Failure:
+                  description: 'Failed registration. Redirect to login form.'
+                  value: '/login'
+
+######## Login
+
+  /login:
+  
+    get:
+      operationId: R103
+      summary: 'R103: Login Form'
+      description: 'Provide login form. Access: PUB'
+      tags:
+      - 'M01: Authentication and Individual Profile'
+      responses:
+        '200':
+          description: 'Show Login Form.'
+
+    post:
+      operationId: R104
+      summary: 'R104: Login Action'
+      description: 'Processes the login form submission. Access: PUB'
+      tags:
+      - 'M01: Authentication'
+      
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  format: password
+              required:
+              - email
+              - password
+      
+      responses:
+        '302':
+          description: 'Redirect after processing the login credentials.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: 'Successful login. Redirect to homepage.'
+                  value: '/home'
+                302Error:
+                  description: 'Failed login. Redirect to login form.'
+                  value: '/login'
+
+######## Logout
+
+  /logout:
+  
+    post:
+      operationId: R105
+      summary: 'R105: Logout Action'
+      description: 'Logout the current authenticated user. Access: USR, ADM'
+      tags:
+      - 'M01: Authentication'
+      responses:
+        '302':
+          description: 'Redirect after processing logout.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: 'Successful logout. Redirect to homepage.'
+                  value: '/home'
+
+######## Password recovery
+
+  /password/reset:
+  
+    post:
+      operationId: R106
+      summary: 'R106: Request Password Recovery Action'
+      description: 'Initiates the password recovery process by sending a token via email to the user.'
+      tags:
+        - 'M01: Authentication'
+        
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+              required:
+                - email
+        
+        responses:
+          '200':
+            description: 'Success. Password recovery email sent successfully.'
+          '400':
+            description: 'Failure. Invalid input.'
+          '404':
+            description: 'Failure. Email does not match any user'
+          '500':
+            description: 'Failure. Internal Server Error - Unable to process request.'
+
+  /password/set:
+  
+    post:
+      operationId: R107
+      summary: 'R107: Password Recovery Action'
+      description: 'Set a new password using the recovery token.'
+      tags:
+        - 'M01: Authentication'
+    
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                token:
+                  type: string
+                newPassword:
+                  type: string
+                  format: password
+                confirmPassword:
+                  type: string
+                  format: password
+              required:
+                - token
+                - newPassword
+                - confirmPassword
+                
+      responses:
+        '200':
+          description: 'Success. Password updated.'
+        '400':
+          description: 'Failure. Invalid token or password format'
+        '404':
+          description: 'Failure. Token not found or expired.'
+        '500':
+          description: 'Failure. Internal Server Error - Unable to process request'
+
+### M02: Users
+
+######## User profiles
+
+  /users/{username}:
+  
+    get:
+      operationId: R201
+      summary: 'R201: View User Profile'
+      description: 'Show one individual user profile. Access: PUB, USR, ADM'
+      tags:
+      - 'M02: Users'
+      
+      parameters:
+        - in: path
+          name: username
+          schema:
+            type: string
+          required: true
+      
+      responses:
+        '200':
+          description: 'Success. Show User Profile.'
+        '404':
+          description: 'Failure. User Profile not found.'
+
+######## Edit profile
+
+  /user/edit:
+
+    get:
+      operationId: R202
+      summary: 'R202: User Profile Edit'
+      description: 'Shows the user profile edit page. Access: USR'
+      tags:
+        - 'M02: Users'
+
+      responses:
+        '200':
+          description: 'Ok. Show edit profile.'
+        '401':
+          description: 'Unauthorized. You can only edit your own profile.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                401Success:
+                  description: 'Unauthorized. Redirect to user profile.'
+                  value: '/user/{username}'
+
+    post:
+      operationId: R203
+      summary: 'R203: User Profile Edit Action'
+      description: 'Processes and saves the changes made by user. Access: USR'
+      tags:
+        - 'M02: Users'
+
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                firstname:
+                  type: string
+                surname:
+                  type: string
+                password:
+                  type: string
+                  format: password
+                confirmPassword:
+                  type: string
+                  format: password
+                email:
+                  type: string
+                  format: email
+                bio_description:
+                  type: string
+                is_public:
+                  type: boolean
+                type:
+                  type: string
+                picture:
+                  type: string
+                  format: binary
+              required:
+                - username
+                - firstname
+                - surname
+                - password
+                - confirmPassword
+                - email
+                - type
+
+      responses:
+        '302':
+          description: 'Ok. Redirect after processing the new user information.'
+          headers:
+            Location:
+              schema:
+                type: string
+              example:
+                302Success:
+                  description: 'Successful update. Redirect to user profile page.'
+                  value: '/user/{username}'
+                302Failure:
+                  description: 'Failed update. Redirect profile edit page.'
+                  value: '/user/edit'
+
+######## Delete profile
+
+  /user/delete:
+  
+    post:
+      operationId: R204
+      summary: 'R204: Delete Profile'
+      description: 'Delete profile. Access: USR, ADM'
+      tags:
+        - 'M02: Users'
+
+      requestBody:
+          required: true
+          content:
+            application/x-www-form-urlencoded:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                required:
+                  - id
+
+      responses:
+        '302':
+          description: 'Ok. Redirect after deleting user profile.'
+          headers:
+            Location:
+              schema:
+                type: string
+              example:
+                302Success:
+                  description: 'Successful. Redirect to login page.'
+        '403':
+          description: 'Failure. Unauthorized action.'
+
+### M03: Posts
+
+######## Homepage
+
+  /home
+  
+    get:
+      operationId: R301
+      summary: 'R301: View Homepage'
+      description: 'Show homepage. Access: PUB, USR, ADM'
+      tags:
+        - 'M03: Posts'
+
+      responses:
+        '200':
+          description: 'Ok. Show the home page.'
+
+######## See, Create, Edit and Delete Posts
+
+   /post/{post_id}:
+      
+      get:
+        operationId: R302
+        summary: 'R302: View Post'
+        description: 'Show one post. Access: PUB, USR, OWN'
+        tags:
+          - 'M03: Posts'
+  
+        responses:
+          '200':
+            description: 'Ok. Show the post page.'
+          '302':
+            description: 'Unauthorized. Redirect after unauthorized request.'
+            headers:
+              Location:
+                schema:
+                  type: string
+                example:
+                    302Success:
+                      description: 'You need to login or follow this profile if it is private.'
+                      value: '/home'
+
+   /post/create:
+
+    post:
+      operationId: R303
+      summary: 'R303: Create Post Action'
+      description: 'Create post. Access: USR'
+      tags:
+        - 'M03: Posts'
+
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                description:
+                  type: string
+                picture:
+                  type: string
+              required:
+                - description
+                - picture
+
+      responses:
+        '302':
+          description: 'Ok. Redirect after processing the new post.'
+          headers:
+            Location:
+              schema:
+                type: string
+              example:
+                302Success:
+                  description: 'Success. Post created. Redirect back.'
+                302Failure:
+                  description: 'Failed. Redirect back.'
+  
+  /post/{post_id}/edit:
+
+    post:
+      operationId: R304
+      summary: 'R304: Edit Post Action'
+      description: 'Edit post. Access: OWN'
+      tags:
+        - 'M03: Posts'
+
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                description:
+                  type: string
+                picture:
+                  type: string
+              required:
+                - description
+                - picture
+
+      responses:
+        '200':
+          description: 'Success. Edit saved.'
+        '403':
+          description: 'Failure. Unauthorized action.'
+  
+  /post/{post_id}/delete:
+
+    post:
+      operationId: R305
+      summary: 'R305: Delete Post Action'
+      description: 'Delete post. Access: OWN, ADM'
+      tags:
+        - 'M03: Posts'
+
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                post_id:
+                  type: integer
+              required:
+                  - post_id
+
+      responses:
+        '200':
+          description: 'Redirect after deleting post.'
+        '403':
+          description: 'Failure. Unauthorized action.'
+
+### M04: Comments
+### M05: Groups
+### M06: Search
+### M07: Admin
+### M08: Pictures
+### M09: Messages
+
+
+### M10: Bans
+
   /bans:
     post:
       operationId: R1001
@@ -135,3 +660,7 @@ paths:
           description: Ban reason successfully updated.
         '403':
           description: Unauthorized. You do not have permission to perform this action.
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/UP202402361/LBAW/1.0.0
