@@ -96,7 +96,7 @@ paths:
       summary: 'R103: Login Form'
       description: 'Provide login form. Access: PUB'
       tags:
-      - 'M01: Authentication and Individual Profile'
+      - 'M01: Authentication'
       responses:
         '200':
           description: 'Show Login Form.'
