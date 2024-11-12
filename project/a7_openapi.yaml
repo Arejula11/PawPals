@@ -3,11 +3,9 @@ info:
   version: 1.0.0
   title: PawPals API
   description: API for the LBAW 2024/2025 project
-  
 externalDocs:
   description: Find more info here.
   url: 'https://gitlab.up.pt/lbaw/lbaw2425/lbaw24121'
-  
 tags:
   - name: 'M01: Authentication'
   - name: 'M02: Users'
@@ -22,11 +20,8 @@ tags:
   - name: 'M11: Appeals'
   - name: 'M12: Notifications'
   - name: 'M13: Static pages'
-  
 paths:
-
   /register:
-  
    get:
       operationId: R101
       summary: 'R101: Register Form'
@@ -36,14 +31,12 @@ paths:
       responses:
        '200':
         description: 'Show Registration Form.'
-
    post:
       operationId: R102
       summary: 'R102: Register Action'
       description: 'Processes the new user registration form submission. Access: PUB'
       tags:
        - 'M01: Authentication'
-       
       requestBody:
         required: true
         content:
@@ -83,7 +76,6 @@ paths:
                 - confirmPassword
                 - email
                 - type
-                
       responses:
         '302':
           description: 'Redirect after processing the new user information.'
@@ -98,9 +90,7 @@ paths:
                 302Failure:
                   description: 'Failed registration. Redirect to login form.'
                   value: '/login'
-
   /login:
-  
     get:
       operationId: R103
       summary: 'R103: Login Form'
@@ -110,14 +100,12 @@ paths:
       responses:
         '200':
           description: 'Show Login Form.'
-
     post:
       operationId: R104
       summary: 'R104: Login Action'
       description: 'Processes the login form submission. Access: PUB'
       tags:
       - 'M01: Authentication'
-      
       requestBody:
         required: true
         content:
@@ -134,7 +122,6 @@ paths:
               required:
               - email
               - password
-      
       responses:
         '302':
           description: 'Redirect after processing the login credentials.'
@@ -149,9 +136,7 @@ paths:
                 302Error:
                   description: 'Failed login. Redirect to login form.'
                   value: '/login'
-
   /logout:
-  
     post:
       operationId: R105
       summary: 'R105: Logout Action'
@@ -169,16 +154,13 @@ paths:
                 302Success:
                   description: 'Successful logout. Redirect to homepage.'
                   value: '/home'
-
   /password/reset:
-  
     post:
       operationId: R106
       summary: 'R106: Request Password Recovery Action'
       description: 'Initiates the password recovery process by sending a token via email to the user.'
       tags:
         - 'M01: Authentication'
-        
       requestBody:
         required: true
         content:
@@ -191,7 +173,6 @@ paths:
                   format: email
               required:
                 - email
-        
         responses:
           '200':
             description: 'Success. Password recovery email sent successfully.'
@@ -201,16 +182,13 @@ paths:
             description: 'Failure. Email does not match any user'
           '500':
             description: 'Failure. Internal Server Error - Unable to process request.'
-
   /password/set:
-  
     post:
       operationId: R107
       summary: 'R107: Password Recovery Action'
       description: 'Set a new password using the recovery token.'
       tags:
         - 'M01: Authentication'
-    
       requestBody:
         required: true
         content:
@@ -230,7 +208,6 @@ paths:
                 - token
                 - newPassword
                 - confirmPassword
-                
       responses:
         '200':
           description: 'Success. Password updated.'
@@ -240,38 +217,31 @@ paths:
           description: 'Failure. Token not found or expired.'
         '500':
           description: 'Failure. Internal Server Error - Unable to process request'
-
   /users/{username}:
-  
     get:
       operationId: R201
       summary: 'R201: View User Profile'
       description: 'Show one individual user profile. Access: PUB, USR, ADM'
       tags:
       - 'M02: Users'
-      
       parameters:
         - in: path
           name: username
           schema:
             type: string
           required: true
-      
       responses:
         '200':
           description: 'Success. Show User Profile.'
         '404':
           description: 'Failure. User Profile not found.'
-
   /user/edit:
-
     get:
       operationId: R202
       summary: 'R202: User Profile Edit'
       description: 'Shows the user profile edit page. Access: USR'
       tags:
         - 'M02: Users'
-
       responses:
         '200':
           description: 'Ok. Show edit profile.'
@@ -285,14 +255,12 @@ paths:
                 401Success:
                   description: 'Unauthorized. Redirect to user profile.'
                   value: '/user/{username}'
-
     post:
       operationId: R203
       summary: 'R203: User Profile Edit Action'
       description: 'Processes and saves the changes made by user. Access: USR'
       tags:
         - 'M02: Users'
-
       requestBody:
         required: true
         content:
@@ -332,7 +300,6 @@ paths:
                 - confirmPassword
                 - email
                 - type
-
       responses:
         '302':
           description: 'Ok. Redirect after processing the new user information.'
@@ -347,16 +314,13 @@ paths:
                 302Failure:
                   description: 'Failed update. Redirect profile edit page.'
                   value: '/user/edit'
-
   /user/delete:
-  
     post:
       operationId: R204
       summary: 'R204: Delete Profile'
       description: 'Delete profile. Access: USR, ADM'
       tags:
         - 'M02: Users'
-
       requestBody:
           required: true
           content:
@@ -368,7 +332,6 @@ paths:
                     type: integer
                 required:
                   - id
-
       responses:
         '302':
           description: 'Ok. Redirect after deleting user profile.'
@@ -381,9 +344,7 @@ paths:
                   description: 'Successful. Redirect to login page.'
         '403':
           description: 'Failure. Unauthorized action.'
-
-  /home
-  
+  /home:
     get:
       operationId: R301
       summary: 'R301: View Homepage'
@@ -394,9 +355,7 @@ paths:
       responses:
         '200':
           description: 'Ok. Show the home page.'
-
-   /post/{post_id}:
-      
+  /post/{post_id}:
       get:
         operationId: R302
         summary: 'R302: View Post'
@@ -418,7 +377,7 @@ paths:
                       description: 'You need to login or follow this profile if it is private.'
                       value: '/home'
 
-   /post/create:
+  /post/create:
 
     post:
       operationId: R303
