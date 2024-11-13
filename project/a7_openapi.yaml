@@ -471,6 +471,327 @@ paths:
         '403':
           description: 'Failure. Unauthorized action.'
 
+  '/post/{id}/comments':
+    post:
+      operationId: R0401
+      summary: 'R0401: Create a new comment on a post'
+      description: Adds a comment to a post with a given ID
+      tags:
+        - 'M04: Comments'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID of the post
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                postId:
+                  type: integer
+                  description: ID of the post
+                content:
+                  type: string
+                  description: Content of the comment
+              required:
+                - postId
+                - content
+      responses:
+        '200':
+          description: Comment successfully posted.
+        '403':
+          description: Post not found. The specified post ID does not exist.
+          #description: Unauthorized. You do not have permission to access this resource. MAYBE PRIVATE POST?
+    get:
+      operationId: R0402
+      summary: 'R0402: Retrieve all comments from a post'
+      description: Fetch all the comments from post with a given ID
+      tags:
+        - 'M04: Comments'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID of the post
+      responses:
+        '200':
+          description: Successfully retrieved post comments.
+        '403':
+          description: Post not found. The specified post ID does not exist.
+          #description: Unauthorized. You do not have permission to access this resource. MAYBE PRIVATE POST?
+  '/post/{postId}/comments/{commentId}':
+    put:
+      operationId: R0403
+      summary: 'R0403: Update a comment on a post'
+      description: Updates the content of a comment with a given ID
+      tags: 
+        - 'M04: Comments'
+      parameters:
+        - in: path
+          name: postId
+          schema:
+            type: integer
+          required: true
+          description: ID of the post
+        - in: path
+          name: commentId
+          schema:
+            type: integer
+          required: true
+          description: ID of the comment
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+                  description: Content of updated comment
+              required:
+                - content
+      responses:
+        '200':
+          description: Comment successfully updated.
+        '403':
+          description: Unauthorized. You do not have permission to perform this action.
+    delete:
+      operationId: R0404
+      summary: 'R0404: Delete a comment from a post'
+      description: Removes a comment from a post by specifying the comment ID.
+      tags:
+        - 'M04: Comments'
+      parameters:
+        - in: path
+          name: postId
+          schema:
+            type: integer
+          required: true
+          description: ID of the post
+        - in: path
+          name: commentId
+          schema:
+            type: integer
+          required: true
+          description: ID of the comment to remove
+      responses:
+        '200':
+          description: Comment successfully removed.
+        '403':
+          description: Unauthorized. You do not have permission to remove this comment.
+        '404':
+          description: Post not found. The specified post ID does not exist.
+        '405':
+          description: Comment not found. The specified comment ID does not exist.
+
+##### GROUPS
+  
+  /group:
+    post:
+      operationId: R0501
+      summary: 'R0501: Create a new group'
+      description: Creates a new group by creating a new group entry.
+      tags: 
+        - 'M05: Groups'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Name of the group
+                isPublic:
+                  type: boolean
+                  description: Privacy status of the group (False is private).
+                description:
+                  type: string
+                  description: Description of the group
+                imgId:
+                  type: integer
+                  description: Image of the group
+              required:
+                - name
+                - description
+      responses:
+        '200':
+          description: Group successfully created.
+  
+  '/group/{id}':
+    put:
+      operationId: R0502
+      summary: 'R0502: Update group information'
+      description: Updated group's information with new values
+      tags:
+        - 'M05: Groups'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID of the group
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Name of the group
+                isPublic:
+                  type: boolean
+                  description: Privacy status of the group (False is private).
+                description:
+                  type: string
+                  description: Description of the group
+                imgId:
+                  type: integer
+                  description: Image of the group
+      responses:
+        '200':
+          description: Group successfully updated.
+        '403':
+          description: Unauthorized. You do not have permission to perform this action.
+        '404':
+          description: Group not found. The specified group ID does not exist.
+    get:
+      operationId: R0503
+      summary: 'R0503: Retrieve group information'
+      description: Fetch all group information associated to the group ID.
+      tags: 
+        - 'M05: Groups'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID of the group
+      responses:
+        '200':
+          description: Successfully retrieved group's information.
+        '403':
+          description: Unauthorized. You do not have permission to access this resource.
+        '404':
+          description: Group not found. The specified group ID does not exist.
+    delete:
+      operationId: R0504
+      summary: 'R0504: Delete a group'
+      description: Delete a group with a specific ID.
+      tags:
+        - 'M05: Groups'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID of the group to delete
+      responses:
+        '200':
+          description: Successfully retrieved group's information.
+        '403':
+          description: Unauthorized. You do not have permission to perform this action.
+        '404':
+          description: Group not found. The specified group ID does not exist.
+      
+  '/group/{id}/message':
+    post:
+      operationId: R0505
+      summary: 'R0505: Create message on group'
+      description: Create a new message on a group with a given ID.
+      tags: 
+        - 'M05: Groups'
+      parameters: 
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID of the group
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+                  description: Content of the message
+              required: 
+                - content
+      responses:
+        '200':
+          description: Message successfully posted.
+        '403':
+          description: Unauthorized. You do not have permission to create this message.
+        '404':
+          description: Group not found. The specified group ID does not exist.
+    get:
+      operationId: R0506
+      summary: 'R0506: Retrieve messages from group'
+      description: Fetch all messages associated to the group ID.
+      tags: 
+        - 'M05: Groups'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID of the group
+      responses:
+        '200':
+          description: Successfully retrieved group's information.
+        '403':
+          description: Unauthorized. You do not have permission to access this resource.
+        '404':
+          description: Group not found. The specified group ID does not exist.
+  '/group/{groupId}/message/{messageId}':
+    delete:
+      operationId: R0507
+      summary: 'R0507: Delete a message from group'
+      description: Delete a message with a specific ID from a group with a specific ID.
+      tags:
+        - 'M05: Groups'
+      parameters:
+        - in: path
+          name: groupId
+          schema:
+            type: integer
+          required: true
+          description: ID of the group to delete
+        - in: path
+          name: messageId
+          schema:
+            type: integer
+          required: true
+          description: ID of the message to delete
+      responses:
+        '200':
+          description: Successfully deleted messagee.
+        '403':
+          description: Unauthorized. You do not have permission to perform this action.  
+        '404':
+          description: Group not found. The specified group ID does not exist.
+        '405':
+          description: Message not found. The specified message ID does not exist.
+
+
   /bans:
     post:
       operationId: R1001
