@@ -1035,8 +1035,8 @@ paths:
   '/bans/{id}':
     get:
       operationId: R1002
-      summary: 'R1002: Retrieve all bans for a user'
-      description: Fetch all ban records associated with a user by id.
+      summary: 'R1002: Show all bans for a user'
+      description: Get all ban records associated with a user by id and show it.
       tags:
         - 'M10: Bans'
       parameters:
@@ -1048,7 +1048,7 @@ paths:
           description: Id of the user
       responses:
         '200':
-          description: Successfully retrieved user bans.
+          description: Successfully gotten user bans.
         '403':
           description: Unauthorized. You do not have permission to access this resource.
     delete:
@@ -1126,7 +1126,7 @@ paths:
   /appeals:
     post:
       operationId: R1101
-      summary: 'R1101: Create an appeal for a ban'
+      summary: 'R1101: Create a new appeal for a ban'
       description: Submits a new appeal for a ban.
       tags:
         - 'M11: Appeals'
@@ -1142,7 +1142,7 @@ paths:
                   description: Id of the ban to appeal
                 reason:
                   type: string
-                  description: Description of the appeal
+                  description: Reason for the appeal
                 date:
                   type: string
                   format: date
@@ -1150,16 +1150,16 @@ paths:
               required:
                 - ban_id
                 - reason
-                - date
       responses:
         '200':
           description: Appeal successfully created.
         '403':
           description: Unauthorized. You do not have permission to perform this action.
+
   '/appeals/{ban_id}':
     get:
       operationId: R1102
-      summary: 'R1102: Get all appeals for a ban'
+      summary: 'R1102: Get and show all appeals for a ban'
       description: Returns all appeals associated with a specific ban id.
       tags:
         - 'M11: Appeals'
@@ -1175,6 +1175,7 @@ paths:
           description: Successfully retrieved appeals.
         '403':
           description: Unauthorized. You do not have permission to access this resource.
+
   '/appeals/{id}/status':
     put:
       operationId: R1103
@@ -1190,8 +1191,8 @@ paths:
               type: object
               properties:
                 status:
-                  type: string
-                  description: New status of the appeal
+                  type: boolean
+                  description: New status of the appeal 
               required:
                 - status
       parameters:
@@ -1206,11 +1207,12 @@ paths:
           description: Appeal status successfully updated.
         '403':
           description: Unauthorized. You do not have permission to perform this action.
-  '/appeals/{id}/description':
+
+  '/appeals/{id}/reason':
     put:
       operationId: R1104
-      summary: 'R1104: Update the description of an appeal'
-      description: Modifies the description of an existing appeal.
+      summary: 'R1104: Update the reason of an appeal'
+      description: Modifies the reason of an existing appeal.
       tags:
         - 'M11: Appeals'
       requestBody:
@@ -1220,11 +1222,11 @@ paths:
             schema:
               type: object
               properties:
-                description:
+                reason:
                   type: string
-                  description: New description of the appeal
+                  description: New reason of the appeal
               required:
-                - description
+                - reason
       parameters:
         - in: path
           name: id
@@ -1234,9 +1236,10 @@ paths:
           description: Id of the appeal to update
       responses:
         '200':
-          description: Appeal description successfully updated.
+          description: Appeal reason successfully updated.
         '403':
           description: Unauthorized. You do not have permission to perform this action.
+
   '/appeals/{id}':
     delete:
       operationId: R1105
@@ -1258,6 +1261,7 @@ paths:
           description: Unauthorized. You do not have permission to delete this appeal.
         '404':
           description: Appeal not found. The specified appeal id does not exist.
+
   /notifications:
     post:
       operationId: R1201
@@ -1275,17 +1279,18 @@ paths:
                 userId:
                   type: integer
                   description: Id of the user to notify
-                message:
+                description:
                   type: string
                   description: Notification message
               required:
                 - userId
-                - message
+                - description
       responses:
         '200':
           description: Notification successfully created.
         '403':
           description: Unauthorized. You do not have permission to perform this action.
+
   '/notifications/{id}':
     put:
       operationId: R1202
@@ -1300,11 +1305,11 @@ paths:
             schema:
               type: object
               properties:
-                message:
+                description:
                   type: string
                   description: New notification message
               required:
-                - message
+                - description
       parameters:
         - in: path
           name: id
@@ -1317,7 +1322,7 @@ paths:
           description: Notification successfully updated.
         '403':
           description: Unauthorized. You do not have permission to perform this action.
-  
+
     delete:
       operationId: R1203
       summary: 'R1203: Delete a notification'
@@ -1338,10 +1343,11 @@ paths:
           description: Unauthorized. You do not have permission to delete this notification.
         '404':
           description: Notification not found. The specified notification id does not exist.
+
   '/notifications/user/{userId}':
     get:
       operationId: R1204
-      summary: 'R1204: Get notifications for a user'
+      summary: 'R1204: Get and show notifications for a user'
       description: Retrieves all notifications for a specific user, optionally filtered.
       tags:
         - 'M12: Notifications'
@@ -1362,7 +1368,47 @@ paths:
           description: Successfully retrieved notifications.
         '403':
           description: Unauthorized. You do not have permission to access this resource.
-servers:
-  # Added by API Auto Mocking Plugin
-  - description: SwaggerHub API Auto Mocking
-    url: https://virtserver.swaggerhub.com/ninjadeouro12/projectapi/1.0.0
+
+  /about:
+    get:
+      operationId: R1301
+      summary: 'R1301: About Us'
+      description: 'Show information about us.'
+      tags:
+        - 'M13: Static pages'
+      responses:
+        '200':
+          description: 'Successfully shown information about us.'
+
+  /faq:
+    get:
+      operationId: R1302
+      summary: 'R1302: FAQ'
+      description: 'Show asked questions.'
+      tags:
+        - 'M13: Static pages'
+      responses:
+        '200':
+          description: 'Successfully shown FAQ.'
+
+  /contacts:
+    get:
+      operationId: R1303
+      summary: 'R1303: Contacts'
+      description: 'Show contact information.'
+      tags:
+        - 'M13: Static pages'
+      responses:
+        '200':
+          description: 'Successfully shown contact information.'
+
+  /help:
+    get:
+      operationId: R1304
+      summary: 'R1304: Help'
+      description: 'Show help information.'
+      tags:
+        - 'M13: Static pages'
+      responses:
+        '200':
+          description: 'Successfully shown help information.'
