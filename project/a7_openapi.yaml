@@ -173,7 +173,7 @@ paths:
                   format: email
               required:
                 - email
-        responses:
+      responses:
           '200':
             description: 'Success. Password recovery email sent successfully.'
           '400':
@@ -487,7 +487,7 @@ paths:
               properties:
                 id:
                   type: integer
-                  description: ID of the user to ban
+                  description: Id of the user to ban
               required:
                 - id
       responses:
@@ -499,7 +499,7 @@ paths:
     get:
       operationId: R1002
       summary: 'R1002: Retrieve all bans for a user'
-      description: Fetch all ban records associated with a user by ID.
+      description: Fetch all ban records associated with a user by id.
       tags:
         - 'M10: Bans'
       parameters:
@@ -508,7 +508,7 @@ paths:
           schema:
             type: integer
           required: true
-          description: ID of the user
+          description: Id of the user
       responses:
         '200':
           description: Successfully retrieved user bans.
@@ -517,7 +517,7 @@ paths:
     delete:
       operationId: R1003
       summary: 'R1003: Delete a specific ban'
-      description: Removes a ban for a user by specifying the ban ID.
+      description: Removes a ban for a user by specifying the ban id.
       tags:
         - 'M10: Bans'
       parameters:
@@ -526,14 +526,14 @@ paths:
           schema:
             type: integer
           required: true
-          description: ID of the ban to delete
+          description: Id of the ban to delete
       responses:
         '200':
           description: Ban successfully deleted.
         '403':
           description: Unauthorized. You do not have permission to delete this ban.
         '404':
-          description: Ban not found. The specified ban ID does not exist.
+          description: Ban not found. The specified ban id does not exist.
   /bans/unblock:
     put:
       operationId: R1004
@@ -550,7 +550,7 @@ paths:
               properties:
                 id:
                   type: integer
-                  description: ID of the user to unblock
+                  description: Id of the user to unblock
               required:
                 - id
       responses:
@@ -574,7 +574,7 @@ paths:
               properties:
                 id:
                   type: integer
-                  description: ID of the ban to update
+                  description: Id of the ban to update
                 reason:
                   type: string
                   description: New reason for the ban
@@ -586,7 +586,242 @@ paths:
           description: Ban reason successfully updated.
         '403':
           description: Unauthorized. You do not have permission to perform this action.
-servers:
-  # Added by API Auto Mocking Plugin
-  - description: SwaggerHub API Auto Mocking
-    url: https://virtserver.swaggerhub.com/UP202402361/LBAW/1.0.0
+  /appeals:
+    post:
+      operationId: R1101
+      summary: 'R1101: Create an appeal for a ban'
+      description: Submits a new appeal for a ban.
+      tags:
+        - 'M11: Appeals'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                ban_id:
+                  type: integer
+                  description: Id of the ban to appeal
+                reason:
+                  type: string
+                  description: Description of the appeal
+                date:
+                  type: string
+                  format: date
+                  description: Date of the appeal
+              required:
+                - ban_id
+                - reason
+                - date
+      responses:
+        '200':
+          description: Appeal successfully created.
+        '403':
+          description: Unauthorized. You do not have permission to perform this action.
+  '/appeals/{ban_id}':
+    get:
+      operationId: R1102
+      summary: 'R1102: Get all appeals for a ban'
+      description: Returns all appeals associated with a specific ban id.
+      tags:
+        - 'M11: Appeals'
+      parameters:
+        - in: path
+          name: ban_id
+          schema:
+            type: integer
+          required: true
+          description: Id of the ban
+      responses:
+        '200':
+          description: Successfully retrieved appeals.
+        '403':
+          description: Unauthorized. You do not have permission to access this resource.
+  '/appeals/{id}/status':
+    put:
+      operationId: R1103
+      summary: 'R1103: Update the status of an appeal'
+      description: Changes the status of an existing appeal.
+      tags:
+        - 'M11: Appeals'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  description: New status of the appeal
+              required:
+                - status
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Id of the appeal to update
+      responses:
+        '200':
+          description: Appeal status successfully updated.
+        '403':
+          description: Unauthorized. You do not have permission to perform this action.
+  '/appeals/{id}/description':
+    put:
+      operationId: R1104
+      summary: 'R1104: Update the description of an appeal'
+      description: Modifies the description of an existing appeal.
+      tags:
+        - 'M11: Appeals'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                description:
+                  type: string
+                  description: New description of the appeal
+              required:
+                - description
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Id of the appeal to update
+      responses:
+        '200':
+          description: Appeal description successfully updated.
+        '403':
+          description: Unauthorized. You do not have permission to perform this action.
+  '/appeals/{id}':
+    delete:
+      operationId: R1105
+      summary: 'R1105: Delete an appeal'
+      description: Removes an appeal by specifying the appeal id.
+      tags:
+        - 'M11: Appeals'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Id of the appeal to delete
+      responses:
+        '200':
+          description: Appeal successfully deleted.
+        '403':
+          description: Unauthorized. You do not have permission to delete this appeal.
+        '404':
+          description: Appeal not found. The specified appeal id does not exist.
+  /notifications:
+    post:
+      operationId: R1201
+      summary: 'R1201: Create a notification'
+      description: Creates a new notification for a user.
+      tags:
+        - 'M12: Notifications'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: integer
+                  description: Id of the user to notify
+                message:
+                  type: string
+                  description: Notification message
+              required:
+                - userId
+                - message
+      responses:
+        '200':
+          description: Notification successfully created.
+        '403':
+          description: Unauthorized. You do not have permission to perform this action.
+  '/notifications/{id}':
+    put:
+      operationId: R1202
+      summary: 'R1202: Update a notification'
+      description: Updates an existing notification.
+      tags:
+        - 'M12: Notifications'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                  description: New notification message
+              required:
+                - message
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Id of the notification to update
+      responses:
+        '200':
+          description: Notification successfully updated.
+        '403':
+          description: Unauthorized. You do not have permission to perform this action.
+  '/notifications/id':
+    delete:
+      operationId: R1203
+      summary: 'R1203: Delete a notification'
+      description: Deletes a notification by specifying the notification id.
+      tags:
+        - 'M12: Notifications'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Id of the notification to delete
+      responses:
+        '200':
+          description: Notification successfully deleted.
+        '403':
+          description: Unauthorized. You do not have permission to delete this notification.
+        '404':
+          description: Notification not found. The specified notification id does not exist.
+  '/notifications/user/{userId}':
+    get:
+      operationId: R1204
+      summary: 'R1204: Get notifications for a user'
+      description: Retrieves all notifications for a specific user, optionally filtered.
+      tags:
+        - 'M12: Notifications'
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: integer
+          required: true
+          description: Id of the user
+        - in: query
+          name: filter
+          schema:
+            type: string
+          description: Optional filter for notifications
+      responses:
+        '200':
+          description: Successfully retrieved notifications.
+        '403':
+          description: Unauthorized. You do not have permission to access this resource.
