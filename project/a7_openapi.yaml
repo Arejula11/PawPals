@@ -362,6 +362,13 @@ paths:
         description: 'Show one post. Access: PUB, USR, OWN'
         tags:
           - 'M03: Posts'
+        parameters:
+        - in: path
+          name: post_id
+          schema:
+            type: integer
+          required: true
+          description: ID of the post  
   
         responses:
           '200':
@@ -415,13 +422,20 @@ paths:
                   description: 'Failed. Redirect back.'
   
   /post/{post_id}/edit:
-
+  
     post:
       operationId: R304
       summary: 'R304: Edit Post Action'
       description: 'Edit post. Access: OWN'
       tags:
         - 'M03: Posts'
+      parameters:
+      - in: path
+        name: post_id
+        required: true
+        schema:
+          type: integer
+        description: 'ID of the post to edit'
 
       requestBody:
         required: true
@@ -452,6 +466,13 @@ paths:
       description: 'Delete post. Access: OWN, ADM'
       tags:
         - 'M03: Posts'
+      parameters:
+      - in: path
+        name: post_id
+        required: true
+        schema:
+          type: integer
+        description: 'ID of the post to delete'
 
       requestBody:
         required: true
@@ -791,6 +812,201 @@ paths:
         '405':
           description: Message not found. The specified message ID does not exist.
 
+### M07: Admin
+  /admin/users:
+    get:
+      operationId: R0701
+      summary: 'R0701: Retrieve list of all users'
+      description: Returns a list of all users registered in the system.
+      tags: 
+        - 'M07: Admin'
+      responses:
+        '200':
+          description: Successfully retrieved users list.
+        '403':
+          description: Unauthorized. You do not have permission to access this resource.
+  
+  /admin/users/{id}:
+    get:
+      operationId: R0702
+      summary: 'R0702: Retrieve user details'
+      description: Returns details of a specific user by ID.
+      tags: 
+        - 'M07: Admin'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID of the user
+      responses:
+        '200':
+          description: Successfully retrieved user details.
+        '403':
+          description: Unauthorized. You do not have permission to access this resource.
+        '404':
+          description: User not found. The specified user ID does not exist.
+
+    delete:
+      operationId: R0703
+      summary: 'R0703: Delete a user'
+      description: Deletes a user by ID.
+      tags: 
+        - 'M07: Admin'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID of the user to delete
+      responses:
+        '200':
+          description: User successfully deleted.
+        '403':
+          description: Unauthorized. You do not have permission to perform this action.
+        '404':
+          description: User not found. The specified user ID does not exist.
+
+  ### M08: Pictures
+  /pictures:
+    post:
+      operationId: R0801
+      summary: 'R0801: Upload a new picture'
+      description: Allows users to upload a new picture.
+      tags: 
+        - 'M08: Pictures'
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: Picture file to upload
+      responses:
+        '200':
+          description: Picture successfully uploaded.
+        '403':
+          description: Unauthorized. You do not have permission to upload pictures.
+
+  '/pictures/{id}':
+    get:
+      operationId: R0802
+      summary: 'R0802: Retrieve picture details'
+      description: Retrieves details of a specific picture by ID.
+      tags: 
+        - 'M08: Pictures'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID of the picture
+      responses:
+        '200':
+          description: Successfully retrieved picture details.
+        '404':
+          description: Picture not found. The specified picture ID does not exist.
+
+    delete:
+      operationId: R0803
+      summary: 'R0803: Delete a picture'
+      description: Deletes a picture by ID.
+      tags: 
+        - 'M08: Pictures'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID of the picture to delete
+      responses:
+        '200':
+          description: Picture successfully deleted.
+        '403':
+          description: Unauthorized. You do not have permission to delete this picture.
+        '404':
+          description: Picture not found. The specified picture ID does not exist.
+
+  ### M09: Messages
+  /messages:
+    post:
+      operationId: R0901
+      summary: 'R0901: Send a message'
+      description: Allows a user to send a message.
+      tags: 
+        - 'M09: Messages'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                recipientId:
+                  type: integer
+                  description: ID of the message recipient
+                content:
+                  type: string
+                  description: Content of the message
+              required:
+                - recipientId
+                - content
+      responses:
+        '200':
+          description: Message successfully sent.
+        '403':
+          description: Unauthorized. You do not have permission to send this message.
+
+  '/messages/{id}':
+    get:
+      operationId: R0902
+      summary: 'R0902: Retrieve message details'
+      description: Retrieves details of a specific message by ID.
+      tags: 
+        - 'M09: Messages'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID of the message
+      responses:
+        '200':
+          description: Successfully retrieved message details.
+        '403':
+          description: Unauthorized. You do not have permission to view this message.
+        '404':
+          description: Message not found. The specified message ID does not exist.
+
+    delete:
+      operationId: R0903
+      summary: 'R0903: Delete a message'
+      description: Deletes a message by ID.
+      tags: 
+        - 'M09: Messages'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID of the message to delete
+      responses:
+        '200':
+          description: Message successfully deleted.
+        '403':
+          description: Unauthorized. You do not have permission to delete this message.
+        '404':
+          description: Message not found. The specified message ID does not exist.
 
   /bans:
     post:
@@ -1101,7 +1317,7 @@ paths:
           description: Notification successfully updated.
         '403':
           description: Unauthorized. You do not have permission to perform this action.
-  '/notifications/id':
+  
     delete:
       operationId: R1203
       summary: 'R1203: Delete a notification'
@@ -1146,3 +1362,7 @@ paths:
           description: Successfully retrieved notifications.
         '403':
           description: Unauthorized. You do not have permission to access this resource.
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/ninjadeouro12/projectapi/1.0.0
