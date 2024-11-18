@@ -527,7 +527,6 @@ paths:
           description: Comment successfully posted.
         '403':
           description: Post not found. The specified post ID does not exist.
-          #description: Unauthorized. You do not have permission to access this resource. MAYBE PRIVATE POST?
     get:
       operationId: R0402
       summary: 'R0402: Retrieve all comments from a post'
@@ -546,7 +545,6 @@ paths:
           description: Successfully retrieved post comments.
         '403':
           description: Post not found. The specified post ID does not exist.
-          #description: Unauthorized. You do not have permission to access this resource. MAYBE PRIVATE POST?
   '/post/{postId}/comments/{commentId}':
     put:
       operationId: R0403
@@ -609,9 +607,7 @@ paths:
         '403':
           description: Unauthorized. You do not have permission to remove this comment.
         '404':
-          description: Post not found. The specified post ID does not exist.
-        '405':
-          description: Comment not found. The specified comment ID does not exist.
+          description: Resource not found. Either the post ID or comment ID does not exist.
 
 ##### GROUPS
   
@@ -808,10 +804,33 @@ paths:
         '403':
           description: Unauthorized. You do not have permission to perform this action.  
         '404':
-          description: Group not found. The specified group ID does not exist.
-        '405':
-          description: Message not found. The specified message ID does not exist.
-
+          description: Resource not found. Either the group ID or message ID does not exist.
+### SEARCH
+  /search:
+    get:
+      operationId: R0601
+      summary: 'R0601: Search across all resources'
+      description: Allows users to search for posts, users, or groups using a single endpoint.
+      tags:
+        - 'M06: Search'
+      parameters:
+        - in: query
+          name: query
+          schema:
+            type: string
+          required: true
+          description: The search keyword or phrase
+        - in: query
+          name: type
+          schema:
+            type: string
+            enum: [posts, users, groups]
+          description: Filter results by resource type (posts, users, groups).
+      responses:
+        '200':
+          description: Successfully retrieved search results.
+        '400':
+          description: Invalid search query.
 ### M07: Admin
   /admin/users:
     get:
