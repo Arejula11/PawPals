@@ -800,7 +800,45 @@ paths:
           description: ID of the message to delete
       responses:
         '200':
-          description: Successfully deleted messagee.
+          description: Successfully deleted message.
+        '403':
+          description: Unauthorized. You do not have permission to perform this action.  
+        '404':
+          description: Resource not found. Either the group ID or message ID does not exist.
+    put:
+      operationId: R0508
+      summary: 'R0508: Update a message from group'
+      description: Update a message with a specific ID from a group with a specific ID.
+      tags:
+        - 'M05: Groups'
+      parameters:
+        - in: path
+          name: groupId
+          schema:
+            type: integer
+          required: true
+          description: ID of the group to update
+        - in: path
+          name: messageId
+          schema:
+            type: integer
+          required: true
+          description: ID of the message to update
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+                  description: Content of the message
+              required: 
+                - content
+      responses:
+        '200':
+          description: Successfully updated content of message.
         '403':
           description: Unauthorized. You do not have permission to perform this action.  
         '404':
