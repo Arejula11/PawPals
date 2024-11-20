@@ -28,21 +28,36 @@ class RegisterController extends Controller
     public function register(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:250',
-            'email' => 'required|email|max:250|unique:users',
-            'password' => 'required|min:8|confirmed'
+            'username' => 'required|unique:users|max:255',
+            'firstname' => 'required|string|max:255',
+            'surname' => 'required|string|max:255',
+            'password' => 'required|string|min:8|confirmed',
+            'email' => 'required|email|unique:users|max:255',
+            'bio_description' => 'nullable|string',
+            'is_public' => 'nullable|boolean',
+            'type' => 'required|in:pet owner,admin,veterinarian,adoption organization,rescue organization',
+            'profile_picture' => 'required|integer|exists:picture,id',
         ]);
 
-        User::create([
-            'name' => $request->name,
+        $user = User::create([
+            'username' => $request->username,
+            'firstname' => $request->firstname,
+            'surname' => $request->surname,
+            'password' => Hash::make($request->password),
             'email' => $request->email,
-            'password' => Hash::make($request->password)
+            'bio_description' => $request->bio_description,
+            'is_public' => $request->is_public ?? true,
+            'admin' => false,
+            'type' => $request->type,
+            'profile_picture' => $request->profile_picture,
         ]);
-
+    
         $credentials = $request->only('email', 'password');
-        Auth::attempt($credentials);
-        $request->session()->regenerate();
-        return redirect()->route('cards')
-            ->withSuccess('You have successfully registered & logged in!');
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+            return redirect()->route('cards')->withSuccess('You have successfully registered & logged in!');
+        } else {
+            return redirect()->back()->withErrors(['login' => 'Login failed after registration']);
+        }
     }
 }
