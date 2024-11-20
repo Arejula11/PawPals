@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Models\Post;
+
 class PostController extends Controller
 {
     /**
@@ -59,6 +61,13 @@ class PostController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $post = Post::find($id);
+
+        // Check if the current user is authorized to delete this item.
+        $this->authorize('delete', $post);
+
+        // Delete the item and return it as JSON.
+        $post->delete();
+        return response()->json($post);
     }
 }
