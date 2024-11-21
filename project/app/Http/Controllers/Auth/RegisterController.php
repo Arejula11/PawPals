@@ -51,11 +51,7 @@ class RegisterController extends Controller
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-<<<<<<< HEAD
-            return redirect()->route('cards')->withSuccess('You have successfully registered & logged in!');
-=======
             return redirect()->route('home')->withSuccess('You have successfully registered & logged in!');
->>>>>>> authentication
         } else {
             return redirect()->back()->withErrors(['login' => 'Login failed after registration']);
         }
