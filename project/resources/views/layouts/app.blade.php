@@ -19,18 +19,54 @@
         </script>
         <script type="text/javascript" src={{ url('js/app.js') }} defer>
         </script>
+        <style>
+
+.column {
+  float: left;
+  width: 50%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+    </style>
     </head>
+
     <body>
         <main>
-            <header>
-                <h1><a href="{{ url('/cards') }}">Thingy!</a></h1>
-                @if (Auth::check())
-                    <a class="button" href="{{ url('/logout') }}"> Logout </a> <span>{{ Auth::user()->name }}</span>
-                @endif
-            </header>
-            <section id="content">
-                @yield('content')
-            </section>
+        <header>
+            <h1><a href="{{ url('/home') }}">PetPawls</a></h1>
+            @if (Auth::check())
+                <a class="button" href="{{ url('/logout') }}"> Logout </a> <span>{{ Auth::user()->name }}</span>
+            @elseif (url()->current() !== url('/login'))
+                <a class="button" href="{{ route('login') }}">Login</a>
+            @endif
+        </header>
+        
+        <div class="row">
+
+            <div class="column">
+                <nav>
+                    <ul>
+                        <li><a href="{{ url('/home') }}">Home</a></li>
+                        <li><a href="#">Search</a></li>
+                        <li><a href="#">Notifications</a></li>
+                        <li><a href="#">Create Post</a></li>
+                        <li><a href="#">Groups</a></li>
+                        <li><a href="#">Settings</a></li>
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="column">
+                <section id="content">
+                    @yield('content')
+                </section>
+            </div>
+        </div>
         </main>
     </body>
 </html>
