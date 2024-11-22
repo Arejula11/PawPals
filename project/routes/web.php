@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\SearchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,3 +35,11 @@ Route::controller(RegisterController::class)->group(function () {
     Route::get('/register', 'showRegistrationForm')->name('register');
     Route::post('/register', 'register');
 });
+
+// Search Page
+Route::controller(SearchController::class)->group(function() {
+    Route::get('/search', 'index')->name('search');
+});
+
+// Search Users - AJAX Request
+Route::get('/search-users', [SearchController::class, 'searchUsers'])->name('search.users');
