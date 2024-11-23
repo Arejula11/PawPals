@@ -15,22 +15,72 @@
         <link href="{{ url('css/app.css') }}" rel="stylesheet">
         <script type="text/javascript">
             // Fix for Firefox autofocus CSS bug
-            // See: http://stackoverflow.com/questions/18943276/html-5-autofocus-messes-up-css-loading/18945951#18945951
         </script>
-        <script type="text/javascript" src={{ url('js/app.js') }} defer>
-        </script>
+        <script type="text/javascript" src={{ url('js/app.js') }} defer></script>
+        <style>
+            .column {
+                float: left;
+                width: 50%;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .row:after {
+                content: "";
+                display: table;
+                clear: both;
+            }
+
+            .column.logout-container {
+                margin-top: auto;
+            }
+
+            .row {
+                height: 100%;
+                margin: 0 16px;
+            }
+
+            main > header {
+                display: none;
+            }
+
+            .button.logout {
+                margin-top: 1em;
+            }
+
+        </style>
     </head>
+
     <body>
         <main>
-            <header>
-                <h1><a href="{{ url('/cards') }}">Thingy!</a></h1>
-                @if (Auth::check())
-                    <a class="button" href="{{ url('/logout') }}"> Logout </a> <span>{{ Auth::user()->name }}</span>
-                @endif
-            </header>
-            <section id="content">
-                @yield('content')
-            </section>
+            <div class="row">
+                <!-- Left Column -->
+                <div class="column">
+                    <h1><a href="{{ url('/home') }}">PetPawls</a></h1>
+                    <nav>
+                        <ul>
+                            <li><a href="{{ url('/home') }}">Home</a></li>
+                            <li><a href="{{ route('search') }}">Search</a></li>
+                            <li><a href="#">Notifications</a></li>
+                            <li><a href="#">Create Post</a></li>
+                            <li><a href="#">Groups</a></li>
+                            <li><a href="#">Settings</a></li>
+                        </ul>
+                    </nav>
+                    @if (Auth::check())
+                        <a class="button logout" href="{{ url('/logout') }}"> Logout </a>
+                    @elseif (url()->current() !== url('/login'))
+                        <a class="button" href="{{ route('login') }}">Login</a>
+                    @endif
+                </div>
+
+                <!-- Right Column (Content Area) -->
+                <div class="column">
+                    <section id="content">
+                        @yield('content')
+                    </section>
+                </div>
+            </div>
         </main>
     </body>
 </html>

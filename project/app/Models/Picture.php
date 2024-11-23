@@ -10,6 +10,8 @@ class Picture extends Model
 {
     use HasFactory;
 
+    protected $table = 'picture';
+
     public $timestamps = false;
 
     protected $fillable = [
