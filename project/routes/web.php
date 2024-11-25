@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,3 +44,8 @@ Route::controller(SearchController::class)->group(function() {
 
 // Search Users - AJAX Request
 Route::get('/search-users', [SearchController::class, 'searchUsers'])->name('search.users');
+
+// Post
+Route::get('/posts', [PostController::class, 'create'])->name('posts.create');
+
+Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
