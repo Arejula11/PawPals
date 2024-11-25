@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\GroupController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,3 +44,17 @@ Route::controller(SearchController::class)->group(function() {
 
 // Search Users - AJAX Request
 Route::get('/search-users', [SearchController::class, 'searchUsers'])->name('search.users');
+
+Route::controller(GroupController::class)->group(function () {
+    Route::get('/groups/search', 'search')->name('groups.search'); // Search for groups
+    Route::get('/groups', 'index')->name('groups.index'); // List of groups
+    Route::get('/groups/create', 'create')->name('groups.create'); // Form to create a group
+    Route::post('/groups', 'store')->name('groups.store'); // Save new group
+    Route::get('/groups/{id}/edit', [GroupController::class, 'edit'])->name('groups.edit'); // Edit group form
+    Route::put('/groups/{id}', [GroupController::class, 'update'])->name('groups.update'); // Update group
+    Route::get('/groups/{id}/messages', 'messages')->name('groups.messages'); // Group messages only
+    Route::post('/groups/{id}/join', 'join')->name('groups.join'); // Join group
+    Route::get('/groups/{id}', 'show')->name('groups.show'); // Group details
+    Route::post('/groups/{id}/messages/store', [GroupController::class, 'storeMessage'])->name('groups.messages.store');
+});
+
