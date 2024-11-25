@@ -20,8 +20,8 @@ SET DateStyle TO European;
 
 
 
-DROP TABLE IF EXISTS groups;
 DROP TABLE IF EXISTS group_participant;
+DROP TABLE IF EXISTS groups;
 DROP TABLE IF EXISTS post;
 DROP TABLE IF EXISTS comment;
 DROP TABLE IF EXISTS post_like;
@@ -80,7 +80,7 @@ CREATE TABLE users (
     is_public BOOLEAN NOT NULL DEFAULT TRUE,
     admin BOOLEAN NOT NULL DEFAULT FALSE,
     type profile_type NOT NULL,
-    profile_picture INT NOT NULL,
+    profile_picture TEXT NOT NULL,
     FOREIGN KEY (profile_picture) REFERENCES picture(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
