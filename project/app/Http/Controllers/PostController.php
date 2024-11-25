@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Post;
 
 class PostController extends Controller
 {
@@ -19,7 +20,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.post.create');
     }
 
     /**
@@ -27,7 +28,29 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Validate the request
+    $request->validate([
+        'description' => 'required|string|max:500',
+        'post_picture' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
+    ]);
+
+    // Save the post to the database
+    $post = new Post();
+    $post->description = $request->description;
+    $post->creation_date = now();
+    $post->user_id = auth()->id(); // Assuming user is logged in
+
+    // Handle file upload
+    if ($request->hasFile('post_picture')) {
+        $file = $request->file('post_picture');
+        $path = $file->store('uploads/posts', 'public');
+        $post->post_picture_id = $path; // Adjust this to match your database logic
+    }
+
+    $post->save();
+
+    // Redirect with success message
+    return redirect()->route('home')->with('success', 'Post created successfully!');
     }
 
     /**
