@@ -235,13 +235,19 @@ paths:
           description: 'Success. Show User Profile.'
         '404':
           description: 'Failure. User Profile not found.'
-  /user/edit:
+  /user/{username}/edit:
     get:
       operationId: R202
       summary: 'R202: User Profile Edit'
       description: 'Shows the user profile edit page. Access: USR'
       tags:
         - 'M02: Users'
+      parameters:
+        - in: path
+          name: username
+          schema:
+            type: string
+          required: true
       responses:
         '200':
           description: 'Ok. Show edit profile.'
