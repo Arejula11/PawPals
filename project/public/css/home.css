@@ -30,3 +30,17 @@
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
     align-self: center;
 }
+
+.profile-picture {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.profile-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ccc;
+}

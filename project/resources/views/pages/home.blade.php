@@ -23,7 +23,7 @@
 
     <div class="profile-picture" style="position: absolute; top: 10px; right: 10px;">
         <a href="{{ route('users.show', ['id' => Auth::user()->id]) }}">
-            <img src="{{ Auth::user()->getProfilePicture() }}" alt="Profile Picture" style="width: 50px; height: 50px; border-radius: 50%;">
+            <img src="{{ Auth::user()->getProfilePicture() }}" alt="Profile Picture" class="profile-img">
         </a>
     </div>
 
