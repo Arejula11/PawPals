@@ -32,9 +32,9 @@
         <!-- Left column (user's posts) -->
         <div class="posts">
             <h2>Posts</h2>
-            <div class="post-gallery">
+            <div class="post-gallery-show">
                 @foreach ($postImages as $image)
-                    <div class="post-item">
+                    <div class="post-item-show">
                         <img src="{{ $image }}" alt="Post Image">
                     </div>
                 @endforeach
