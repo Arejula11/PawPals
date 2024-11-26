@@ -50,20 +50,12 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         // Check if the profile is public, or if the logged-in user is the owner or follows the user
         if (!$user->is_public && !auth()->check()) {
-            // Redirect or show an error page if the profile is private and the user is not logged in
-            abort(403, 'This profile is private.');
-        }
 
-        // Check if the logged-in user is accessing their own profile or follows the user
-        if (auth()->check()) {
-            $loggedInUser = auth()->user();
-    
-            // Check if the logged-in user is accessing their own profile or follows the user
-            if ($loggedInUser->id !== $user->id && !$loggedInUser->follows($user)) {
-                abort(403, 'You are not authorized to view this profile.');
-            }
-    
-            // Pass logged-in user to the view to show the "Edit" button if it's their profile
+            abort(403, 'This profile is private.');
+        }else if (auth()->check()) {
+            $this->authorize('view', $user);
+            $loggedInUser = auth()->user();    
+
             $isOwnProfile = $loggedInUser->id === $user->id;
         } else {
             $isOwnProfile = false;
@@ -78,11 +70,7 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
 
-        $loggedInUser = auth()->user();
-
-        if (!$loggedInUser || $loggedInUser->id !== $user->id) {
-            abort(403, 'Unauthorized action. You cannot edit another user\'s profile.');
-        }
+        $this->authorize('update', $user);
 
         return view('users.edit', compact('user'));
     }
