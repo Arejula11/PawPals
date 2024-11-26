@@ -32,11 +32,11 @@
         <!-- Left column (user's posts) -->
         <div class="posts">
             <h2>Posts</h2>
-            @foreach ($user->posts as $post)
+            @foreach ($user->posts() as $post)
                 <div class="post-item">
-                    <h3>{{ $post->title }}</h3>
-                    <p>{{ $post->content }}</p>
-                    <span class="post-date">Published on {{ $post->created_at->format('d M, Y') }}</span>
+                    <img src="{{ $post->post_picture_id }}" alt="Post Picture">
+                    <p>{{ $post->description }}</p>
+                    <p>{{ $post->created_at }}</p>
                 </div>
             @endforeach
         </div>
