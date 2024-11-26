@@ -53,25 +53,6 @@
                 margin-top: 1em;
             }
 
-            .profile-picture {
-                position: absolute;
-                top: 10px;
-                right: 10px;
-                width: 60px;  /* Adjust size */
-                height: 60px; /* Adjust size */
-                border-radius: 50%;
-                border: 3px solid #fff; /* Circle border around the picture */
-                overflow: hidden;
-                background-color: #fff;
-                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            }
-
-            .profile-picture img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
-
         </style>
         
     </head>
@@ -100,20 +81,6 @@
                         <a class="button" href="{{ route('login') }}">Login</a>
                     @endif
                 </div>
-                
-                <!-- Profile Picture -->
-                <div class="column">
-                @if(Auth::check())
-                <div class="profile-picture">
-                    <a href="{{ route('users.show', ['id' => Auth::user()->id]) }}">
-                        <img src="{{ Auth::user()->getProfilePicture() }}">
-                    </a>
-                </div>
-                @else
-                <div class="profile-picture">
-                    <img src="images/profile/default.png">
-                </div>
-                @endif
     
                 <!-- Right Column (Content Area) -->
                 <div class="column scrollable">
