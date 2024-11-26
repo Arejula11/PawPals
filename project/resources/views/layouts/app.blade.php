@@ -26,6 +26,10 @@
                 flex-direction: column;
             }
 
+            .column.scrollable {
+                overflow-y: scroll;
+            }
+
             .row:after {
                 content: "";
                 display: table;
@@ -79,7 +83,7 @@
                 </div>
 
                 <!-- Right Column (Content Area) -->
-                <div class="column">
+                <div class="column scrollable">
                     <section id="content">
                         @yield('content')
                     </section>
