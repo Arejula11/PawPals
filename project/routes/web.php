@@ -49,8 +49,8 @@ Route::get('/search-users', [SearchController::class, 'searchUsers'])->name('sea
 
 // Post
 Route::get('/posts', [PostController::class, 'create'])->name('posts.create');
-
 Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
+Route::get('/posts/{id}', [PostController::class, 'show'])->name('posts.show');
 
 Route::controller(GroupController::class)->group(function () {
     Route::get('/groups/search', 'search')->name('groups.search'); // Search for groups

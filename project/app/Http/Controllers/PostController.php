@@ -52,12 +52,15 @@ class PostController extends Controller
     return redirect()->route('home')->with('success', 'Post created successfully!');
     }
 
+    
     /**
      * Display the specified resource.
      */
     public function show(string $id)
     {
-        //
+        $post = Post::with('user')->findOrFail($id);
+
+        return view('pages.post.show', compact('post'));
     }
 
     /**
