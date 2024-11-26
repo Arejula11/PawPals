@@ -60,5 +60,7 @@ Route::controller(GroupController::class)->group(function () {
 });
 
 // Users profile
-Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
-Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
+Route::get('/user/{id}', [UserController::class, 'show'])->name('users.show');
+Route::get('/user/edit/{id}', [UserController::class, 'edit'])->name('users.edit');
+Route::put('/user/edit/{id}', [UserController::class, 'update'])->name('users.update');
+
