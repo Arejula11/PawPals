@@ -83,9 +83,10 @@ class User extends Authenticatable
     /**
      * Get the posts created by the user.
      */
-    public function posts(): HasMany
+    public function posts() 
     {
-        return $this->hasMany(Post::class);
+        $postImages =FileController::getAllPostUserImages( $this->id);
+        return view('post_images', ['images' => $postImages]);
     }
 
     /**

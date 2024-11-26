@@ -60,7 +60,8 @@ class UserController extends Controller
         } else {
             $isOwnProfile = false;
         }
-        return view('users.show', compact('user', 'isOwnProfile'));
+        $postImages = FileController::getAllPostUserImages(1);
+        return view('users.show', compact('user', 'isOwnProfile', 'postImages'));
     }
 
     /**
