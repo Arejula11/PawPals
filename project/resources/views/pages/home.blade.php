@@ -10,7 +10,8 @@
         </a>
     </div>
     <div>
-        @foreach ($user->posts() as $post)
+        @foreach ()
+            @foreach (App\Models\Post::getAllPosts() as $post)
             <div class="post-item">
                 <img src="{{ $post->post_picture_id }}" alt="Post Picture">
                 <p>{{ $post->description }}</p>
