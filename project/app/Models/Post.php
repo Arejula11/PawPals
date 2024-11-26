@@ -59,4 +59,12 @@ class Post extends Model
     {
         return $this->belongsToMany(User::class, 'post_tag', 'post_id', 'user_id');
     }
+
+    /**
+     * Get all the posts
+     */
+    public function getAllPosts()
+    {
+        return $this->all();
+    }
 }

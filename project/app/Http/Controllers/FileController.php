@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\User;
+use App\Models\Post;
 
 class FileController extends Controller
 {   
@@ -149,5 +150,15 @@ class FileController extends Controller
 
         // Not found: returns default asset
         return self::defaultAsset($type);
+    }
+
+    static function getAllPostUserImages(int $userId) {
+        $posts = Post::where('user_id', $userId)->get();
+        $images = [];
+        foreach($posts as $post) {
+            $images[] = asset($post->post_picture);
+        }
+        error_log(print_r($images, true));
+        return $images;
     }
 }

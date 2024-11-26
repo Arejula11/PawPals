@@ -4,6 +4,25 @@ html, body {
   overflow: hidden;
 }
 
+.post-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.post-item {
+  flex: 1 1 200px;
+  max-width: 200px;
+  text-align: center;
+}
+
+.post-item img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
 body {
   background-color: #ffffff;
   color: #9b4dca;
