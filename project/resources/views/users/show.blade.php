@@ -8,7 +8,8 @@
 <div class="user-profile">
     <!-- Header -->
     <header class="profile-header">
-        <img src="{{ asset('images/profile.jpg') }}" alt="Profile Picture" class="profile-image">
+
+        <img src="{{ $user->profilePicture()  }}" alt="Profile Picture" class="profile-image">
         <div class="user-info">
             <h1 class="username">{{ $user->username }}</h1>
             <h3>{{ $user->firstname }} {{ $user->surname }}</h2>

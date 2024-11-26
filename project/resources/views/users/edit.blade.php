@@ -30,8 +30,8 @@
         </div>
 
         <div class="form-group">
-            <label for="bio">Bio Description</label>
-            <textarea class="form-control" id="bio" name="bio" rows="3">{{ $user->bio_description }}</textarea>
+            <label for="bio_description">Bio Description</label>
+            <textarea class="form-control" id="bio" name="bio_description" rows="3">{{ $user->bio_description }}</textarea>
         </div>
 
         <div class="form-group">

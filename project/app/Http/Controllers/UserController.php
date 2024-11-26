@@ -87,17 +87,17 @@ class UserController extends Controller
             $user->password = bcrypt($validatedData['password']);
         }
 
-        // // Handle profile picture upload
-        // if ($request->hasFile('profile_picture')) {
-        //     $file = $request->file('profile_picture');
-        //     $fileName = $file->hashName();
-        //     $file->storeAs('profile', $fileName, 'Images');
+        // Handle profile picture upload
+        if ($request->hasFile('profile_picture')) {
+            $file = $request->file('profile_picture');
+            $fileName = $file->hashName();
+            $file->storeAs('profile', $fileName, 'Images');
 
-        //     // Update profile_picture field
-        //     $user->profile_picture = $fileName;
-        // }
+            // Update profile_picture field
+            $user->profile_picture = $fileName;
+        }
 
-        $user->bio_description = $validatedData['bio'] ?? $user->bio_description;
+        $user->bio_description = $validatedData['bio_description'] ?? $user->bio_description;
         $user->is_public = $validatedData['public'];
         $user->type = $validatedData['type'];
 
