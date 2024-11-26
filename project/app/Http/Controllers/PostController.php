@@ -41,13 +41,10 @@ class PostController extends Controller
 
     if ($request->hasFile('post_picture')) {
         $file = $request->file('post_picture');
-        $path = $file->store('uploads/posts', 'public');
+        $fileName = $file->hashName();
+        $file->storeAs('post', $fileName, 'Images');
 
-        $picture = new Picture();
-        $picture->img_path = $path;
-        $picture->save();
-
-        $post->post_picture_id = $picture->id;
+        $post->post_picture = "post/$fileName";
     }
 
     $post->save();

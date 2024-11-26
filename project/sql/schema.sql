@@ -106,9 +106,8 @@ CREATE TABLE post (
     creation_date DATE NOT NULL DEFAULT CURRENT_DATE,
     description TEXT,
     user_id INT NOT NULL,
-    post_picture_id INT NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE,
-    FOREIGN KEY (post_picture_id) REFERENCES picture(id) ON UPDATE CASCADE ON DELETE CASCADE
+    post_picture TEXT,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE comment (
