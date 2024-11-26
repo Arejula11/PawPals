@@ -9,16 +9,7 @@
             <img src="{{ Auth::user()->profilePicture() }}" alt="Profile Picture" style="width: 50px; height: 50px; border-radius: 50%;">
         </a>
     </div>
-    <div>
-        @foreach ()
-            @foreach (App\Models\Post::getAllPosts() as $post)
-            <div class="post-item">
-                <img src="{{ $post->post_picture_id }}" alt="Post Picture">
-                <p>{{ $post->description }}</p>
-                <p>{{ $post->created_at }}</p>
-            </div>
-        @endforeach
-    </div>
+
 @else
     <div="container"> Hello, Stranger!</div>
 @endif

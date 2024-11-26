@@ -32,13 +32,13 @@
         <!-- Left column (user's posts) -->
         <div class="posts">
             <h2>Posts</h2>
-            @foreach ($user->posts() as $post)
+            <!-- @foreach ($user->posts() as $post)
                 <div class="post-item">
                     <img src="{{ $post->post_picture_id }}" alt="Post Picture">
                     <p>{{ $post->description }}</p>
                     <p>{{ $post->created_at }}</p>
                 </div>
-            @endforeach
+            @endforeach -->
         </div>
 
         <!-- Right column (groups) -->
