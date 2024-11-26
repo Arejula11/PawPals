@@ -22,7 +22,7 @@
                                     let userDiv = document.createElement('div');
                                     
                                     // Add a clickable link to the user's profile
-                                    userDiv.innerHTML = `<a href="http://127.0.0.1:8001/user/${user.id}" class="user-link">${user.username}</a>`;
+                                    userDiv.innerHTML = `<a href="http://127.0.0.1:8000/user/${user.id}" class="user-link">${user.username}</a>`;
                                     resultsDiv.appendChild(userDiv);
                                 });
                             } else {
