@@ -507,7 +507,7 @@ paths:
         '403':
           description: 'Failure. Unauthorized action.'
 
-  '/post/{id}/comments':
+  '/post/{id}/comments/create':
     post:
       operationId: R0401
       summary: 'R0401: Create a new comment on a post'
@@ -542,6 +542,8 @@ paths:
           description: Comment successfully posted.
         '403':
           description: Post not found. The specified post ID does not exist.
+  
+  '/post/{postId}/comments/{commentId}':
     get:
       operationId: R0402
       summary: 'R0402: Retrieve all comments from a post'
@@ -560,7 +562,34 @@ paths:
           description: Successfully retrieved post comments.
         '403':
           description: Post not found. The specified post ID does not exist.
-  '/post/{postId}/comments/{commentId}':
+    delete:
+      operationId: R0404
+      summary: 'R0404: Delete a comment from a post'
+      description: Removes a comment from a post by specifying the comment ID.
+      tags:
+        - 'M04: Comments'
+      parameters:
+        - in: path
+          name: postId
+          schema:
+            type: integer
+          required: true
+          description: ID of the post
+        - in: path
+          name: commentId
+          schema:
+            type: integer
+          required: true
+          description: ID of the comment to remove
+      responses:
+        '200':
+          description: Comment successfully removed.
+        '403':
+          description: Unauthorized. You do not have permission to remove this comment.
+        '404':
+          description: Resource not found. Either the post ID or comment ID does not exist.
+    
+  '/post/{postId}/comments/{commentId}/edit':
     put:
       operationId: R0403
       summary: 'R0403: Update a comment on a post'
@@ -597,36 +626,10 @@ paths:
           description: Comment successfully updated.
         '403':
           description: Unauthorized. You do not have permission to perform this action.
-    delete:
-      operationId: R0404
-      summary: 'R0404: Delete a comment from a post'
-      description: Removes a comment from a post by specifying the comment ID.
-      tags:
-        - 'M04: Comments'
-      parameters:
-        - in: path
-          name: postId
-          schema:
-            type: integer
-          required: true
-          description: ID of the post
-        - in: path
-          name: commentId
-          schema:
-            type: integer
-          required: true
-          description: ID of the comment to remove
-      responses:
-        '200':
-          description: Comment successfully removed.
-        '403':
-          description: Unauthorized. You do not have permission to remove this comment.
-        '404':
-          description: Resource not found. Either the post ID or comment ID does not exist.
 
 ##### GROUPS
   
-  /group:
+  /group/create:
     post:
       operationId: R0501
       summary: 'R0501: Create a new group'
@@ -659,7 +662,7 @@ paths:
         '200':
           description: Group successfully created.
   
-  '/group/{id}':
+  '/group/{id}/edit':
     put:
       operationId: R0502
       summary: 'R0502: Update group information'
@@ -699,6 +702,8 @@ paths:
           description: Unauthorized. You do not have permission to perform this action.
         '404':
           description: Group not found. The specified group ID does not exist.
+  
+  '/group/{id}':
     get:
       operationId: R0503
       summary: 'R0503: Retrieve group information'
@@ -740,7 +745,7 @@ paths:
         '404':
           description: Group not found. The specified group ID does not exist.
       
-  '/group/{id}/message':
+  '/group/{id}/message/create':
     post:
       operationId: R0505
       summary: 'R0505: Create message on group'
@@ -773,6 +778,7 @@ paths:
           description: Unauthorized. You do not have permission to create this message.
         '404':
           description: Group not found. The specified group ID does not exist.
+  '/group/{id}/message':  
     get:
       operationId: R0506
       summary: 'R0506: Retrieve messages from group'
@@ -820,6 +826,8 @@ paths:
           description: Unauthorized. You do not have permission to perform this action.  
         '404':
           description: Resource not found. Either the group ID or message ID does not exist.
+  
+  '/group/{groupId}/message/{messageId}/edit':
     put:
       operationId: R0508
       summary: 'R0508: Update a message from group'
@@ -858,6 +866,7 @@ paths:
           description: Unauthorized. You do not have permission to perform this action.  
         '404':
           description: Resource not found. Either the group ID or message ID does not exist.
+
 ### SEARCH
   /search:
     get:

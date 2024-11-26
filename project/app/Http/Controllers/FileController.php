@@ -42,7 +42,8 @@ class FileController extends Controller
                 $fileName = User::find($id)->profile_picture; // can be null as well
                 break;
             case 'post':
-                // other models
+                $post = Post::find($id);
+                $fileName = $post ? $post->post_picture : null; // Can be null if the post or post picture does not exist
                 break;
             default:
                 return null;
@@ -60,9 +61,13 @@ class FileController extends Controller
                 case 'profile':
                     User::find($id)->profile_picture = null;
                     break;
-                case 'post':
-                    // other models
-                    break;
+               case 'post':
+                    $post = Post::find($id);
+                    if ($post) {
+                        $post->post_picture = null;
+                        $post->save();
+                    }
+                break;
             }
         }
     }
@@ -97,7 +102,6 @@ class FileController extends Controller
         $error = null;
         switch($request->type) {
             case 'profile':
-                error_log("aqui");
                 $user = User::findOrFail($request->id);
                 if ($user) {
                     error_log('User ID: ' . $request->id);
@@ -108,9 +112,15 @@ class FileController extends Controller
                 }
                 break;
 
-            case 'post':
-                // other models
-                break;
+                case 'post':
+                    $post = Post::findOrFail($request->id);
+                    if ($post) {
+                        $post->post_picture = "$type/$fileName"; // Save the relative path
+                        $post->save();
+                    } else {
+                        $error = "Unknown post";
+                    }
+                    break;
 
             default:
                 redirect()->back()->with('error', 'Error: Unsupported upload object');

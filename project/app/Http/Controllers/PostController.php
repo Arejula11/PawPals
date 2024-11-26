@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Post;
+use App\Models\Picture;
 
 class PostController extends Controller
 {
@@ -11,7 +13,17 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        // Get the authenticated user's ID
+        $userId = auth()->id();
+            
+        // Fetch posts belonging to the authenticated user
+        $posts = Post::with('user')
+            ->where('user_id', $userId)
+            ->orderBy('creation_date', 'desc')
+            ->paginate(10); // Paginate with 10 posts per page
+            
+        // Return the index view with user's posts
+        return view('pages.post.index', compact('posts'));
     }
 
     /**
@@ -19,7 +31,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.post.create');
     }
 
     /**
@@ -27,15 +39,38 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+    $validated = $request->validate([
+        'description' => 'required|string|max:500',
+        'post_picture' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+    ]);
+
+    $post = new Post($validated);
+    $post->description = $request->description;
+    $post->creation_date = now();
+    $post->user_id = auth()->id();
+
+    if ($request->hasFile('post_picture')) {
+        $file = $request->file('post_picture');
+        $fileName = $file->hashName();
+        $file->storeAs('post', $fileName, 'Images');
+
+        $post->post_picture = "post/$fileName";
     }
 
+    $post->save();
+
+    return redirect()->route('home')->with('success', 'Post created successfully!');
+    }
+
+    
     /**
      * Display the specified resource.
      */
     public function show(string $id)
     {
-        //
+        $post = Post::with('user')->findOrFail($id);
+
+        return view('pages.post.show', compact('post'));
     }
 
     /**
@@ -43,7 +78,15 @@ class PostController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $post = Post::findOrFail($id);
+
+        // Ensure the authenticated user owns the post
+        if ($post->user_id !== auth()->id()) {
+            abort(403, 'Unauthorized action.');
+        }
+    
+        // Return the edit view with the post
+        return view('pages.post.edit', compact('post'));
     }
 
     /**
@@ -51,7 +94,39 @@ class PostController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $post = Post::findOrFail($id);
+
+        // Ensure the authenticated user owns the post
+        if ($post->user_id !== auth()->id()) {
+            abort(403, 'Unauthorized action.');
+        }
+    
+        // Validate the request
+        $validated = $request->validate([
+            'description' => 'required|string|max:500',
+            'post_picture' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        ]);
+    
+        // Update description
+        $post->description = $validated['description'];
+    
+        // Update post picture if provided
+        if ($request->hasFile('post_picture')) {
+            // Delete the old picture
+            if ($post->post_picture && \Storage::disk('Images')->exists($post->post_picture)) {
+                \Storage::disk('Images')->delete($post->post_picture);
+            }
+    
+            // Save the new picture
+            $file = $request->file('post_picture');
+            $fileName = $file->hashName();
+            $file->storeAs('post', $fileName, 'Images');
+            $post->post_picture = "post/$fileName";
+        }
+    
+        $post->save();
+    
+        return redirect()->route('posts.index')->with('success', 'Post updated successfully!');
     }
 
     /**
@@ -59,6 +134,20 @@ class PostController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $post = Post::findOrFail($id);
+
+        // Ensure the authenticated user owns the post
+        if ($post->user_id !== auth()->id()) {
+            abort(403, 'Unauthorized action.');
+        }
+    
+        // Delete the associated image if it exists
+        if ($post->post_picture && \Storage::disk('Images')->exists($post->post_picture)) {
+            \Storage::disk('Images')->delete($post->post_picture);
+        }
+    
+        $post->delete();
+    
+        return redirect()->route('posts.index')->with('success', 'Post deleted successfully!');        
     }
 }
