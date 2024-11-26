@@ -9,6 +9,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use App\Http\Controllers\FileController;
 
 class User extends Authenticatable
 {
@@ -57,10 +58,11 @@ class User extends Authenticatable
     /**
      * Get the profile picture for the user.
      */
-    public function profilePicture(): BelongsTo
+    public function profilePicture()
     {
-        return $this->belongsTo(Picture::class, 'profile_picture');
+        return FileController::get('profile', $this->id);
     }
+    
 
     /**
      * Get the cards for a user.
