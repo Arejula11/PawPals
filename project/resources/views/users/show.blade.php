@@ -20,6 +20,9 @@
             </div>
             <span><strong>About me:</strong></span>
             <p class="profile-description">{{ $user->bio_description }}</p>
+            @if ($isOwnProfile)
+                <a href="{{ route('users.update', $user->id) }}" class="btn btn-primary">Edit Profile</a>
+            @endif
 
         </div>
     </header>
@@ -29,13 +32,15 @@
         <!-- Left column (user's posts) -->
         <div class="posts">
             <h2>Posts</h2>
-            @foreach ($user->posts as $post)
-                <div class="post-item">
-                    <h3>{{ $post->title }}</h3>
-                    <p>{{ $post->content }}</p>
-                    <span class="post-date">Published on {{ $post->created_at->format('d M, Y') }}</span>
-                </div>
-            @endforeach
+            <div class="post-gallery">
+                @foreach ($postImages as $image)
+                    <div class="post-item">
+                        <img src="{{ $image }}" alt="Post Image">
+                    </div>
+                @endforeach
+            </div>
+            
+        </div>
         </div>
 
         <!-- Right column (groups) -->

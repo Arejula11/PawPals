@@ -48,7 +48,20 @@ class UserController extends Controller
     public function show(string $id)
     {
         $user = User::findOrFail($id);
-        return view('users.show', compact('user'));
+        // Check if the profile is public, or if the logged-in user is the owner or follows the user
+        if (!$user->is_public && !auth()->check()) {
+
+            abort(403, 'This profile is private.');
+        }else if (auth()->check()) {
+            $this->authorize('view', $user);
+            $loggedInUser = auth()->user();    
+
+            $isOwnProfile = $loggedInUser->id === $user->id;
+        } else {
+            $isOwnProfile = false;
+        }
+        $postImages = FileController::getAllPostUserImages(1);
+        return view('users.show', compact('user', 'isOwnProfile', 'postImages'));
     }
 
     /**
@@ -57,6 +70,9 @@ class UserController extends Controller
     public function edit(string $id)
     {
         $user = User::findOrFail($id);
+
+        $this->authorize('update', $user);
+
         return view('users.edit', compact('user'));
     }
 
