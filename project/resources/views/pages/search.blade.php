@@ -20,7 +20,9 @@
                             if (data.length > 0) {
                                 data.forEach(user => {
                                     let userDiv = document.createElement('div');
-                                    userDiv.textContent = user.username;
+                                    
+                                    // Add a clickable link to the user's profile
+                                    userDiv.innerHTML = `<a href="http://127.0.0.1:8001/user/${user.id}" class="user-link">${user.username}</a>`;
                                     resultsDiv.appendChild(userDiv);
                                 });
                             } else {
