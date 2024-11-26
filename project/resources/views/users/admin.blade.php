@@ -17,6 +17,7 @@
                 @endforeach
             </ul>
         </div>
-       
+       <h1>Search user</h1>
+
     </div>
 @endsection
