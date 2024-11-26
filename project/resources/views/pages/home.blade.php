@@ -12,7 +12,7 @@
         <h1>Posts</h1>
         @foreach ($postImages as $image)
             <div class="post-item-home">
-                <img src="{{ $image }}" alt="Post Image">
+                <img src="{{ asset($image) }}" alt="Post Image">
             </div>
         @endforeach
     </div>
