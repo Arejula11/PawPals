@@ -134,4 +134,15 @@ class UserController extends Controller
 
         return redirect()->route('users.index')->with('success', 'User deleted successfully.');
     }
+
+    /**
+     * Show the admin dashboard.
+     */
+    public function admin()
+    {
+        $user = auth()->user();
+        $this->authorize('admin', $user);
+        $users = User::all();
+        return view('users.admin', compact('users'));
+    }
 }
