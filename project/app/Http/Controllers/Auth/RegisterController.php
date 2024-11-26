@@ -25,6 +25,7 @@ class RegisterController extends Controller
      */
     public function register(Request $request)
     {
+        \Log::debug('Start register request:');
         $request->validate([
         'username' => 'required|unique:users|max:255',
         'firstname' => 'required|string|max:255',
@@ -34,11 +35,24 @@ class RegisterController extends Controller
         'bio_description' => 'nullable|string',
         //'is_public' => 'nullable|boolean',
         'type' => 'required|in:pet owner,admin,veterinarian,adoption organization,rescue organization',
-        'profile_picture' => 'required|integer|exists:picture,id'
+        'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', 
         ]);
     
         $isPublic = $request->has('is_public') ? true : false;
 
+        if ($request->hasFile('profile_picture')) {
+            $file = $request->file('profile_picture');
+            $fileName = $file->hashName();
+
+            $storedFilePath = $file->storeAs('images/profile', $fileName, 'Images');
+        
+            if ($storedFilePath) {
+                \Log::debug('File stored successfully', ['path' => $storedFilePath]);
+            } else {
+                \Log::debug('File storage failed');
+            }
+        }
+        
         $user = User::create([
             'username' => $request->username,
             'firstname' => $request->firstname,
@@ -49,7 +63,7 @@ class RegisterController extends Controller
             'is_public' => $isPublic, 
             'admin' => false,
             'type' => $request->type,
-            'profile_picture' => $request->profile_picture,
+            'profile_picture' => $fileName,
         ]);
         
         $credentials = $request->only('email', 'password');

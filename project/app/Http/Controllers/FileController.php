@@ -144,7 +144,7 @@ class FileController extends Controller
         // Validation: file exists
         $fileName = self::getFileName($type, $userId);
         if ($fileName) {
-            return asset($type . '/' . $fileName);
+            return asset(self::$diskName . '/' . $type . '/' . $fileName);
         }
 
         // Not found: returns default asset
