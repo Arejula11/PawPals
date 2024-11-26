@@ -156,9 +156,8 @@ class FileController extends Controller
         $posts = Post::where('user_id', $userId)->get();
         $images = [];
         foreach($posts as $post) {
-            $images[] = asset($post->post_picture);
+            $images[] = $post ? $post->post_picture : null;
         }
-        error_log(print_r($images, true));
         return $images;
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class HomeController extends Controller
 {
@@ -11,8 +12,19 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $postImages = FileController::getAllPostUserImages(1);
-        return view('pages.home', ['postImages' => $postImages]);
+        $allPostImages = [];
+
+    // Assuming User is your model for users
+    $users = User::all(); // Fetch all users from the database
+
+    foreach ($users as $user) {
+        // Fetch the posts for each user
+        $userPostImages = FileController::getAllPostUserImages($user->id);
+        $allPostImages = array_merge($allPostImages, $userPostImages);
+    }
+
+    return view('pages.home', ['postImages' => $allPostImages]);
+
     }
 
 }
