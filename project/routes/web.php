@@ -49,9 +49,15 @@ Route::controller(SearchController::class)->group(function() {
 Route::get('/search-users', [SearchController::class, 'searchUsers'])->name('search.users');
 
 // Post
-Route::get('/posts', [PostController::class, 'create'])->name('posts.create');
-Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
-Route::get('/posts/{id}', [PostController::class, 'show'])->name('posts.show');
+Route::controller(PostController::class)->group(function () {
+    Route::get('/posts', 'index')->name('posts.index'); // List all posts
+    Route::get('/posts/create', 'create')->name('posts.create'); // Create a new post
+    Route::post('/posts', 'store')->name('posts.store'); // Store a new post
+    Route::get('/posts/{id}', 'show')->name('posts.show'); // Show a specific post
+    Route::get('/posts/{id}/edit', 'edit')->name('posts.edit'); // Edit a specific post
+    Route::put('/posts/{id}', 'update')->name('posts.update'); // Update a specific post
+    Route::delete('/posts/{id}', 'destroy')->name('posts.destroy'); // Delete a specific post
+});
 
 Route::controller(GroupController::class)->group(function () {
     Route::get('/groups/search', 'search')->name('groups.search'); // Search for groups
