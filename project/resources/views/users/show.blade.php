@@ -20,6 +20,9 @@
             </div>
             <span><strong>About me:</strong></span>
             <p class="profile-description">{{ $user->bio_description }}</p>
+            @if ($isOwnProfile)
+                <a href="{{ route('users.update', $user->id) }}" class="btn btn-primary">Edit Profile</a>
+            @endif
 
         </div>
     </header>
