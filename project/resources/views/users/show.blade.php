@@ -35,7 +35,7 @@
             <div class="post-gallery-show">
                 @foreach ($postImages as $image)
                     <div class="post-item-show">
-                        <img src="{{ $image }}" alt="Post Image">
+                        <img src="{{ asset($image) }}" alt="Post Image">
                     </div>
                 @endforeach
             </div>
