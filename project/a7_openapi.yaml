@@ -217,7 +217,7 @@ paths:
           description: 'Failure. Token not found or expired.'
         '500':
           description: 'Failure. Internal Server Error - Unable to process request'
-  /users/{username}:
+  /user/{id}:
     get:
       operationId: R201
       summary: 'R201: View User Profile'
@@ -226,7 +226,7 @@ paths:
       - 'M02: Users'
       parameters:
         - in: path
-          name: username
+          name: id
           schema:
             type: string
           required: true
@@ -235,13 +235,19 @@ paths:
           description: 'Success. Show User Profile.'
         '404':
           description: 'Failure. User Profile not found.'
-  /user/edit:
+  /user/edit/{id}:
     get:
       operationId: R202
       summary: 'R202: User Profile Edit'
       description: 'Shows the user profile edit page. Access: USR'
       tags:
         - 'M02: Users'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
       responses:
         '200':
           description: 'Ok. Show edit profile.'
@@ -255,12 +261,18 @@ paths:
                 401Success:
                   description: 'Unauthorized. Redirect to user profile.'
                   value: '/user/{username}'
-    post:
+    put:
       operationId: R203
       summary: 'R203: User Profile Edit Action'
       description: 'Processes and saves the changes made by user. Access: USR'
       tags:
         - 'M02: Users'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
       requestBody:
         required: true
         content:
@@ -268,6 +280,8 @@ paths:
             schema:
               type: object
               properties:
+                id:
+                  type: integer
                 username:
                   type: string
                 firstname:
@@ -293,6 +307,7 @@ paths:
                   type: string
                   format: binary
               required:
+                - id
                 - username
                 - firstname
                 - surname
@@ -310,12 +325,12 @@ paths:
               example:
                 302Success:
                   description: 'Successful update. Redirect to user profile page.'
-                  value: '/user/{username}'
+                  value: '/user/{id}'
                 302Failure:
                   description: 'Failed update. Redirect profile edit page.'
                   value: '/user/edit'
   /user/delete:
-    post:
+    delete:
       operationId: R204
       summary: 'R204: Delete Profile'
       description: 'Delete profile. Access: USR, ADM'
@@ -1085,8 +1100,19 @@ paths:
               required:
                 - id
       responses:
-        '200':
-          description: User successfully blocked.
+        '302':
+          description: Redirect after processing the ban.
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: 'Ban successfully created. Redirect to bans list.'
+                  value: '/bans'
+                302Error:
+                  description: 'Failed to create ban. Redirect to ban creation form.'
+                  value: '/bans/create'
         '403':
           description: Unauthorized. You do not have permission to perform this action.
   '/bans/{id}':

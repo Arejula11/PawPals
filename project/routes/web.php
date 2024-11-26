@@ -8,6 +8,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\FileController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,5 +59,15 @@ Route::controller(GroupController::class)->group(function () {
     Route::get('/groups/{id}', 'show')->name('groups.show'); // Group details
     Route::post('/groups/{id}/messages/store', [GroupController::class, 'storeMessage'])->name('groups.messages.store');
 });
+
+// Users profile
+Route::get('/user/{id}', [UserController::class, 'show'])->name('users.show');
+Route::get('/user/edit/{id}', [UserController::class, 'edit'])->name('users.edit');
+Route::put('/user/edit/{id}', [UserController::class, 'update'])->name('users.update');
+
+// Users profile
+Route::get('/user/{id}', [UserController::class, 'show'])->name('users.show');
+Route::get('/user/edit/{id}', [UserController::class, 'edit'])->name('users.edit');
+Route::put('/user/edit/{id}', [UserController::class, 'update'])->name('users.update');
 
 Route::post('/file/upload', [FileController::class, 'upload']);

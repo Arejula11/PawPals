@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class UserController extends Controller
 {
@@ -11,7 +12,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::all();
+        return view('users.index', compact('users'));
     }
 
     /**
@@ -19,7 +21,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('users.create');
     }
 
     /**
@@ -27,7 +29,17 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email',
+            'password' => 'required|string|min:8',
+        ]);
+
+        $user = new User($validated);
+        $user->password = bcrypt($validated['password']);
+        $user->save();
+
+        return redirect()->route('users.index')->with('success', 'User created successfully.');
     }
 
     /**
@@ -35,7 +47,8 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $user = User::findOrFail($id);
+        return view('users.show', compact('user'));
     }
 
     /**
@@ -43,7 +56,8 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $user = User::findOrFail($id);
+        return view('users.edit', compact('user'));
     }
 
     /**
@@ -51,7 +65,47 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        // Validate the incoming data
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'surname' => 'required|string|max:255',
+            'password' => 'nullable|string|min:8|confirmed',
+            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'bio_description' => 'nullable|string|max:1000',
+            'public' => 'required|boolean',
+            'type' => 'required|string|in:pet owner,admin,veterinarian,adoption organization,rescue organization',
+        ]);
+
+        // Find the user
+        $user = User::findOrFail($id);
+
+        // Update the user's attributes
+        $user->firstname = $validatedData['name'];
+        $user->surname = $validatedData['surname'];
+
+        if ($request->filled('password')) {
+            $user->password = bcrypt($validatedData['password']);
+        }
+
+        // Handle profile picture upload
+        if ($request->hasFile('profile_picture')) {
+            $file = $request->file('profile_picture');
+            $fileName = $file->hashName();
+            $file->storeAs('profile', $fileName, 'Images');
+
+            // Update profile_picture field
+            $user->profile_picture = $fileName;
+        }
+
+        $user->bio_description = $validatedData['bio_description'] ?? $user->bio_description;
+        $user->is_public = $validatedData['public'];
+        $user->type = $validatedData['type'];
+
+        // Save changes
+        $user->save();
+
+        // Redirect back with a success message
+        return redirect()->route('users.show', $id)->with('success', 'Profile updated successfully.');
     }
 
     /**
@@ -59,6 +113,9 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->delete();
+
+        return redirect()->route('users.index')->with('success', 'User deleted successfully.');
     }
 }

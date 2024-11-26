@@ -13,6 +13,7 @@
         <!-- Styles -->
         <link href="{{ url('css/milligram.min.css') }}" rel="stylesheet">
         <link href="{{ url('css/app.css') }}" rel="stylesheet">
+        @yield('head')
         <script type="text/javascript">
             // Fix for Firefox autofocus CSS bug
         </script>
@@ -49,6 +50,7 @@
             }
 
         </style>
+        
     </head>
 
     <body>
