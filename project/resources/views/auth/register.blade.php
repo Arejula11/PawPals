@@ -52,9 +52,7 @@
             <label for="type">Profile Type</label>
             <select id="type" name="type" required>
                 <option value="">Select your profile type</option>
-                <option value="pet owner" {{ old('type') == 'pet owner' ? 'selected' : '' }}>Pet Owner</option>
-                <option value="admin" {{ old('type') == 'admin' ? 'selected' : '' }}>Admin</option>
-                <option value="veterinarian" {{ old('type') == 'veterinarian' ? 'selected' : '' }}>Veterinarian</option>
+                <option value="pet owner" {{ old('type') == 'pet owner' ? 'selected' : '' }}>Pet Owner</option>                <option value="veterinarian" {{ old('type') == 'veterinarian' ? 'selected' : '' }}>Veterinarian</option>
                 <option value="adoption organization" {{ old('type') == 'adoption organization' ? 'selected' : '' }}>Adoption Organization</option>
                 <option value="rescue organization" {{ old('type') == 'rescue organization' ? 'selected' : '' }}>Rescue Organization</option>
             </select>

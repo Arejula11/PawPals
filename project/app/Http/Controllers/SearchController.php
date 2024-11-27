@@ -25,9 +25,13 @@ class SearchController extends Controller
         ]);
 
         $query = $request->input('query');
+        $query = strtolower($query);
         
         // Query users based on username
-        $users = User::whereRaw('LOWER(username) LIKE ?', ['%' . strtolower($query) . '%'])
+        $users = User::whereRaw('LOWER(username) LIKE ?', ['%' . $query . '%'])
+                    ->orWhereRaw('LOWER(firstname) LIKE ?', ['%' . $query . '%'])
+                    ->orWhereRaw('LOWER(surname) LIKE ?', ['%' . $query . '%'])
+                    ->orWhereRaw('LOWER(CAST(type AS TEXT)) LIKE ?', ['%' . strtolower($query) . '%'])
                     ->limit(5)
                     ->get()
                     ->map(function ($user) {
