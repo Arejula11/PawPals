@@ -24,7 +24,6 @@ class RegisterController extends Controller
      */
     public function register(Request $request)
     {
-        \Log::debug('Start register request:');
         $request->validate([
         'username' => 'required|unique:users|max:255',
         'firstname' => 'required|string|max:255',
@@ -44,7 +43,7 @@ class RegisterController extends Controller
             $file = $request->file('profile_picture');
             $fileName = $file->hashName();
     
-            $storedFilePath = $file->storeAs('images/profile', $fileName, 'Images');
+            $storedFilePath = $file->storeAs('profile', $fileName, 'Images');
             if ($storedFilePath) {
                 Log::debug('File stored successfully', ['path' => $storedFilePath]);
             } else {

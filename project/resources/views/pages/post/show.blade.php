@@ -7,7 +7,7 @@
         <!-- Post Picture -->
         @if($post->post_picture)
         <div style="padding: 25px 15px 0px 15px;"> <!-- Top padding for image -->
-            <img src="{{ asset($post->post_picture) }}" class="card-img-top" alt="Post Picture" style="max-height: 300px; object-fit: cover; width: 100%; border-bottom: 1px solid #d1d1d1;">
+            <img src="{{ asset($post->getPostPicture()) }}" class="card-img-top" alt="Post Picture" style="max-height: 300px; object-fit: cover; width: 100%; border-bottom: 1px solid #d1d1d1;">
         </div>
         @endif
 

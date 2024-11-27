@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Http\Controllers\FileController;
 
 class Post extends Model
 {
@@ -34,6 +35,14 @@ class Post extends Model
     public function picture()
     {
         return $this->belongsTo(Picture::class, 'post_picture_id');
+    }
+
+    /**
+     * Get the picture for the post.
+     */
+    public function getPostPicture()
+    {
+        return FileController::get('post', $this->id);
     }
 
     /**
@@ -68,3 +77,4 @@ class Post extends Model
         return $this->all();
     }
 }
+
