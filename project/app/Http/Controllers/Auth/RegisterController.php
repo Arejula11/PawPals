@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 use App\Models\User;
-
 use Illuminate\Support\Facades\Log;
 
 class RegisterController extends Controller
@@ -34,25 +33,27 @@ class RegisterController extends Controller
         'email' => 'required|email|unique:users|max:255',
         'bio_description' => 'nullable|string',
         //'is_public' => 'nullable|boolean',
-        'type' => 'required|in:pet owner,admin,veterinarian,adoption organization,rescue organization',
-        'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', 
+        'type' => 'required|in:pet owner,veterinarian,adoption organization,rescue organization',
+        'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
-    
+
         $isPublic = $request->has('is_public') ? true : false;
+        $fileName = null;
 
         if ($request->hasFile('profile_picture')) {
             $file = $request->file('profile_picture');
             $fileName = $file->hashName();
-
+    
             $storedFilePath = $file->storeAs('images/profile', $fileName, 'Images');
-        
             if ($storedFilePath) {
-                \Log::debug('File stored successfully', ['path' => $storedFilePath]);
+                Log::debug('File stored successfully', ['path' => $storedFilePath]);
             } else {
-                \Log::debug('File storage failed');
+                Log::debug('File storage failed');
             }
+        } else {
+            $fileName = 'default.png';
         }
-        
+
         $user = User::create([
             'username' => $request->username,
             'firstname' => $request->firstname,
@@ -60,12 +61,11 @@ class RegisterController extends Controller
             'password' => Hash::make($request->password),
             'email' => $request->email,
             'bio_description' => $request->bio_description,
-            'is_public' => $isPublic, 
-            'admin' => false,
+            'is_public' => $isPublic,
             'type' => $request->type,
             'profile_picture' => $fileName,
         ]);
-        
+
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
@@ -73,6 +73,5 @@ class RegisterController extends Controller
         } else {
             return redirect()->back()->withErrors(['login' => 'Login failed after registration']);
         }
-
     }
 }
