@@ -1,4 +1,4 @@
-SET search_path TO lbaw2425;
+SET search_path TO lbaw24121;
 
 --------------------------TRANSACTIONS------------------------------
 

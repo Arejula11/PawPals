@@ -4,12 +4,12 @@
 -- Use this code to drop and create a schema.
 -- In this case, the DROP TABLE statements can be removed.
 --
--- DROP SCHEMA lbaw2425 CASCADE;
+-- DROP SCHEMA lbaw24121 CASCADE;
 -- CREATE SCHEMA lba2425;
--- SET search_path TO lbaw2425;
+-- SET search_path TO lbaw24121;
 -----------------------------------------
-CREATE SCHEMA if NOT EXISTS lbaw2425;
-SET search_path TO lbaw2425;
+CREATE SCHEMA if NOT EXISTS lbaw24121;
+SET search_path TO lbaw24121;
 
 SET DateStyle TO European;
 
