@@ -10,6 +10,7 @@ use App\Http\Controllers\GroupController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\MailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +40,11 @@ Route::controller(RegisterController::class)->group(function () {
     Route::get('/register', 'showRegistrationForm')->name('register');
     Route::post('/register', 'register');
 });
+
+Route::get('/password-reset', function() {
+    return view('auth.password');
+});
+Route::post('/send', [MailController::class, 'send']);
 
 // Search Page
 Route::controller(SearchController::class)->group(function() {
