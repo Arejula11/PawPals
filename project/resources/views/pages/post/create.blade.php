@@ -28,6 +28,15 @@
             <input type="file" id="post_picture" name="post_picture" class="form-control">
         </div>
 
+        <div class="mb-3">  
+            <label for="is_public" class="form-label">Is Public:</label>
+            <select name="is_public" id="is_public" class="form-select">
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+            </select>
+        </div>
+        
+
         <div class="text-center">
             <button type="submit" class="btn btn-primary" style="width: auto; height: auto; font-size: 0.9rem; padding: 8px 16px;">Create Post</button>
         </div>

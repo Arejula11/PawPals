@@ -17,7 +17,8 @@ class Post extends Model
         'creation_date',
         'description',
         'user_id',
-        'post_picture_id',
+        'post_picture',
+        'is_public',
     ];
 
     /**
@@ -26,14 +27,6 @@ class Post extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
-    }
-
-    /**
-     * Get the picture for the post.
-     */
-    public function picture()
-    {
-        return $this->belongsTo(Picture::class, 'post_picture_id');
     }
 
     /**
@@ -67,4 +60,5 @@ class Post extends Model
     {
         return $this->all();
     }
+
 }

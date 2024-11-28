@@ -1,0 +1,155 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+}
+
+/* Main Div */
+
+.post-view {
+    display: flex; 
+    flex-direction: row;  
+    height: 500px; 
+    width: 95%; 
+    margin-top: 8%;
+    margin-left: 2%; 
+    border: 2px solid black;
+    box-sizing: border-box; 
+}
+
+/* Image side */
+
+.image {
+    display: flex;
+    width: 120%;
+    border-right: 2px solid black;
+}
+
+.image img {
+    width: max-content;
+}
+
+
+/* Post info side */
+
+/* User pic, username, description and date */
+.user {
+    display: flex;
+    flex-direction: row;
+    padding-top: 20px;
+    text-align: center;
+}
+
+.user h6 {
+    padding-left: 10px;
+}
+
+.image-info {
+    margin: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border: 1px solid black;
+}
+
+.profile-picture img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid black;
+}
+
+.d-i {
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    margin-top: 10px; 
+    gap: 10px; 
+}
+
+.icons {
+    display: flex; 
+    gap: 15px; 
+    margin: 0;
+    color:  #9b4dca; 
+    font-size: 1.2rem;
+    align-items: center; 
+}
+
+.icons span {
+    display: flex; 
+    align-items: center;
+    gap: 5px; 
+    cursor: pointer; 
+}
+
+.icons span:hover {
+    color: darkblue;
+}
+
+.content {
+    display: flex; 
+    flex-direction: column; 
+    border: 1px solid black;
+    padding: 10px;
+}
+.description {
+    text-align: left;
+    margin-bottom: 0;
+    color: #333
+}
+
+.date {
+    margin: 0;
+    text-align: right;
+    font-size: smaller;
+}
+
+.comments-section {
+    margin-top: 10px; /* Space from the previous section */
+    padding-left: 10px;
+    border: 1px solid black; /* Separate it visually from the rest */
+    font-size: 1.2rem; /* Adjust font size */
+    max-height: 225px; /* Limit the height to 200px or adjust as needed */
+    overflow-y: auto; /* Enable vertical scrolling */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+    scrollbar-width: thin; /* For modern browsers, make scrollbar thinner */
+    scrollbar-color: #9b4dca #f0f0f0; /* Custom scrollbar colors */
+}
+
+.comment {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px; /* Add space between comments */
+    padding: 5px;
+    border-bottom: 1px solid #ccc; /* Separate individual comments */
+}
+
+.comment span.user {
+    font-weight: bold;
+    color: #9b4dca; /* Highlight the username */
+}
+
+.comment p {
+    margin: 5px 0;
+    color: #333; /* Slightly darker for the text */
+}
+
+.comments-section::-webkit-scrollbar {
+    width: 8px; /* Set the scrollbar width */
+}
+
+.comments-section::-webkit-scrollbar-track {
+    background: #f0f0f0; /* Background of scrollbar track */
+}
+
+.comments-section::-webkit-scrollbar-thumb {
+    background-color: #9b4dca; /* Scrollbar thumb (handle) color */
+    border-radius: 10px; /* Make scrollbar thumb rounded */
+    border: 2px solid #f0f0f0; /* Add a border to the thumb */
+}

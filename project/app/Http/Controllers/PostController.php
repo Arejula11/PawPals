@@ -42,11 +42,13 @@ class PostController extends Controller
     $validated = $request->validate([
         'description' => 'required|string|max:500',
         'post_picture' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        'is_public' => 'required|boolean',
     ]);
 
     $post = new Post($validated);
     $post->description = $request->description;
     $post->creation_date = now();
+    $post->is_public = $request->is_public;
     $post->user_id = auth()->id();
 
     if ($request->hasFile('post_picture')) {
@@ -78,13 +80,8 @@ class PostController extends Controller
      */
     public function edit(string $id)
     {
+        //**** VALIDATION REQUIRED
         $post = Post::findOrFail($id);
-
-        // Ensure the authenticated user owns the post
-        if ($post->user_id !== auth()->id()) {
-            abort(403, 'Unauthorized action.');
-        }
-    
         // Return the edit view with the post
         return view('pages.post.edit', compact('post'));
     }
@@ -95,20 +92,17 @@ class PostController extends Controller
     public function update(Request $request, string $id)
     {
         $post = Post::findOrFail($id);
-
-        // Ensure the authenticated user owns the post
-        if ($post->user_id !== auth()->id()) {
-            abort(403, 'Unauthorized action.');
-        }
     
         // Validate the request
         $validated = $request->validate([
-            'description' => 'required|string|max:500',
+            'description' => 'nullable|string|max:500',
             'post_picture' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'is_public' => 'nullable|boolean',
         ]);
     
         // Update description
         $post->description = $validated['description'];
+        $post->is_public = $validated['is_public'];
     
         // Update post picture if provided
         if ($request->hasFile('post_picture')) {
@@ -134,12 +128,8 @@ class PostController extends Controller
      */
     public function destroy(string $id)
     {
+        //**** VALIDATION REQUIRED
         $post = Post::findOrFail($id);
-
-        // Ensure the authenticated user owns the post
-        if ($post->user_id !== auth()->id()) {
-            abort(403, 'Unauthorized action.');
-        }
     
         // Delete the associated image if it exists
         if ($post->post_picture && \Storage::disk('Images')->exists($post->post_picture)) {

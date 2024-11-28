@@ -107,6 +107,7 @@ CREATE TABLE post (
     description TEXT,
     user_id INT NOT NULL,
     post_picture TEXT,
+    is_public BOOLEAN NOT NULL DEFAULT TRUE,
     FOREIGN KEY (user_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
