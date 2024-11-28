@@ -15,16 +15,13 @@ class PostController extends Controller
      */
     public function index()
     {
-        // Get the authenticated user's ID
         $userId = auth()->id();
             
-        // Fetch posts belonging to the authenticated user
         $posts = Post::with('user')
             ->where('user_id', $userId)
             ->orderBy('creation_date', 'desc')
-            ->paginate(10); // Paginate with 10 posts per page
+            ->paginate(10); 
             
-        // Return the index view with user's posts
         return view('pages.post.index', compact('posts'));
     }
 
