@@ -6,7 +6,7 @@
 --
 -- DROP SCHEMA lbaw2425 CASCADE;
 -- CREATE SCHEMA lba2425;
--- SET search_path TO lbaw2425;
+-- SET search_path TO lbaw2425
 -----------------------------------------
 CREATE SCHEMA if NOT EXISTS lbaw2425;
 SET search_path TO lbaw2425;

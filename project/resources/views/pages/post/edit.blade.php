@@ -16,7 +16,7 @@
             <label for="post_picture" class="form-label">Post Picture</label>
             @if ($post->post_picture)
             <div>
-                <img src="{{ asset($post->post_picture) }}" alt="Post Picture" style="max-height: 200px;">
+                <img src="{{ asset($post->getPostPicture()) }}" alt="Post Picture" style="max-height: 200px;">
             </div>
             @endif
             <input type="file" name="post_picture" id="post_picture" class="form-control">

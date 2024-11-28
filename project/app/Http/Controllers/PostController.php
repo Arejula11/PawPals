@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Picture;
+use Illuminate\Support\Facades\Log;
+
 
 class PostController extends Controller
 {
@@ -56,7 +58,7 @@ class PostController extends Controller
         $fileName = $file->hashName();
         $file->storeAs('post', $fileName, 'Images');
 
-        $post->post_picture = "post/$fileName";
+        $post->post_picture = "$fileName";
     }
 
     $post->save();
@@ -115,7 +117,7 @@ class PostController extends Controller
             $file = $request->file('post_picture');
             $fileName = $file->hashName();
             $file->storeAs('post', $fileName, 'Images');
-            $post->post_picture = "post/$fileName";
+            $post->post_picture = "$fileName";
         }
     
         $post->save();
