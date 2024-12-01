@@ -10,6 +10,9 @@ use App\Http\Controllers\GroupController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\PostLikeController;
+use App\Http\Controllers\CommentLikeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,6 +61,15 @@ Route::controller(PostController::class)->group(function () {
     Route::put('/posts/{id}', 'update')->name('posts.update'); // Update a specific post
     Route::delete('/posts/{id}', 'destroy')->name('posts.destroy'); // Delete a specific post
 });
+
+Route::controller(CommentController::class)->group(function () {
+    Route::post('/posts/{id}/comments', 'store')->name('posts.comments.store'); // Store a new comment on a post
+});
+
+Route::post('/posts/{id}/like', [PostLikeController::class, 'store'])->name('posts.likes.store');
+Route::post('/posts/{id}/unlike', [PostLikeController::class, 'destroy'])->name('posts.likes.destroy');
+Route::post('/comments/{id}/like', [CommentLikeController::class, 'store'])->name('comments.likes.store');
+Route::post('/comments/{id}/unlike', [CommentLikeController::class, 'destroy'])->name('comments.unlikes.destroy'); 
 
 Route::controller(GroupController::class)->group(function () {
     Route::get('/groups/search', 'search')->name('groups.search'); // Search for groups

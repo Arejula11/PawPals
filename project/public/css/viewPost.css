@@ -63,7 +63,7 @@ body {
     display: flex; 
     justify-content: space-between; 
     align-items: center; 
-    margin-top: 10px; 
+    margin-top: 10px;
     gap: 10px; 
 }
 
@@ -93,10 +93,13 @@ body {
     border: 1px solid black;
     padding: 10px;
 }
+
+
 .description {
     text-align: left;
     font-size: 1.4rem;
     height: 75px;
+    width: 300px;
     margin-bottom: 0;
     border-bottom: #494949;
     color: #333;
@@ -110,7 +113,7 @@ body {
 .date {
     margin: 0;
     text-align: right;
-    font-size: x-small;
+    font-size: xx-small;
     color: #494949;
 }
 
@@ -122,16 +125,16 @@ body {
     overflow-x: hidden; 
     scrollbar-width: medium; 
     scrollbar-color: #9b4dca #f0f0f0; 
+    border: 1px solid black;
 }
 
 .comment {
     display: flex;
     flex-direction: column;
-    max-height: 135px;
-    margin-bottom: 10px; /* Add space between comments */
-    padding: 5px;
     border: 1px solid #ccc; /* Separate individual comments */
+    padding: 10px;
 }
+
 
 .comment span.user {
     font-weight: bold;
@@ -141,7 +144,6 @@ body {
 .comment p {
     padding-left: 10px;
     padding-top: 5px;
-    margin-bottom: 10px;
     color: #333; /* Slightly darker for the text */
     overflow-y: auto;
     overflow-x: hidden;
@@ -150,57 +152,57 @@ body {
 }
 
 .image-info::-webkit-scrollbar {
-    width: 8px; /* Set the scrollbar width */
+    width: 8px; 
 }
 
 .image-info::-webkit-scrollbar-track {
-    background: #f0f0f0; /* Background of scrollbar track */
+    background: #f0f0f0; 
 }
 
 .image-info::-webkit-scrollbar-thumb {
-    background-color: #9b4dca; /* Scrollbar thumb (handle) color */
-    border-radius: 10px; /* Make scrollbar thumb rounded */
-    border: 2px solid #f0f0f0; /* Add a border to the thumb */
+    background-color: #9b4dca; 
+    border-radius: 10px; 
+    border: 2px solid #f0f0f0; 
 }
 
-.comment-input {
+.comment-input form {
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 10px; /* Space between textarea and button */
-    margin-top: 0; /* Space from the comments section */
-    border-top: 1px solid #ccc; /* Optional: Separate from previous comments */
-    padding-top: 10px; /* Add padding for separation */
+    gap: 10px; 
+    margin-top: 0; 
+    border-top: 1px solid #ccc; 
+    padding-top: 10px; 
 }
 
-.comment-input textarea {
+.comment-input form textarea {
     resize: none;
     padding: 10px;
     font-size: 1rem;
-    border: 1px solid #ccc;
+    border: 1px solid #ccccccac;
     border-radius: 5px;
     box-sizing: border-box;
 }
 
-.comment-input textarea:focus {
+.comment-input form textarea:focus {
     outline: none;
-    border-color: #9b4dca; /* Highlight border on focus */
+    border-color: #9b4dca; 
     box-shadow: 0 0 5px rgba(155, 77, 202, 0.5);
 }
 
-.comment-input button {
-    padding: 2px 2px;
+.comment-input form button {
+    padding: 8px 12px;
     background-color: #9b4dca;
     color: white;
-    font-size: 1rem;
+    font-size: 0.9rem;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    height: 40px;
-    width: 100px;
+    height: 30px;
+    width: 70px;
 }
 
-.comment-input button:hover {
-    background-color: #7e3ba8; /* Darken the button on hover */
+.comment-input form button:hover {
+    background-color: #7e3ba8; 
 }

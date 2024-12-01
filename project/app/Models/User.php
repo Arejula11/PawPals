@@ -85,7 +85,7 @@ class User extends Authenticatable
      */
     public function posts() 
     {
-        $postImages =FileController::getAllPostUserImages( $this->id);
+        $postImages = FileController::getAllPostUserImages( $this->id);
         return view('post_images', ['images' => $postImages]);
     }
 
@@ -102,7 +102,7 @@ class User extends Authenticatable
      */
     public function postLikes(): BelongsToMany
     {
-        return $this->belongsToMany(Post::class, 'post_like', 'user_id', 'post_id');
+        return $this->belongsToMany(PostLike::class, 'user_id', 'post_id');
     }
 
     /**
@@ -110,7 +110,7 @@ class User extends Authenticatable
      */
     public function commentLikes(): BelongsToMany
     {
-        return $this->belongsToMany(Comment::class, 'comment_like', 'user_id', 'comment_id');
+        return $this->belongsToMany(CommentLike::class, 'user_id', 'comment_id');
     }
 
     /**

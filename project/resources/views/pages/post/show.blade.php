@@ -17,68 +17,44 @@
             <section class="profile-picture">
                 <img src="{{ $post->user->getProfilePicture()  }}" alt="Profile Picture">
             </section>
-            <h6> <a href="{{ route('users.show', $post->user->id) }}" > {{ $post->user->username }} </a> </h6>
+            <!-- <h6> <a href="{{ route('users.show', $post->user->id) }}" > {{ $post->user->username }} </a> </h6> -->
+            <a href="{{ route('users.show', $post->user->id) }}" > {{ $post->user->username }} </a>
         </section>
-
-        <section></section>
 
         <section class="content">
             <p class="description"> {{ $post->description }} </p>
             <section class="d-i">
-                <div class="icons">
-                    <span class="likes">
-                        <i class="fa fa-heart"></i> 100 Likes
-                    </span>
-                    <span class="comments">
-                        <i class="fa fa-comments"></i> 50 Comments
-                    </span>
-                </div>
+                @include('pages.post.likes')
                 <p class="date">Created on: {{ $post->creation_date }}</p>
             </section>
         </section>
                 
         <section class="comments-section">
-            <div class="comment">
-                <span class="user"><strong>user1:</strong></span>
-                <p>This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!</p>
-                <div class="icons">
-                    <span class="likes">
-                        <i class="fa fa-heart"></i> 100 Likes
-                    </span>
-                    <span class="comments">
-                        <i class="fa fa-comments"></i> 50 Comments
-                    </span>
+            @foreach ($post->comments as $comment)
+                <div class="comment">
+                    <span class="user"><strong>{{ $post->user->username }}:</strong></span>
+                    <p> {{ $comment->content }} </p>
+                    <section class="d-i">
+                        <div class="icons">
+                            <span class="likes">
+                                <i class="fa fa-heart"></i> 100 Likes
+                            </span>
+                            <span class="comments">
+                                <i class="fa fa-comments"></i> 50 Comments
+                            </span>
+                        </div>
+                        <p class="date">Created on: {{ $comment->date }}</p>
+                    </section>
                 </div>
-            </div>
-            <div class="comment">
-                <span class="user"><strong>user1:</strong></span>
-                <p>This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!</p>
-                <div class="icons">
-                    <span class="likes">
-                        <i class="fa fa-heart"></i> 100 Likes
-                    </span>
-                    <span class="comments">
-                        <i class="fa fa-comments"></i> 50 Comments
-                    </span>
-                </div>
-            </div>
-            <div class="comment">
-                <span class="user"><strong>user1:</strong></span>
-                <p>This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!This is the first comment!</p>
-                <div class="icons">
-                    <span class="likes">
-                        <i class="fa fa-heart"></i> 100 Likes
-                    </span>
-                    <span class="comments">
-                        <i class="fa fa-comments"></i> 50 Comments
-                    </span>
-                </div>
-            </div>
+            @endforeach
         </section>
 
         <section class="comment-input">
-            <textarea placeholder="Add new comment..." rows="1"></textarea>
-            <button type="submit">Post</button>
+            <form action="{{ route('posts.comments.store', ['id' => $post->id]) }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <textarea name="content" placeholder="Add new comment..." rows="1" required></textarea>
+                <button type="submit"> Post </button>    
+            </form>
         </section>
 
     </section>
