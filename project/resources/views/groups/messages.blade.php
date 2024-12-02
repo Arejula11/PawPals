@@ -5,13 +5,26 @@
     <h1>Messages in {{ $group->name }}</h1>
     <div class="messages-display">
         <ul id="message-list">
-            @foreach($group->messages as $message)
-                <li class="{{ $message->sender_id === auth()->user()->id ? 'user-message' : 'other-message' }}">
+        @foreach($group->messages as $message)
+            <li class="{{ $message->sender_id === auth()->user()->id ? 'user-message' : 'other-message' }}">
+                @if($message->sender_id !== auth()->user()->id)
+                    <a href="{{ route('users.show', $message->sender->id) }}" class="user-link">
+                        <img src="{{ asset('profile/' . $message->sender->profile_picture) }}" alt="Profile Picture" class="profile-picture-message">
+                    </a>
+                    <div class="message-content-wrapper">
+                        <p class="message-content">{{ $message->content }}</p>
+                        <p class="message-date">{{ $message->date }}</p>
+                    </div>
+                @else
+                <div class="message-content-wrapper-2">
                     <p class="message-content">{{ $message->content }}</p>
                     <p class="message-date">{{ $message->date }}</p>
-                </li>
-            @endforeach
-        </ul>
+                </div>
+                 @endif
+                
+            </li>
+        @endforeach
+    </ul>
     </div>
 
     <form id="message-form" action="{{ route('groups.messages.store', $group->id) }}" method="POST">
