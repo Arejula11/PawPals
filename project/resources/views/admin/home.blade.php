@@ -12,13 +12,13 @@
     </div>
 
     <div class="admin-options">
-        <a href="{{ url('admin/user/create')}}" class="bento-option">
+        <a href="{{ route('admin.users.create')}}" class="bento-option">
             <div class="bento-content">
                 <h3>Create New Admin User</h3>
                 <p>Creats a new user accounts for an administrator.</p>
             </div>
         </a>
-        <a href="{{ 2 }}" class="bento-option">
+        <a href="{{ route('admin.users.manage') }}" class="bento-option">
             <div class="bento-content">
                 <h3>Manage Users</h3>
                 <p>Edit and delete users accounts.</p>

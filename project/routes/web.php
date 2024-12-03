@@ -91,6 +91,7 @@ Route::put('/user/edit/{id}', [UserController::class, 'update'])->name('users.up
 // Route::get('admin/user/{id}', [AdminController::class, 'show'])->name('users.show');
 Route::get('admin/', [AdminController::class, 'home'])->name('admin.home');
 Route::get('admin/user/create', [AdminController::class, 'create'])->name('admin.users.create');
+Route::get('admin/users', [AdminController::class, 'usersManage'])->name('admin.users.manage');
 // Route::get('admin/user/edit/{id}', [UserController::class, 'edit'])->name('admin.users.edit');
 // Route::put('admin/user/edit/{id}', [UserController::class, 'update'])->name('admin.users.update');
 

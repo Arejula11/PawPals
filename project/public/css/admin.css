@@ -62,9 +62,66 @@
     color: #6c757d;
 }
 
-/* Ajuste para pantallas más pequeñas */
+
 @media (max-width: 768px) {
     .admin-options {
-        grid-template-columns: 1fr; /* Una columna por fila en pantallas pequeñas */
+        grid-template-columns: 1fr; 
     }
 }
+
+.user-bento {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Adaptable a diferentes tamaños */
+    gap: 20px;
+    padding: 20px;
+}
+
+.bento-option {
+    background-color: #ffffff;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+    overflow: hidden;
+    padding: 20px;
+}
+
+.bento-option:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.bento-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-picture {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
+    border: 3px solid #007bff;
+}
+
+.bento-content h3 {
+    font-size: 1.2em;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.bento-content p {
+    font-size: 1em;
+    color: #666;
+}
+
+
+@media (max-width: 768px) {
+    .user-bento {
+        grid-template-columns: 1fr; 
+    }
+}
+
