@@ -96,7 +96,19 @@ class AdminController extends Controller
      */
     public function usersManage()
     {
-        $users = User::all();
+        $user = auth()->user();
+        $this->authorize('admin', $user);
+        $users = User::orderBy('username', 'asc')->simplePaginate(25);
         return view('admin.usersManage', compact('users'));
     }
+
+    /**
+     * Show user details.
+     */
+    public function showUser(string $id)
+    {
+        $user = User::findOrFail($id);
+        return view('admin.showUser', compact('user'));
+    }
+
 }

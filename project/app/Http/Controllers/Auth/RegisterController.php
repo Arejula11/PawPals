@@ -92,7 +92,7 @@ class RegisterController extends Controller
             'surname' => $request->surname,
             'password' => Hash::make($request->password),
             'email' => $request->email,
-            'bio_description' => "",
+            'bio_description' => "Platform admin. Here to keep things safe and friendly!",
             'is_public' => true,
             'type' => 'admin',
             'profile_picture' => 'default.png',

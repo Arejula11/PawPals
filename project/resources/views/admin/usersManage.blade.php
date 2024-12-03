@@ -14,11 +14,16 @@
                 <div class="bento-content">
                     <img src="{{ $user->getProfilePicture()  }}" alt="Profile Picture" class="profile-picture">
                     <h3>{{ $user->username }}</h3>
-                    <p>{{ $user->firstname }} {{ $user->surname }}</p>
+                    <p>{{ $user->firstname }} {{ $user->lastname }}</p>
                 </div>
             </a>
         @endforeach
     </div>
+
+    <div class="pagination">
+        {{ $users->links() }}
+    </div>
+
 
 
    
