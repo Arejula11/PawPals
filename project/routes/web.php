@@ -10,6 +10,7 @@ use App\Http\Controllers\GroupController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\MessageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -82,10 +83,12 @@ Route::get('/user/{id}', [UserController::class, 'show'])->name('users.show');
 Route::get('/user/edit/{id}', [UserController::class, 'edit'])->name('users.edit');
 Route::put('/user/edit/{id}', [UserController::class, 'update'])->name('users.update');
 
-Route::post('/file/upload', [FileController::class, 'upload']);
+//Route::post('/file/upload', [FileController::class, 'upload']);
 
 
-Route::get('admin/user/{id}', [UserController::class, 'show'])->name('users.show');
+Route::get('admin/user/{id}', [UserController::class, 'show'])->name('admin.users.show');
 Route::get('admin/', [UserController::class, 'admin'])->name('users.admin');
-Route::get('admin/user/edit/{id}', [UserController::class, 'edit'])->name('users.edit');
-Route::put('admin/user/edit/{id}', [UserController::class, 'update'])->name('users.update');
+Route::get('admin/user/edit/{id}', [UserController::class, 'edit'])->name('admin.users.edit');
+Route::put('admin/user/edit/{id}', [UserController::class, 'update'])->name('admin.users.update');
+
+Route::post('/update-message', [MessageController::class, 'updateMessage']);

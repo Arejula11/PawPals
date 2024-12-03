@@ -3,62 +3,32 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Message;
 
 class MessageController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function updateMessage(Request $request)
     {
-        //
-    }
+        $validated = $request->validate([
+            'id' => 'required|exists:messages,id',
+            'content' => 'required|string|max:255',
+            'sender_id' => 'required|exists:users,id',
+            'group_id' => 'required|exists:groups,id',
+        ]);
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+        // Find the message by ID
+        $message = Message::find($validated['id']);
+        
+        // Update the message with the new data
+        $message->content = $validated['content'];
+        $message->date = now();
+        $message->sender_id = $validated['sender_id'];
+        $message->group_id = $validated['group_id'];
+        
+        // Save the updated message
+        $message->save();
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        // Return a response (you can redirect or return a success message)
+        return response()->json(['success' => true, 'message' => 'Message updated successfully!']);
     }
 }

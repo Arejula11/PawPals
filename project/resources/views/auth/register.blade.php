@@ -7,7 +7,7 @@
     <img src="{{ asset('images/parrot_owner_photo.jpg') }}" alt="" class="register-img img-parrot">
     <img src="{{ asset('images/bird_owner_photo.jpg') }}" alt="" class="register-img img-bird">
     <div class="register-container" style="background-image: url('{{ asset('images/paws_photo.jpg') }}');">
-        <form method="POST" action="{{ route('register') }}" class="register-form">
+        <form method="POST" action="{{ route('register') }}" class="register-form" enctype="multipart/form-data">
             {{ csrf_field() }}
             
             <label for="username">Username</label>
@@ -52,9 +52,7 @@
             <label for="type">Profile Type</label>
             <select id="type" name="type" required>
                 <option value="">Select your profile type</option>
-                <option value="pet owner" {{ old('type') == 'pet owner' ? 'selected' : '' }}>Pet Owner</option>
-                <option value="admin" {{ old('type') == 'admin' ? 'selected' : '' }}>Admin</option>
-                <option value="veterinarian" {{ old('type') == 'veterinarian' ? 'selected' : '' }}>Veterinarian</option>
+                <option value="pet owner" {{ old('type') == 'pet owner' ? 'selected' : '' }}>Pet Owner</option>                <option value="veterinarian" {{ old('type') == 'veterinarian' ? 'selected' : '' }}>Veterinarian</option>
                 <option value="adoption organization" {{ old('type') == 'adoption organization' ? 'selected' : '' }}>Adoption Organization</option>
                 <option value="rescue organization" {{ old('type') == 'rescue organization' ? 'selected' : '' }}>Rescue Organization</option>
             </select>
@@ -67,12 +65,9 @@
                 Make Profile Public
             </label>
 
-            <label for="profile_picture">Profile Picture ID</label>
-            <input id="profile_picture" type="number" name="profile_picture" value="{{ old('profile_picture') }}" required>
-            @if ($errors->has('profile_picture'))
-                <span class="error">{{ $errors->first('profile_picture') }}</span>
-            @endif
-
+            <label for="profile_picture">Profile Picture</label>
+            <input type="file" class="form-control-file" id="profile_picture" name="profile_picture">
+            
             <button type="submit">Register</button>
             <a class="button button-outline" href="{{ route('login') }}">Login</a>
         </form>

@@ -6,7 +6,7 @@
 --
 -- DROP SCHEMA lbaw2425 CASCADE;
 -- CREATE SCHEMA lba2425;
--- SET search_path TO lbaw2425;
+-- SET search_path TO lbaw2425
 -----------------------------------------
 CREATE SCHEMA if NOT EXISTS lbaw2425;
 SET search_path TO lbaw2425;
@@ -80,7 +80,7 @@ CREATE TABLE users (
     is_public BOOLEAN NOT NULL DEFAULT TRUE,
     admin BOOLEAN NOT NULL DEFAULT FALSE,
     type profile_type NOT NULL,
-    profile_picture TEXT NOT NULL
+    profile_picture TEXT NOT NULL DEFAULT 'default.png'
 );
 
 CREATE TABLE groups (
@@ -243,3 +243,7 @@ CREATE TABLE follows (
     FOREIGN KEY (user1_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (user2_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
+
+
+
+

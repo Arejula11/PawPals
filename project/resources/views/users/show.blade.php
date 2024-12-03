@@ -9,7 +9,7 @@
     <!-- Header -->
     <header class="profile-header">
 
-        <img src="{{ $user->profilePicture()  }}" alt="Profile Picture" class="profile-image">
+        <img src="{{ $user->getProfilePicture()  }}" alt="Profile Picture" class="profile-image">
         <div class="user-info">
             <h1 class="username">{{ $user->username }}</h1>
             <h3>{{ $user->firstname }} {{ $user->surname }}</h2>
@@ -32,10 +32,10 @@
         <!-- Left column (user's posts) -->
         <div class="posts">
             <h2>Posts</h2>
-            <div class="post-gallery">
+            <div class="post-gallery-show">
                 @foreach ($postImages as $image)
-                    <div class="post-item">
-                        <img src="{{ $image }}" alt="Post Image">
+                    <div class="post-item-show">
+                        <img src="{{ asset($image) }}" alt="Post Image">
                     </div>
                 @endforeach
             </div>

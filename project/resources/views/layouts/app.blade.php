@@ -81,7 +81,7 @@
                         <a class="button" href="{{ route('login') }}">Login</a>
                     @endif
                 </div>
-
+    
                 <!-- Right Column (Content Area) -->
                 <div class="column scrollable">
                     <section id="content">
@@ -90,5 +90,6 @@
                 </div>
             </div>
         </main>
+        @yield('scripts')
     </body>
 </html>

@@ -5,6 +5,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\User;
 use App\Models\Post;
+use Illuminate\Support\Facades\Log;
+
 
 class FileController extends Controller
 {   
@@ -45,6 +47,8 @@ class FileController extends Controller
             case 'post':
                 $post = Post::find($id);
                 $fileName = $post ? $post->post_picture : null; // Can be null if the post or post picture does not exist
+                Log::debug('File name for post picture:', ['fileName' => $fileName]);
+                
                 break;
             default:
                 return null;
@@ -135,7 +139,7 @@ class FileController extends Controller
         return redirect()->back()->with('success', 'Success: upload completed!');
     }
 
-    static function get(String $type, int $userId) {
+    static function get(String $type, int $id) {
 
         // Validation: upload type
         if (!self::isValidType($type)) {
@@ -143,8 +147,9 @@ class FileController extends Controller
         }
 
         // Validation: file exists
-        $fileName = self::getFileName($type, $userId);
+        $fileName = self::getFileName($type, $id);
         if ($fileName) {
+            Log::debug('Path in get function:', ['path' => $type . '/' . $fileName]);
             return asset($type . '/' . $fileName);
         }
 
@@ -156,9 +161,8 @@ class FileController extends Controller
         $posts = Post::where('user_id', $userId)->get();
         $images = [];
         foreach($posts as $post) {
-            $images[] = asset($post->post_picture);
+            $images[] = $post ? $post->getPostPicture() : null;
         }
-        error_log(print_r($images, true));
         return $images;
     }
 }

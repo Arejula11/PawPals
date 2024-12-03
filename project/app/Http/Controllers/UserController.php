@@ -60,7 +60,7 @@ class UserController extends Controller
         } else {
             $isOwnProfile = false;
         }
-        $postImages = FileController::getAllPostUserImages(1);
+        $postImages = FileController::getAllPostUserImages($user->id);
         return view('users.show', compact('user', 'isOwnProfile', 'postImages'));
     }
 
@@ -107,7 +107,7 @@ class UserController extends Controller
         if ($request->hasFile('profile_picture')) {
             $file = $request->file('profile_picture');
             $fileName = $file->hashName();
-            $file->storeAs('profile', $fileName, 'Images');
+            $file->storeAs('images/profile', $fileName, 'Images');
 
             // Update profile_picture field
             $user->profile_picture = $fileName;

@@ -3,56 +3,61 @@
 @section('content')
 <div class="group-messages">
     <h1>Messages in {{ $group->name }}</h1>
-
-    <ul id="message-list">
+    <div class="messages-display">
+        <ul id="message-list">
         @foreach($group->messages as $message)
-            <li>{{ $message->content }} - {{ $message->date }}</li>
+            <li class="{{ $message->sender_id === auth()->user()->id ? 'user-message' : 'other-message' }}">
+                @if($message->sender_id !== auth()->user()->id)
+                    <a href="{{ route('users.show', $message->sender->id) }}" class="user-link">
+                        <img src="{{ asset('profile/' . $message->sender->profile_picture) }}" alt="Profile Picture" class="profile-picture-message">
+                    </a>
+                    <div class="message-content-wrapper">
+                        <p class="message-content">{{ $message->content }}</p>
+                        <p class="message-date">{{ $message->date }}</p>
+                    </div>
+                @else
+                <div class="message-content-wrapper-2">
+                    <p class="message-content">{{ $message->content }}</p>
+                    <p class="message-date">{{ $message->date }}</p>
+                </div>
+                 @endif
+                
+            </li>
         @endforeach
     </ul>
+    </div>
 
     <form id="message-form" action="{{ route('groups.messages.store', $group->id) }}" method="POST">
         @csrf
-        <textarea name="content" id="message-content" rows="3" placeholder="Write a message..."></textarea>
-        <button type="submit" class="button">Send</button>
+        <input type="hidden" name="id" id="message-id" value="">
+        <textarea name="content" id="message-description" required placeholder="Write a message..."></textarea> 
+        <input type="hidden" name="sender_id" id="sender-id" value="{{ auth()->user()->id }}">
+        <input type="hidden" name="group_id" id="group-id" value="{{ $group->id }}">
+
+        <button type="submit" id="button" class="send-butt">Send</button>
     </form>
+    
+    <div id="message-status"></div>
 </div>
 @endsection
 
 @section('scripts')
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    const form = document.getElementById('message-form');
-    const messageList = document.getElementById('message-list');
-
-    form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-
-        const content = document.getElementById('message-content').value;
-        const url = form.action;
-
-        try {
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-                },
-                body: JSON.stringify({ content })
-            });
-
-            if (!response.ok) throw new Error('Failed to send message');
-
-            const data = await response.json();
-
-            // Append the new message to the list
-            const newMessage = document.createElement('li');
-            newMessage.textContent = `${data.content} - ${data.date}`;
-            messageList.appendChild(newMessage);
-
-            // Clear the textarea
-            document.getElementById('message-content').value = '';
-        } catch (error) {
-            console.error('Error sending message:', error);
+    $(document).ready(function() {
+        function scrollToBottom() {
+            const msgbox = document.querySelector('.messages-display');
+            if (msgbox) {
+                msgbox.scrollTop = msgbox.scrollHeight;
+                console.log("scrollToBottom executed: ", msgbox.scrollTop, msgbox.scrollHeight);
+            } else {
+                console.error("messages-display element not found");
+            }
         }
+
+        // Scroll to the bottom when the page loads
+        scrollToBottom();  
+        
     });
 </script>
 @endsection

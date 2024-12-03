@@ -53,8 +53,8 @@ class UserPolicy
      */
     public function admin(User $user): bool
     {
-        // return $user->admin;
-        return true;
+        return $user->admin;
+        // return true;
     }
 
 }
