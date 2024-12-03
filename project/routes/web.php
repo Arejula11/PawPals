@@ -11,6 +11,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +40,7 @@ Route::controller(LoginController::class)->group(function () {
 Route::controller(RegisterController::class)->group(function () {
     Route::get('/register', 'showRegistrationForm')->name('register');
     Route::post('/register', 'register');
+    Route::post('/admin/register', 'registerAdmin')->name('admin.register');
 });
 
 // Search Page
@@ -86,9 +88,10 @@ Route::put('/user/edit/{id}', [UserController::class, 'update'])->name('users.up
 //Route::post('/file/upload', [FileController::class, 'upload']);
 
 
-Route::get('admin/user/{id}', [UserController::class, 'show'])->name('admin.users.show');
-Route::get('admin/', [UserController::class, 'admin'])->name('users.admin');
-Route::get('admin/user/edit/{id}', [UserController::class, 'edit'])->name('admin.users.edit');
-Route::put('admin/user/edit/{id}', [UserController::class, 'update'])->name('admin.users.update');
+// Route::get('admin/user/{id}', [AdminController::class, 'show'])->name('users.show');
+Route::get('admin/', [AdminController::class, 'home'])->name('admin.home');
+Route::get('admin/user/create', [AdminController::class, 'create'])->name('admin.users.create');
+// Route::get('admin/user/edit/{id}', [UserController::class, 'edit'])->name('admin.users.edit');
+// Route::put('admin/user/edit/{id}', [UserController::class, 'update'])->name('admin.users.update');
 
 Route::post('/update-message', [MessageController::class, 'updateMessage']);

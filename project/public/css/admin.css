@@ -1,0 +1,70 @@
+
+
+.header p{
+    font-size: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: semi-bold;
+}
+
+.header h1.name {
+    font-size: 30px;
+    margin-bottom: 15px;
+    margin-top: 25px;
+    text-align: left;
+    color: #9b4dca;
+}
+.header h1 {
+    font-size: 32px;
+    margin-bottom: 10px;
+    margin-top: -40px;
+    text-align: center;
+    color: #333;
+    font-weight: semi-bold;
+}
+
+.admin-options {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Dos columnas por fila */
+    gap: 20px; /* Espaciado entre los bloques */
+    padding: 20px;
+}
+
+.bento-option {
+    display: block;
+    text-decoration: none;
+    background-color: #f8f9fa;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+    overflow: hidden;
+}
+
+.bento-option:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.bento-content {
+    padding: 20px;
+    text-align: center;
+}
+
+.bento-content h3 {
+    margin-bottom: 10px;
+    font-size: 1.5em;
+    color: #9b4dca;
+}
+
+.bento-content p {
+    font-size: 1em;
+    color: #6c757d;
+}
+
+/* Ajuste para pantallas más pequeñas */
+@media (max-width: 768px) {
+    .admin-options {
+        grid-template-columns: 1fr; /* Una columna por fila en pantallas pequeñas */
+    }
+}

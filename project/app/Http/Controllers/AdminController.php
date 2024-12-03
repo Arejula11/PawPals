@@ -5,15 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 
-class UserController extends Controller
+class AdminController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $users = User::all();
-        return view('users.index', compact('users'));
+
     }
 
     /**
@@ -21,7 +20,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('users.create');
+        return view('admin.create');
     }
 
     /**
@@ -39,7 +38,7 @@ class UserController extends Controller
         $user->password = bcrypt($validated['password']);
         $user->save();
 
-        return redirect()->route('users.index')->with('success', 'User created successfully.');
+        return redirect()->route('admin.index')->with('success', 'Admin created successfully.');
     }
 
     /**
@@ -47,21 +46,7 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        $user = User::findOrFail($id);
-        // Check if the profile is public, or if the logged-in user is the owner or follows the user
-        if (!$user->is_public && !auth()->check()) {
-
-            abort(403, 'This profile is private.');
-        }else if (auth()->check()) {
-            $this->authorize('view', $user);
-            $loggedInUser = auth()->user();    
-
-            $isOwnProfile = $loggedInUser->id === $user->id;
-        } else {
-            $isOwnProfile = false;
-        }
-        $postImages = FileController::getAllPostUserImages($user->id);
-        return view('users.show', compact('user', 'isOwnProfile', 'postImages'));
+        
     }
 
     /**
@@ -73,7 +58,7 @@ class UserController extends Controller
 
         $this->authorize('update', $user);
 
-        return view('users.edit', compact('user'));
+        return view('admin.edit', compact('user'));
     }
 
     /**
@@ -135,4 +120,14 @@ class UserController extends Controller
         return redirect()->route('users.index')->with('success', 'User deleted successfully.');
     }
 
+    /**
+     * Show the admin dashboard.
+     */
+    public function home()
+    {
+        $user = auth()->user();
+        $this->authorize('admin', $user);
+        $users = User::all();
+        return view('admin.home', compact('users'));
+    }
 }

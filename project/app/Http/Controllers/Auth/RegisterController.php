@@ -73,4 +73,38 @@ class RegisterController extends Controller
             return redirect()->back()->withErrors(['login' => 'Login failed after registration']);
         }
     }
+
+    /**
+     * Register a new admin user.
+     */
+    public function registerAdmin(Request $request)
+    {
+        $request->validate([
+            'username' => 'required|unique:users|max:255',
+            'firstname' => 'required|string|max:255',
+            'surname' => 'required|string|max:255',
+            'password' => 'required|string|min:8|confirmed',
+            'email' => 'required|email|unique:users|max:255',
+        ]);
+        $user = User::create([
+            'username' => $request->username,
+            'firstname' => $request->firstname,
+            'surname' => $request->surname,
+            'password' => Hash::make($request->password),
+            'email' => $request->email,
+            'bio_description' => "",
+            'is_public' => true,
+            'type' => 'admin',
+            'profile_picture' => 'default.png',
+            'admin' => true,
+        ]);
+
+        $credentials = $request->only('email', 'password');
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+            return redirect()->route('admin.home')->withSuccess('Admin registered & logged in successfully!');
+        } else {
+            return redirect()->back()->withErrors(['login' => 'Login failed after registration']);
+        }
+    }
 }
