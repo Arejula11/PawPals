@@ -39,7 +39,7 @@ class SearchController extends Controller
                             'id' => $user->id,
                             'first_name' => $user->firstname,
                             'username' => $user->username,
-                            'profile_image' => $user->profile_picture ? asset('images/profile/' . $user->profile_picture) : asset('images/profile/default.png'), // Fallback image
+                            'profile_image' => $user->profile_picture ? asset('profile/' . $user->profile_picture) : asset('profile/default.png'), // Fallback image
                             'profile_url' => route('users.show', $user->id),
                         ];
                     });

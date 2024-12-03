@@ -906,4 +906,101 @@ h1 {
   background-color: #4a148c;
 }
 
+/* Main container */
+.group-messages {
+  display: flex;
+  flex-direction: column;
+  height: 70vh;
+  max-width: 600px;
+  margin: auto;
+  overflow: hidden; /* Prevent overflowing */
+}
 
+.messages-display {
+  height:100%; /* Fixed height for the scrolling area */
+  overflow-y: scroll; /* Enable vertical scrolling */
+  padding: 10px;
+}
+
+.messages-display::-webkit-scrollbar {
+  width: none; /* Optional: scrollbar width */
+}
+
+#message-list {
+  display: flex;
+  flex-direction: column; /* Stack messages vertically */
+  padding: 0;
+  margin: 0;
+  list-style-type: none; /* Remove bullet points */
+}
+
+#message-list li {
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  max-width: 70%; /* Ensure messages don’t take up too much space */
+  word-wrap: break-word;
+}
+
+.user-message {
+  align-self: flex-end; /* Align to the right */
+  background-color: #e0f7fa; /* Light blue */
+  text-align: right;
+}
+
+/* Other messages aligned to the left */
+.other-message {
+  align-self: flex-start; /* Align to the left */
+  background-color: #f1f1f1; /* Light gray */
+  text-align: left;
+}
+
+/* Form fixed at the bottom */
+#message-form {
+  display: flex;
+  position: fixed;
+  bottom: 10%;
+  left: 60%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 650px;
+  background: #fff;
+  padding: 10px;
+  margin: 0;
+}
+
+#message-form textarea {
+  width: calc(100% - 20px); /* Full width minus padding */
+  margin: 0 auto;
+  display: block;
+  resize: none;
+}
+
+.send-butt {
+  display: flex;
+  width: 20%;
+}
+
+.message-content {
+  margin: 0;
+}
+
+.message-date {
+  margin: 0;
+  font-size: 10px;
+}
+
+.profile-picture-message {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+  float: left;
+  object-fit: cover;
+}
+
+.message-content-wrapper {
+  display: inline-block;
+  vertical-align: top;
+  max-width: calc(100% - 50px);
+}

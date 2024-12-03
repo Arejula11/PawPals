@@ -90,5 +90,6 @@
                 </div>
             </div>
         </main>
+        @yield('scripts')
     </body>
 </html>

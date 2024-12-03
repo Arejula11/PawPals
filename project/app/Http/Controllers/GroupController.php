@@ -15,7 +15,7 @@ class GroupController extends Controller
      */
     public function index()
     {
-        $userGroups = auth()->user()->groups; // Assuming you have a relationship defined on the User model like `groups()`
+        $userGroups = auth()->user()->groups;
         return view('groups.index', compact('userGroups'));
     }
 
@@ -61,8 +61,9 @@ class GroupController extends Controller
             'sender_id' => auth()->id(),
             'date' => now(),
         ]);
-    
-        return response()->json($message);
+
+        // Return the message data as a JSON response
+        return view('groups.messages', compact('group'));
     }
 
 
@@ -86,13 +87,13 @@ class GroupController extends Controller
     public function search()
     {
         // Logic to retrieve groups, you can use Eloquent or DB queries here
-        $groups = Group::where('is_public', true)->get(); // Example query to get public groups
-        return view('groups.search', compact('groups')); // Create a new view for this search result page
+        $groups = Group::where('is_public', true)->get();
+        return view('groups.search', compact('groups'));
     }
 
     public function messages($id)
     {
-        $group = Group::with('messages')->findOrFail($id); // Fetch only group messages
+        $group = Group::with('messages')->findOrFail($id);
         return view('groups.messages', compact('group'));
     }
 
@@ -120,7 +121,6 @@ class GroupController extends Controller
     {
         $group = Group::findOrFail($id);
 
-        // Ensure only the owner can update
         if (auth()->id() !== $group->owner_id) {
             abort(403, 'Unauthorized action.');
         }
