@@ -14,6 +14,7 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\FollowController;
 use App\Http\Controllers\BanController;
+use App\Http\Controllers\AppealController;
 
 /*
 |--------------------------------------------------------------------------
@@ -101,6 +102,7 @@ Route::get('admin/user/ban/{id}', [BanController::class, 'create'])->name('admin
 Route::post('admin/user/ban/{id}', [BanController::class, 'store'])->name('admin.users.ban');
 Route::get('admin/bans', [BanController::class, 'showAll'])->name('admin.bans');
 Route::get('admin/ban/{id}', [BanController::class, 'show'])->name('admin.bans.show');
+Route::get('admin/appeal/{id}', [AppealController::class, 'show'])->name('admin.appeal.show');
 
 
 Route::post('/update-message', [MessageController::class, 'updateMessage']);
