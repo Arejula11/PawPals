@@ -49,5 +49,8 @@
             </div>
         </a>
     </div>
+    <div class="logout">
+        <a class="button logout" style="width:200px;" href="{{ url('/logout') }}"> Logout </a>
+    </div>
 
 @endsection
