@@ -5,7 +5,7 @@
 
 @section('content')
     <div class="header">
-        <h1 class="name">PetPawls</h1>
+        <a href="{{route('admin.home')}}" class="name">PetPawls</a>
         <h1>Users</h1>
     </div>
     <div class="user-bento">
@@ -15,6 +15,9 @@
                     <img src="{{ $user->getProfilePicture()  }}" alt="Profile Picture" class="profile-picture">
                     <h3>{{ $user->username }}</h3>
                     <p>{{ $user->firstname }} {{ $user->lastname }}</p>
+                    @if($user->isBanned())
+                        <p class="banned" style="color: red; font-weight: bold;">Banned</p>
+                    @endif
                 </div>
             </a>
         @endforeach

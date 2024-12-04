@@ -45,7 +45,7 @@ class BanController extends Controller
      */
     public function show(string $id)
     {
-        
+        return view('admin.banShow', ['ban' => Ban::findOrFail($id)]);
     }
 
     /**
@@ -76,11 +76,11 @@ class BanController extends Controller
     }
 
     /**
-     * Show the admin dashboard.
+     * Show all bans
      */
-    public function home()
-    {
-        
+    public function showAll(){
+        $bans = Ban::all();
+        return view('admin.showAllBans', ['bans' => $bans]);
     }
 
     

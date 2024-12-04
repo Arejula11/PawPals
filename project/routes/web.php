@@ -99,6 +99,8 @@ Route::put('admin/user/edit/{id}', [AdminController::class, 'update'])->name('ad
 Route::delete('admin/user/delete/{id}', [UserController::class, 'deleteUser'])->name('admin.users.delete');
 Route::get('admin/user/ban/{id}', [BanController::class, 'create'])->name('admin.users.banForm');
 Route::post('admin/user/ban/{id}', [BanController::class, 'store'])->name('admin.users.ban');
+Route::get('admin/bans', [BanController::class, 'showAll'])->name('admin.bans');
+Route::get('admin/ban/{id}', [BanController::class, 'show'])->name('admin.bans.show');
 
 
 Route::post('/update-message', [MessageController::class, 'updateMessage']);

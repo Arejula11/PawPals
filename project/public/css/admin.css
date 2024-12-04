@@ -7,7 +7,7 @@
     font-weight: semi-bold;
 }
 
-.header h1.name {
+.header a.name {
     font-size: 30px;
     margin-bottom: 15px;
     margin-top: 25px;
@@ -241,4 +241,106 @@
     display: flex;
     justify-content: center;
     margin-top: 20px;
+}
+
+.bans {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.bans-header {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.ban {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.ban-details {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.ban-reason {
+    font-size: 16px;
+    font-weight: bold;
+    color: #444;
+}
+
+.ban-meta {
+    font-size: 14px;
+    color: #666;
+}
+
+.ban-active {
+    font-size: 14px;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.ban-active.active {
+    color: #fff;
+    background-color: #28a745;
+}
+
+.ban-active.inactive {
+    color: #fff;
+    background-color: #dc3545;
+}
+
+.ban a {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    text-decoration: none; /* Elimina el subrayado del enlace */
+    color: inherit; /* Hereda el color del texto para mantener el diseño */
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.ban a:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .bans {
+        width: 95%;
+    }
+
+    .ban {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .ban-active {
+        align-self: flex-end;
+    }
 }

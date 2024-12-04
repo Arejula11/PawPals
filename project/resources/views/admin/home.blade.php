@@ -6,7 +6,8 @@
 
 @section('content')
     <div class="header">
-        <h1 class="name">PetPawls</h1>
+        <a href="{{route('admin.home')}}" class="name">PetPawls</a>
+
         <h1>Hello {{ Auth::user()->username }} to your admin panel</h1>
         <p>What would you like to do?</p>
     </div>
@@ -36,7 +37,7 @@
                 <p>Edit and delete user posts and their comments.</p>
             </div>
         </a>
-        <a href="{{ 5 }}" class="bento-option">
+        <a href="{{ route('admin.bans') }}" class="bento-option">
             <div class="bento-content">
                 <h3>Manage Bans</h3>
                 <p>Create bans, remove bans and manage the appeals for the bans.</p>
