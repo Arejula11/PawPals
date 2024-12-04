@@ -210,4 +210,14 @@ class UserController extends Controller
         return redirect()->route('users.index')->with('success', 'User deleted successfully.');
     }
 
+    /**
+     * Delete a user making it a anonymous user
+     */
+    public function deleteUser(string $id)
+    {
+        // $user = User::findOrFail($id);
+        // $user->
+
+
+    }
 }
