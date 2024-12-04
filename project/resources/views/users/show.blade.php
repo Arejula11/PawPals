@@ -22,8 +22,31 @@
             <p class="profile-description">{{ $user->bio_description }}</p>
             @if ($isOwnProfile)
                 <a href="{{ route('users.update', $user->id) }}" class="btn btn-primary">Edit Profile</a>
-            @endif
+            @else
+                @if ($followStatus === 'pending')
+                    <button class="btn btn-secondary" disabled>Request Sent</button>
+                @elseif ($followStatus === 'accepted')
+                    <button class="btn btn-success" disabled>Following</button>
+                @else
+                    <form method="POST" action="{{ route('follow.send') }}">
+                        @csrf
+                        <input type="hidden" name="user1_id" value="{{ Auth::id() }}">
+                        <input type="hidden" name="user2_id" value="{{ $user->id }}">
 
+                        @if ($user->is_public)
+                            <button type="submit" class="btn btn-primary">Follow</button>
+                        @else
+                            @if ($followStatus === 'pending')
+                                <button class="btn btn-secondary" disabled>Request Sent</button>
+                            @elseif ($followStatus === 'accepted')
+                                <button class="btn btn-success" disabled>Following</button>
+                            @else
+                                <button type="submit" class="btn btn-primary">Send Follow Request</button>
+                            @endif
+                        @endif
+                    </form>
+                @endif
+            @endif
         </div>
     </header>
 
