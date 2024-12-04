@@ -407,8 +407,9 @@ VALUES
 ('bigdogbuddy', 'Leah', 'King', 'BigDog123', 'leah.king@yahoo.com', 'My big dog is my best friend.', TRUE, FALSE, 'pet owner', 'default.png'),
 ('rescuesrock', 'Adrian', 'Wells', 'Rescue#1', 'adrian.wells@gmail.com', 'Proud rescue dog parent.', TRUE, FALSE, 'pet owner', 'default.png'),
 ('petsofinstinct', 'Dylan', 'Walker', 'Instinct#567', 'dylan.walker@gmail.com', 'Pet trainer.', TRUE, FALSE, 'pet owner', 'default.png'),
-('hamstergal', 'Sophia', 'Brooks', 'Hamsters#987', 'sophia.brooks@outlook.com', 'Pet mom to hamsters and always learning new things.', FALSE, FALSE, 'pet owner', 'default.png'),
+('hamstergal', 'Sophia', 'Brooks', 'Hamsters#987', 'sophia.brooks@outlook.com', 'Pet mom to hamsters and always learning new things.', FALSE, FALSE, 'pet owner', 'default.png');
 
+SELECT setval('users_id_seq', 181);
 
 --------------------------------------------
 -- R04 GROUPS ------------------------------
@@ -446,6 +447,8 @@ VALUES
 (28, 'Horse Lovers Club', 'For those who own or simply love horses! Share riding tips, care information, and event news.', FALSE, 86),
 (29, 'Parrot Care Tips', 'Focused on parrot care, enrichment activities, and behavior training for parrot owners.', TRUE, 57),
 (30, 'Animal Welfare & Rescue Efforts', 'For advocates and volunteers working toward improving animal welfare and supporting rescue efforts.', TRUE, 58);
+
+SELECT setval('groups_id_seq', 30);
 
 
 --------------------------------------------
@@ -655,6 +658,8 @@ VALUES
 (184, 'There’s a pet adoption fair next weekend at the community center!', '2024-11-30 09:30:25', 74, 30),
 (185, 'Oh, and a charity dog walk on the 15th! It’s always a great time.', '2024-11-30 09:45:45', 78, 30),
 (186, 'I’ll check both out. Thanks for the info!', '2024-11-30 10:00:20', 92, 30);
+
+SELECT setval('message_id_seq', 186);
 
 
 --------------------------------------------
@@ -888,6 +893,8 @@ VALUES
 (180, '2024-11-09 16:00:00', 'What’s the most rewarding part of having a pet for you?', 100, 'default_post.jpg'),
 (181, '2024-11-09 17:00:00', 'How do you keep your pets entertained while traveling?', 100, 'default_post.jpg');
 
+SELECT setval('post_id_seq', 181);
+
 
 --------------------------------------------
 -- R07 POST_LIKE ---------------------------
@@ -1041,6 +1048,8 @@ VALUES
 (45, 'Super excited to give this a go! Thanks for sharing.', '2024-11-11 08:15:00', 181, 71, NULL),
 (46, 'Let me know how it goes! Would love to hear about it.', '2024-11-11 08:25:00', 181, 80, 45);
 
+SELECT setval('comment_id_seq', 46);
+
 
 --------------------------------------------
 -- R08 COMMENT_LIKE ------------------------
@@ -1119,6 +1128,8 @@ VALUES
 (9, 'Using multiple accounts', '2024-10-23 17:10:00', FALSE, 72),
 (10, 'Excessive negativity', '2024-10-24 18:20:00', TRUE, 81);
 
+SELECT setval('ban_id_seq', 10);
+
 
 --------------------------------------------
 -- R13 APPEAL ------------------------------
@@ -1136,6 +1147,8 @@ VALUES
 (8, 'I will adhere to the guidelines.', '2024-11-04 16:00:00', TRUE, 8),
 (9, 'I did not realize it was against the rules.', '2024-11-05 17:00:00', TRUE, 9),
 (10, 'I believe the ban was unfair.', '2024-11-06 18:00:00', FALSE, 10);
+
+SELECT setval('appeal_id_seq', 10);
 
 
 --------------------------------------------
@@ -2641,6 +2654,9 @@ VALUES
 (1491, 'New message in group Animal Welfare & Rescue Efforts.', '2024-11-30 10:00:20', 84),
 (1492, 'New message in group Animal Welfare & Rescue Efforts.', '2024-11-30 10:00:20', 99),
 (1493, 'New message in group Animal Welfare & Rescue Efforts.', '2024-11-30 10:00:20', 94);
+
+SELECT setval('notification_id_seq', 1493);
+
 
 --------------------------------------------
 -- R15 USER_NOTIFICATION -------------------
