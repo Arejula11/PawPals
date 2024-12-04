@@ -8,7 +8,7 @@ use App\Mail\MailModel;
 use TransportException;
 use Exception;
 
-class MailController extends Controller
+class PasswordController extends Controller
 {
     function send(Request $request) {
 
@@ -33,14 +33,14 @@ class MailController extends Controller
         if (empty($missingVariables)) {
 
             $mailData = [
-                'name' => $request->name,
                 'email' => $request->email,
             ];
 
             try {
+                # TODO: catch case of mail not in database
                 Mail::to($request->email)->send(new MailModel($mailData));
                 $status = 'Success!';
-                $message = $request->name . ', an email has been sent to ' . $request->email;
+                $message = 'An email has been sent to ' . $request->email;
             } catch (TransportException $e) {
                 $status = 'Error!';
                 $message = 'SMTP connection error occurred during the email sending process to ' . $request->email;
@@ -57,6 +57,6 @@ class MailController extends Controller
         $request->session()->flash('status', $status);
         $request->session()->flash('message', $message);
         $request->session()->flash('details', $missingVariables);
-        return redirect()->route('home');
+        return redirect()->route('login');
     }
 }
