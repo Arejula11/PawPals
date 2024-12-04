@@ -36,7 +36,7 @@ class AppealController extends Controller
      */
     public function show(string $id)
     {
-        return view('admin.appeal.show', ['appeal' => Appeal::findOrFail($id)]);
+        return view('admin.appealShow', ['appeal' => Appeal::findOrFail($id)]);
     }
 
     /**
@@ -52,7 +52,22 @@ class AppealController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        
+        $appeal = Appeal::findOrFail($id);
+        $status = $appeal->status;
+        $appeal->status = !$status;
+        $appeal->save();
+
+        //get all the appeals of the user and if the status of all are true, set the ban tu false
+        $ban = $appeal->ban;
+        $user = $ban->user;
+        if( $ban->appeals->where('status', false)->count() == 0){
+            $ban->active = false;
+            $ban->save();
+        }else{
+            $ban->active = true;
+            $ban->save();
+        }
+        return redirect()->route('admin.bans')->with('success', 'Appeal updated successfully.');
     }
 
     /**

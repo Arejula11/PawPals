@@ -21,8 +21,8 @@
                         <p class="ban-meta">Date: {{ $ban->date }}</p>
                         <p class="ban-meta">User ID: {{ $ban->user_id }}</p>
                     </div>
-                    <div class="ban-active {{ $ban->active ? 'active' : 'inactive' }}">
-                        {{ $ban->active ? 'Active' : 'Inactive' }}
+                    <div class="ban-active {{ !$ban->active ? 'active' : 'inactive' }}">
+                        {{ !$ban->active ? 'Unbanned' : 'Banned' }}
                     </div>
                 </a>
             </div>

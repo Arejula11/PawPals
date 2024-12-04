@@ -22,8 +22,8 @@
                         <p class="appeal-reason">Reason: {{ $appeal->reason }}</p>
                         <p class="appeal-meta">Date: {{ $appeal->date }}</p>
                     </div>
-                    <div class="appeal-active {{ $appeal->active ? 'active' : 'inactive' }}">
-                        {{ $appeal->active ? 'Active' : 'Inactive' }}
+                    <div class="appeal-active {{ $appeal->status ? 'active' : 'inactive' }}">
+                        {{ $appeal->status ? 'Accepted' : 'Declined' }}
                     </div>
                 </a>
             </div>
