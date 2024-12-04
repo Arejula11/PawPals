@@ -18,8 +18,11 @@
     </div>
     </div>
     
-
-    
+    <form action="{{ route('requests.show') }}" method="GET" style="position: absolute; top: 15px; right: 70px;">
+        <button type="submit" style="background-color:white; border:none" >
+            <img src="/images/follow.png" alt="Follow Requests" class="requests-follow">
+        </button>
+    </form>
 
     <div class="profile-picture" style="position: absolute; top: 10px; right: 10px;">
         <a href="{{ route('users.show', ['id' => Auth::user()->id]) }}">

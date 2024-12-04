@@ -12,6 +12,7 @@ use App\Http\Controllers\FileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\FollowController;
 
 /*
 |--------------------------------------------------------------------------
@@ -99,3 +100,8 @@ Route::post('admin/user/ban/{id}', [AdminController::class, 'banUser'])->name('a
 
 
 Route::post('/update-message', [MessageController::class, 'updateMessage']);
+
+Route::post('/follow', [UserController::class, 'follow'])->name('follow.send');
+Route::get('/requests', [UserController::class, 'checkRequests'])->name('requests.show');
+Route::post('follow/accept/{user1_id}/{user2_id}', [UserController::class, 'accept'])->name('follow.accept');
+Route::post('follow/reject/{user1_id}/{user2_id}', [UserController::class, 'reject'])->name('follow.reject');

@@ -923,7 +923,7 @@ h1 {
 }
 
 .messages-display::-webkit-scrollbar {
-  width: none; /* Optional: scrollbar width */
+  width: none;
 }
 
 #message-list {
@@ -938,20 +938,20 @@ h1 {
   margin-bottom: 10px;
   padding: 10px;
   border-radius: 10px;
-  max-width: 70%; /* Ensure messages don’t take up too much space */
+  max-width: 70%;
   word-wrap: break-word;
 }
 
 .user-message {
-  align-self: flex-end; /* Align to the right */
-  background-color: #e0f7fa; /* Light blue */
+  align-self: flex-end;
+  background-color: #e0f7fa;
   text-align: right;
 }
 
 /* Other messages aligned to the left */
 .other-message {
-  align-self: flex-start; /* Align to the left */
-  background-color: #f1f1f1; /* Light gray */
+  align-self: flex-start;
+  background-color: #f1f1f1;
   text-align: left;
 }
 
@@ -970,7 +970,7 @@ h1 {
 }
 
 #message-form textarea {
-  width: calc(100% - 20px); /* Full width minus padding */
+  width: calc(100% - 20px);
   margin: 0 auto;
   display: block;
   resize: none;
@@ -1003,4 +1003,53 @@ h1 {
   display: inline-block;
   vertical-align: top;
   max-width: calc(100% - 50px);
+}
+
+.requests-follow {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+}
+
+.requests-follow:hover{
+  cursor: pointer;
+}
+
+.request-item{
+  display: flex;
+  align-items: center;
+}
+
+.request-phrase{
+  display: flex;
+  font-size: 17px;
+  margin-bottom: auto;
+}
+
+.request-accept{
+  width: auto;
+  width: 30px;
+  height: 30px;
+  background-color: white;
+  border:none;
+  margin-left: 2px;
+}
+
+.request-decline{
+  width: auto;
+  width: 30px;
+  height: 30px;
+  background-color: white;
+  border: none;
+  margin-left: 5px;
+}
+
+.request-accept:hover{
+  cursor: pointer;
+  background-color: white;
+}
+
+.request-decline:hover{
+  cursor: pointer;
+  background-color: white;
 }
