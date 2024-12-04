@@ -111,4 +111,14 @@ class AdminController extends Controller
         return view('admin.showUser', compact('user'));
     }
 
+
+    /**
+     * Ban a user
+     */
+    public function banUser(string $id){
+        $user = User::findOrFail($id);
+        
+
+        return redirect()->route('admin.users.manage')->with('success', 'User banned successfully.');
+    }
 }

@@ -13,6 +13,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\FollowController;
+use App\Http\Controllers\BanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -96,7 +97,8 @@ Route::get('admin/users', [AdminController::class, 'usersManage'])->name('admin.
 Route::get('admin/user/edit/{id}', [AdminController::class, 'edit'])->name('admin.users.edit');
 Route::put('admin/user/edit/{id}', [AdminController::class, 'update'])->name('admin.users.update');
 Route::delete('admin/user/delete/{id}', [UserController::class, 'deleteUser'])->name('admin.users.delete');
-Route::post('admin/user/ban/{id}', [AdminController::class, 'banUser'])->name('admin.users.ban');
+Route::get('admin/user/ban/{id}', [BanController::class, 'create'])->name('admin.users.banForm');
+Route::post('admin/user/ban/{id}', [BanController::class, 'store'])->name('admin.users.ban');
 
 
 Route::post('/update-message', [MessageController::class, 'updateMessage']);
