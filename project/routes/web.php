@@ -92,11 +92,10 @@ Route::get('admin/users/{id}', [AdminController::class, 'showUser'])->name('admi
 Route::get('admin/', [AdminController::class, 'home'])->name('admin.home');
 Route::get('admin/user/create', [AdminController::class, 'create'])->name('admin.users.create');
 Route::get('admin/users', [AdminController::class, 'usersManage'])->name('admin.users.manage');
-Route::get('admin/user/edit/{id}', [UserController::class, 'edit'])->name('admin.users.edit');
-Route::put('admin/user/edit/{id}', [UserController::class, 'update'])->name('admin.users.update');
-Route::delete('admin/user/delete/{id}', [AdminController::class, 'deleteUser'])->name('admin.users.delete');
+Route::get('admin/user/edit/{id}', [AdminController::class, 'edit'])->name('admin.users.edit');
+Route::put('admin/user/edit/{id}', [AdminController::class, 'update'])->name('admin.users.update');
+Route::delete('admin/user/delete/{id}', [UserController::class, 'deleteUser'])->name('admin.users.delete');
 Route::post('admin/user/ban/{id}', [AdminController::class, 'banUser'])->name('admin.users.ban');
-// Route::get('admin/user/edit/{id}', [UserController::class, 'edit'])->name('admin.users.edit');
-// Route::put('admin/user/edit/{id}', [UserController::class, 'update'])->name('admin.users.update');
+
 
 Route::post('/update-message', [MessageController::class, 'updateMessage']);
