@@ -88,11 +88,10 @@ CREATE TABLE groups (
     name TEXT NOT NULL,
     description TEXT NOT NULL,
     is_public BOOLEAN NOT NULL DEFAULT FALSE,
-    img_id INT NOT NULL,
     owner_id INT NOT NULL,
-    FOREIGN KEY (owner_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE,
-    FOREIGN KEY (img_id) REFERENCES picture(id) ON UPDATE CASCADE ON DELETE CASCADE
+    FOREIGN KEY (owner_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
+
 CREATE TABLE group_participant (
     user_id INT NOT NULL,
     group_id INT NOT NULL,
