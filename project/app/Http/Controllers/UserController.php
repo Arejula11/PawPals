@@ -48,20 +48,91 @@ class UserController extends Controller
     public function show(string $id)
     {
         $user = User::findOrFail($id);
-        // Check if the profile is public, or if the logged-in user is the owner or follows the user
+
         if (!$user->is_public && !auth()->check()) {
-
             abort(403, 'This profile is private.');
-        }else if (auth()->check()) {
-            $this->authorize('view', $user);
-            $loggedInUser = auth()->user();    
+        }
 
-            $isOwnProfile = $loggedInUser->id === $user->id;
-        } else {
-            $isOwnProfile = false;
+        $loggedInUser = auth()->user();    
+        $isOwnProfile = $loggedInUser && $loggedInUser->id === $user->id;
+
+        $followStatus = null;
+
+        if ($loggedInUser && !$isOwnProfile) {
+            $follow = \App\Models\Follow::where([
+                ['user1_id', '=', $loggedInUser->id],
+                ['user2_id', '=', $user->id],
+            ])->first();
+
+            if ($follow) {
+                $followStatus = $follow->request_status;
+            }
         }
         $postImages = FileController::getAllPostUserImages($user->id);
-        return view('users.show', compact('user', 'isOwnProfile', 'postImages'));
+        return view('users.show', compact('user', 'isOwnProfile', 'postImages', 'followStatus'));
+    }
+
+    public function follow(Request $request)
+    {
+        $userToFollow = User::findOrFail($request->user2_id);
+        $loggedInUser = auth()->user();
+
+        if ($userToFollow->is_public) {
+            \App\Models\Follow::create([
+                'user1_id' => $loggedInUser->id,
+                'user2_id' => $userToFollow->id,
+                'request_status' => 'accepted',
+            ]);
+        } else {
+            \App\Models\Follow::create([
+                'user1_id' => $loggedInUser->id,
+                'user2_id' => $userToFollow->id,
+                'request_status' => 'pending',
+            ]);
+        }
+
+        return redirect()->route('users.show', $userToFollow->id);
+    }
+
+    public function checkRequests()
+    {
+        $user = auth()->user();
+        $pendingRequests = \App\Models\Follow::with('follower')
+                                            ->where('user2_id', $user->id)
+                                            ->where('request_status', 'pending')
+                                            ->get();
+
+        return view('requests.show', compact('pendingRequests','user'));
+    }
+
+    public function accept($user1_id, $user2_id)
+    {
+        // Find the follow request using both user1_id and user2_id
+        $request = \App\Models\Follow::where('user1_id', $user1_id)
+                                    ->where('user2_id', $user2_id)
+                                    ->first();
+
+        if ($request) {
+            $request->request_status = 'accepted';
+            $request->save();
+
+            return redirect()->route('requests.show')->with('success', 'Follow request accepted.');
+        }
+
+        return redirect()->route('requests.show')->with('error', 'Follow request not found.');
+    }
+
+    public function reject($user1_id, $user2_id)
+    {
+        $deleted = \App\Models\Follow::where('user1_id', $user1_id)
+                                    ->where('user2_id', $user2_id)
+                                    ->delete();
+    
+        if ($deleted) {
+            return redirect()->route('requests.show')->with('success', 'Follow request rejected.');
+        }
+    
+        return redirect()->route('requests.show')->with('error', 'Follow request not found.');
     }
 
     /**
@@ -107,7 +178,7 @@ class UserController extends Controller
         if ($request->hasFile('profile_picture')) {
             $file = $request->file('profile_picture');
             $fileName = $file->hashName();
-            $file->storeAs('images/profile', $fileName, 'Images');
+            $file->storeAs('profile', $fileName, 'Images');
 
             // Update profile_picture field
             $user->profile_picture = $fileName;

@@ -8,8 +8,8 @@
 -- CREATE SCHEMA lba2425;
 -- SET search_path TO lbaw2425
 -----------------------------------------
-CREATE SCHEMA if NOT EXISTS lbaw2425;
-SET search_path TO lbaw2425;
+CREATE SCHEMA if NOT EXISTS lbaw24121;
+SET search_path TO lbaw24121;
 
 SET DateStyle TO European;
 
@@ -52,7 +52,7 @@ DROP TYPE IF EXISTS group_member_notification_type;
 --------TYPES---------------
 -----------------------------
 
-CREATE TYPE profile_type AS ENUM ('pet owner', 'admin', 'veterinarian', 'adoption organization', 'rescue organization');
+CREATE TYPE profile_type AS ENUM ('pet owner', 'admin', 'veterinarian', 'adoption organization', 'rescue organization','deleted');
 CREATE TYPE response_type AS ENUM ('accepted', 'rejected', 'pending');
 CREATE TYPE user_notification_type AS ENUM('follow_request', 'follow_response', 'start_following');
 CREATE TYPE post_notification_type AS ENUM('post_likes', 'post_comments', 'post_tags');
@@ -71,11 +71,11 @@ CREATE TABLE picture (
 
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
-    username TEXT NOT NULL UNIQUE,
-    firstname TEXT NOT NULL,
-    surname TEXT NOT NULL,
-    password TEXT NOT NULL,
-    email TEXT NOT NULL,
+    username TEXT UNIQUE,
+    firstname TEXT,
+    surname TEXT,
+    password TEXT,
+    email TEXT ,
     bio_description TEXT,
     is_public BOOLEAN NOT NULL DEFAULT TRUE,
     admin BOOLEAN NOT NULL DEFAULT FALSE,
@@ -88,11 +88,10 @@ CREATE TABLE groups (
     name TEXT NOT NULL,
     description TEXT NOT NULL,
     is_public BOOLEAN NOT NULL DEFAULT FALSE,
-    img_id INT NOT NULL,
     owner_id INT NOT NULL,
-    FOREIGN KEY (owner_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE,
-    FOREIGN KEY (img_id) REFERENCES picture(id) ON UPDATE CASCADE ON DELETE CASCADE
+    FOREIGN KEY (owner_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
+
 CREATE TABLE group_participant (
     user_id INT NOT NULL,
     group_id INT NOT NULL,
