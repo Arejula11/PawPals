@@ -408,7 +408,6 @@ VALUES
 ('rescuesrock', 'Adrian', 'Wells', 'Rescue#1', 'adrian.wells@gmail.com', 'Proud rescue dog parent.', TRUE, FALSE, 'pet owner', 'default.png'),
 ('petsofinstinct', 'Dylan', 'Walker', 'Instinct#567', 'dylan.walker@gmail.com', 'Pet trainer.', TRUE, FALSE, 'pet owner', 'default.png'),
 ('hamstergal', 'Sophia', 'Brooks', 'Hamsters#987', 'sophia.brooks@outlook.com', 'Pet mom to hamsters and always learning new things.', FALSE, FALSE, 'pet owner', 'default.png'),
-('powlaf', 'Paula', 'Frindte', '$2y$10$ujy9X7AJSWX6aeXJwyl7xuRujEQzPS/aGcnTdr/8B1e1haHU51sva', 'admin@example.com', 'Pet mom to hamsters and always learning new things.', FALSE, FALSE, 'pet owner', 'default.png');
 
 
 --------------------------------------------
