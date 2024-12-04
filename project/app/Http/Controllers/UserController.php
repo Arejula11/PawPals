@@ -178,7 +178,7 @@ class UserController extends Controller
         if ($request->hasFile('profile_picture')) {
             $file = $request->file('profile_picture');
             $fileName = $file->hashName();
-            $file->storeAs('images/profile', $fileName, 'Images');
+            $file->storeAs('profile', $fileName, 'Images');
 
             // Update profile_picture field
             $user->profile_picture = $fileName;
