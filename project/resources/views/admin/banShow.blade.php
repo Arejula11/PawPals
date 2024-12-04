@@ -14,9 +14,8 @@
 
     <h1 style="font-size: 32px; margin-bottom: 10px; margin-top: -40px; text-align: center; color: #333; font-weight: semi-bold;">Bans of user: {{ $user->username }} </h1>
     <div class="appeals">
-    <div class="appeals-header">appeal List</div>
+    <div class="appeals-header">Appeals List</div>
     @foreach($ban->appeals as $appeal)
-        <p>Appeal: {{ $appeal }}</p>
         <div class="appeal">
                 <a href="{{ route('admin.appeal.show', $appeal->id) }}">
                     <div class="appeal-details">
