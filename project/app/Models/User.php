@@ -100,17 +100,27 @@ class User extends Authenticatable
     /**
      * Get the likes given by the user on posts.
      */
-    public function postLikes(): BelongsToMany
+    public function postLikes()
     {
-        return $this->belongsToMany(PostLike::class, 'user_id', 'post_id');
+        return $this->belongsToMany(Post::class, 'post_like');
+    }
+
+    public function likesPost(Post $post) 
+    {
+        return $this->postLikes()->where('post_id', $post->id)->exists();
     }
 
     /**
      * Get the likes given by the user on comments.
      */
-    public function commentLikes(): BelongsToMany
+    public function commentLikes()
     {
-        return $this->belongsToMany(CommentLike::class, 'user_id', 'comment_id');
+        return $this->belongsToMany(Comment::class, 'comment_like');
+    }
+
+    public function likesComment(Comment $comment) 
+    {
+        return $this->commentLikes()->where('comment_id', $comment->id)->exists();
     }
 
     /**

@@ -70,8 +70,8 @@ Route::controller(CommentController::class)->group(function () {
 
 Route::post('/posts/{id}/like', [PostLikeController::class, 'store'])->name('posts.likes.store');
 Route::post('/posts/{id}/unlike', [PostLikeController::class, 'destroy'])->name('posts.likes.destroy');
-Route::post('/comments/{id}/like', [CommentLikeController::class, 'store'])->name('comments.likes.store');
-Route::post('/comments/{id}/unlike', [CommentLikeController::class, 'destroy'])->name('comments.unlikes.destroy'); 
+Route::post('/posts/{post}/comments/{comment}/like', [CommentLikeController::class, 'store'])->name('comments.likes.store');
+Route::post('/posts/{post}/comments/{comment}/unlike', [CommentLikeController::class, 'destroy'])->name('comments.likes.destroy'); 
 
 Route::controller(GroupController::class)->group(function () {
     Route::get('/groups/search', 'search')->name('groups.search'); // Search for groups

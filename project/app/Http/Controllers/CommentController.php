@@ -32,15 +32,17 @@ class CommentController extends Controller
     {
         $post = Post::findOrFail($id);
         // Validate the input
-        $validated = $request->validate(['content' => 'required|string|max:500',]);
-        
+        $validated = $request->validate([
+            'content' => 'required|string|max:500',
+            'previous_comment_id' => 'nullable|exists:comment,id',
+        ]);
         // Create a new comment
         $comment = new Comment($validated);
         $comment->content = $request->content;
         $comment->date = now();
         $comment->post_id = $id; 
         $comment->user_id = auth()->id(); 
-        $comment->previous_comment_id = NULL;
+        $comment->previous_comment_id = $request->previous_comment_id;
         
 
         $comment->save();

@@ -179,3 +179,32 @@ function addEventListeners() {
   
   addEventListeners();
   
+// Likes and Comments JS
+
+function submitLike(event) {
+    event.preventDefault();
+    const form = event.target.closest('form');
+    if (form) {
+        form.submit();
+    }
+}
+
+function focusCommentBox() {
+    const commentBox = document.getElementById('comment-box');
+    if (commentBox) {
+        commentBox.focus();
+        commentBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+}
+
+function setReplyToComment(commentId, username) {
+  const replyInput = document.getElementById('reply-to');
+  const commentBox = document.getElementById('comment-box');
+
+  if (replyInput && commentBox) {
+      replyInput.value = commentId; 
+      commentBox.placeholder = `Replying to comment from #${username}...`; 
+      commentBox.focus(); 
+      commentBox.scrollIntoView({ behavior: 'smooth', block: 'center' }); 
+  }
+}
