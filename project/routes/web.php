@@ -97,7 +97,7 @@ Route::get('admin/user/create', [AdminController::class, 'create'])->name('admin
 Route::get('admin/users', [AdminController::class, 'usersManage'])->name('admin.users.manage');
 Route::get('admin/user/edit/{id}', [AdminController::class, 'edit'])->name('admin.users.edit');
 Route::put('admin/user/edit/{id}', [AdminController::class, 'update'])->name('admin.users.update');
-Route::delete('admin/user/delete/{id}', [UserController::class, 'deleteUser'])->name('admin.users.delete');
+Route::put('admin/user/delete/{id}', [UserController::class, 'deleteUser'])->name('admin.users.delete');
 Route::get('admin/user/ban/{id}', [BanController::class, 'create'])->name('admin.users.banForm');
 Route::post('admin/user/ban/{id}', [BanController::class, 'store'])->name('admin.users.ban');
 Route::get('admin/bans', [BanController::class, 'showAll'])->name('admin.bans');

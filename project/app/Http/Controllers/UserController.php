@@ -215,9 +215,19 @@ class UserController extends Controller
      */
     public function deleteUser(string $id)
     {
-        // $user = User::findOrFail($id);
-        // $user->
+        $user = User::findOrFail($id);
+        $user->username = null;
+        $user->firstname = null;
+        $user->surname = null;
+        $user->password = null;
+        $user->email = null;
+        $user->bio_description = null;
+        $user->profile_picture = 'default.jpg';
+        $user->is_public = false;
+        $user->type = 'deleted';
+        $user->save();
 
+        return redirect()->route('admin.users.manage')->with('success', 'User deleted successfully.');
 
     }
 

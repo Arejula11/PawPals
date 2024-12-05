@@ -29,7 +29,11 @@
         </header>
         <div class="action-bento">
             <a href="{{ route('admin.users.edit', $user->id) }}" class="action-item edit">Edit</a>
-            <a href="{{ route('admin.users.delete', $user->id) }}" class="action-item delete">Delete</a>
+            <form action="{{ route('admin.users.delete', $user->id) }}" method="POST" class="action-item delete" style="display:inline;">
+                @csrf
+                @method('PUT')
+                <button type="submit" style="background:none; border:none; color:#007bff; text-decoration:underline; cursor:pointer;">Delete</button>
+            </form>
             @if(!$user->isBanned())
                 <a href="{{ route('admin.users.ban', $user->id) }}" class="action-item ban">Ban</a>
             @endif

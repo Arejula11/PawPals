@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
+
 
 class AdminController extends Controller
 {
@@ -100,7 +100,12 @@ class AdminController extends Controller
     {
         $user = auth()->user();
         $this->authorize('admin', $user);
-        $users = User::orderBy('username', 'asc')->simplePaginate(25);
+
+        // Filtrar usuarios donde el campo 'type' no sea 'delete'
+        $users = User::where('type', '!=', 'deleted')
+                    ->orderBy('username', 'asc')
+                    ->simplePaginate(25);
+
         return view('admin.usersManage', compact('users'));
     }
 
