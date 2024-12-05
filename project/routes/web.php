@@ -104,6 +104,8 @@ Route::get('admin/bans', [BanController::class, 'showAll'])->name('admin.bans');
 Route::get('admin/ban/{id}', [BanController::class, 'show'])->name('admin.bans.show');
 Route::get('admin/appeal/{id}', [AppealController::class, 'show'])->name('admin.appeal.show');
 Route::put('admin/appeal/{id}', [AppealController::class, 'update'])->name('admin.appeal.update');
+Route::get('admin/changePassword', [AdminController::class, 'changePassword'])->name('admin.changePassword');
+Route::put('admin/changePassword/{id}', [AdminController::class, 'updatePassword'])->name('admin.updatePassword');
 
 
 Route::post('/update-message', [MessageController::class, 'updateMessage']);

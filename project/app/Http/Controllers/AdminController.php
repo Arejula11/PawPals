@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class AdminController extends Controller
 {
@@ -121,4 +123,35 @@ class AdminController extends Controller
 
         return redirect()->route('admin.users.manage')->with('success', 'User banned successfully.');
     }
+
+    /**
+     * Show the page to change the password
+     */
+    public function changePassword()
+    {
+        Log::info('Showing change password page');
+        return view('admin.changePassword');
+    }
+
+    /**
+     * Change the passwrod after validating the old password
+     */
+    public function updatePassword(Request $request, string $id)
+    {
+        $validatedData = $request->validate([
+            'old' => 'required|string|min:8',
+            'new' => 'required|string|min:8',
+        ]);
+        $user = User::findOrFail($id);
+
+        if (Hash::check($validatedData['old'], $user->password)) {
+            $user->password = bcrypt($validatedData['new']);
+            $user->save();
+
+            return redirect()->route('admin.home')->with('success', 'Password changed successfully.');
+        }
+
+        return redirect()->route('admin.changePassword', $id)->with('error', 'Old password is incorrect.');
+    }
+
 }

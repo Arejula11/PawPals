@@ -43,7 +43,7 @@
                 <p>Create bans, remove bans and manage the appeals for the bans.</p>
             </div>
         </a>
-        <a href="{{ 6 }}" class="bento-option">
+        <a href="{{ route('admin.changePassword') }}" class="bento-option">
             <div class="bento-content">
                 <h3>Change password</h3>
                 <p>Change your password.</p>
