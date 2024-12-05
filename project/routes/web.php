@@ -106,6 +106,10 @@ Route::get('admin/appeal/{id}', [AppealController::class, 'show'])->name('admin.
 Route::put('admin/appeal/{id}', [AppealController::class, 'update'])->name('admin.appeal.update');
 Route::get('admin/changePassword', [AdminController::class, 'changePassword'])->name('admin.changePassword');
 Route::put('admin/changePassword/{id}', [AdminController::class, 'updatePassword'])->name('admin.updatePassword');
+Route::get('admin/groups', [AdminController::class, 'groupsManage'])->name('admin.groups.manage');
+Route::get('admin/groups/{id}', [AdminController::class, 'showGroup'])->name('admin.groups.show');
+Route::delete('admin/groups/{id}', [GroupController::class, 'destroy'])->name('admin.groups.delete');
+Route::get('admin/groups/edit/{id}', [GroupController::class, 'edit'])->name('admin.groups.edit');
 
 
 Route::post('/update-message', [MessageController::class, 'updateMessage']);

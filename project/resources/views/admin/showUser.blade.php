@@ -27,17 +27,24 @@
 
             </div>
         </header>
-        <div class="action-bento">
-            <a href="{{ route('admin.users.edit', $user->id) }}" class="action-item edit">Edit</a>
-            <form action="{{ route('admin.users.delete', $user->id) }}" method="POST" class="action-item delete" style="display:inline;">
-                @csrf
-                @method('PUT')
-                <button type="submit" style="background:none; border:none; color:#007bff; text-decoration:underline; cursor:pointer;">Delete</button>
-            </form>
-            @if(!$user->isBanned())
-                <a href="{{ route('admin.users.ban', $user->id) }}" class="action-item ban">Ban</a>
-            @endif
-        </div>
+            <div class="action-bento">
+
+                <a href="{{ route('admin.users.edit', $user->id) }}" class="action-item edit">EDIT</a>
+
+
+                <form action="{{ route('admin.users.delete', $user->id) }}" method="POST" style="margin: 0; padding: 0; display: inline;">
+                    @csrf
+                    @method('PUT')
+                    <div class="action-item deleted">
+                        <button type="submit">Delete</button>
+                    </div>
+                </form>
+
+                @if(!$user->isBanned())
+                    <a href="{{ route('admin.users.ban', $user->id) }}" class="action-item baned">BAN</a>
+                @endif
+            </div>
+
 
    
     </div>

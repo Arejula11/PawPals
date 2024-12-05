@@ -25,7 +25,7 @@
                 <p>Edit and delete users accounts.</p>
             </div>
         </a>
-        <a href="{{ 3 }}" class="bento-option">
+        <a href="{{ route('admin.groups.manage') }}" class="bento-option">
             <div class="bento-content">
                 <h3>Manage Groups</h3>
                 <p>Edit and delete user groups.</p>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Group;
 use Illuminate\Support\Facades\Hash;
 
 
@@ -110,12 +111,35 @@ class AdminController extends Controller
     }
 
     /**
+     * Manage groups.
+     */
+    public function groupsManage()
+    {
+        $user = auth()->user();
+        $this->authorize('admin', $user);
+
+        $groups = Group::orderBy('name', 'asc')->simplePaginate(10);
+
+        return view('admin.groupsManage', compact('groups'));
+    }
+
+
+    /**
      * Show user details.
      */
     public function showUser(string $id)
     {
         $user = User::findOrFail($id);
         return view('admin.showUser', compact('user'));
+    }
+
+    /**
+     * Show group details
+     */
+    public function showGroup(string $id)
+    {
+        $group = Group::findOrFail($id);
+        return view('admin.showGroup', compact('group'));
     }
 
 
