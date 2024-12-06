@@ -1,9 +1,9 @@
 <h3></h3>
 <p>
-Hi Stranger,<br>
+Hi {{ $mailData['name'] }},<br>
 <br>
 Here is your new password:<br>
-xxx<br>
+{{ $mailData['new_password'] }}<br>
 <br>
 Have fun using PetPawls!<br>
 Your PetPawls Team<br>

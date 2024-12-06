@@ -14,11 +14,10 @@ class HomeController extends Controller
     {
         $allPostImages = [];
 
-    // Assuming User is your model for users
-    $users = User::all(); // Fetch all users from the database
+    $users = User::all();
 
     foreach ($users as $user) {
-        // Fetch the posts for each user
+
         $userPostImages = FileController::getAllPostUserImages($user->id);
         $allPostImages = array_merge($allPostImages, $userPostImages);
     }

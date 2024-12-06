@@ -10,7 +10,7 @@ use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailables\Address;
 
-class MailModel extends Mailable
+class PasswordMailModel extends Mailable
 {
 
     // Necessary to pass data from the controller.
@@ -37,7 +37,7 @@ class MailModel extends Mailable
     {
         return new Envelope(
             from: new Address(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME')),
-            subject: 'LBAW Tutorial 01 - Send Email',
+            subject: 'Your new PetPawls password',
         );
     }
     

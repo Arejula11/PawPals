@@ -20,11 +20,12 @@
                 </span>
             @endif
             <button type="submit">Send new Password</button>
-            @if (session('success'))
-                <p class="success">
-                    {{ session('success') }}
+            @if (session('error'))
+                <p class="error">
+                    {{ session('error') }}
                 </p>
             @endif
+            
         </form>
     </div>
 </div>
