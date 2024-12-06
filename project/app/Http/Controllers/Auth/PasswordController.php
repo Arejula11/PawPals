@@ -23,7 +23,7 @@ class PasswordController extends Controller
     public function index() {
         
         return view('auth.password');
-    
+        
     }
 
     function send(Request $request) {
@@ -47,7 +47,7 @@ class PasswordController extends Controller
         }
 
         $user = User::where('email', $request->email)->first();
-        Log::debug('Email:', ['email' => $request->email]);
+        #Log::debug('Email:', ['email' => $request->email]);
         #Log::debug('Username: ', ['username' => $user->firstname]);
 
         if (!$user) {
@@ -68,11 +68,11 @@ class PasswordController extends Controller
                 Mail::to($request->email)->send(new PasswordMailModel($mailData));
                 $status = 'Success!';
                 $message = 'An email has been sent to ' . $request->email;
-                Log::info('Email successfully sent!');
+                #Log::info('Email successfully sent!');
             } catch (TransportException $e) {
                 $status = 'Error!';
                 $message = 'SMTP connection error occurred during the email sending process to ' . $request->email;
-                Log::info('Transportexception!');
+                #Log::info('Transportexception!');
             } 
 
         } else {
@@ -80,13 +80,9 @@ class PasswordController extends Controller
             $message = 'The SMTP server cannot be reached due to missing environment variables:';
         }
 
-        
-        Log::info('out of the if loop');
-
         $request->session()->flash('status', $status);
         $request->session()->flash('message', $message);
         $request->session()->flash('details', $missingVariables);
-        # return redirect('login'); # ->route('login');
 
         if ($status='Success') {
             return redirect()->route('login')
