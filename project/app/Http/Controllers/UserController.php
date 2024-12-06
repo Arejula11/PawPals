@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -156,7 +157,6 @@ class UserController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'surname' => 'required|string|max:255',
-            'password' => 'nullable|string|min:8|confirmed',
             'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'bio_description' => 'nullable|string|max:1000',
             'public' => 'required|boolean',
@@ -169,10 +169,6 @@ class UserController extends Controller
         // Update the user's attributes
         $user->firstname = $validatedData['name'];
         $user->surname = $validatedData['surname'];
-
-        if ($request->filled('password')) {
-            $user->password = bcrypt($validatedData['password']);
-        }
 
         // Handle profile picture upload
         if ($request->hasFile('profile_picture')) {
@@ -216,4 +212,64 @@ class UserController extends Controller
         $users = User::all();
         return view('users.admin', compact('users'));
     }
+
+
+    /**
+     * Show the settings page.
+     */
+    public function settings()
+    {
+        $user = auth()->user();
+        return view('settings.show', compact('user'));
+    }
+
+    /**
+     * Change the password.
+     */
+    public function updatePassword(Request $request, string $id)
+    {
+        $validatedData = $request->validate([
+            'old' => 'required|string|min:8',
+            'new' => 'required|string|min:8',
+        ]);
+        $user = User::findOrFail($id);
+
+        if (Hash::check($validatedData['old'], $user->password)) {
+            $user->password = bcrypt($validatedData['new']);
+            $user->save();
+
+            return redirect()->route('home')->with('success', 'Password changed successfully.');
+        }
+
+        return redirect()->route('settings.show', $id)->with('error', 'Old password is incorrect.');
+    }
+
+    /**
+     * Delete a user making it a anonymous user
+     */
+    public function deleteUser(string $id)
+    {
+        $user = User::findOrFail($id);
+        $user->username = null;
+        $user->firstname = null;
+        $user->surname = null;
+        $user->password = null;
+        $user->email = null;
+        $user->bio_description = null;
+        $user->profile_picture = 'default.jpg';
+        $user->is_public = false;
+        $user->type = 'deleted';
+        $user->save();
+        
+        if (auth()->user()->admin) {
+            return redirect()->route('admin.home')->with('success', 'Profile updated successfully.');
+        }else{
+            return redirect()->route('/logout', $id)->with('success', 'Profile updated successfully.');
+        }
+
+;
+
+    }
+
+
 }

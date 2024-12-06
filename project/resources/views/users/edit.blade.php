@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('head')
-    <!-- Include only the CSS for this view -->
+
     <link href="{{ asset('css/editProfile.css') }}" rel="stylesheet">
 @endsection
 
@@ -17,11 +17,6 @@
         <div class="form-group">
             <label for="surname">Surname</label>
             <input type="text" class="form-control" id="surname" name="surname" value="{{ $user->surname }}" required>
-        </div>
-
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" class="form-control" id="password" name="password">
         </div>
 
         <div class="form-group">
