@@ -159,7 +159,6 @@ class UserController extends Controller
             'surname' => 'required|string|max:255',
             'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'bio_description' => 'nullable|string|max:1000',
-            'public' => 'required|boolean',
             'type' => 'required|string|in:pet owner,admin,veterinarian,adoption organization,rescue organization',
         ]);
 
@@ -181,7 +180,6 @@ class UserController extends Controller
         }
 
         $user->bio_description = $validatedData['bio_description'] ?? $user->bio_description;
-        $user->is_public = $validatedData['public'];
         $user->type = $validatedData['type'];
 
         // Save changes
@@ -266,9 +264,22 @@ class UserController extends Controller
         }else{
             return redirect()->route('/logout', $id)->with('success', 'Profile updated successfully.');
         }
+    }
 
-;
+    /**
+     * Change the privacity of the user
+     */
+    public function privacity(Request $request, string $id)   
+    {
+        $user = User::findOrFail($id);
 
+        $validatedData = $request->validate([
+            'public' => 'required|boolean',
+        ]);
+        $user->is_public = $validatedData['public'];
+        $user->save();
+
+        return redirect()->route('settings.show', $id)->with('success', 'Privacity changed successfully.');
     }
 
 

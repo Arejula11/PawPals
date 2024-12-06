@@ -104,3 +104,4 @@ Route::post('follow/reject/{user1_id}/{user2_id}', [UserController::class, 'reje
 Route::get('/settings', [UserController::class, 'settings'])->name('settings.show');
 Route::put('/settings/changePassword/{id}', [UserController::class, 'updatePassword'])->name('user.updatePassword');
 Route::put('/settings/user/delete/{id}', [UserController::class, 'deleteUser'])->name('settings.users.delete');
+Route::put('/settings/user/public/{id}', [UserController::class, 'privacity'])->name('settings.users.public');

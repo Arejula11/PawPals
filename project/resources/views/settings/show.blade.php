@@ -29,6 +29,20 @@
                 </form>
             </div>
 
+            <!-- Change privacity -->
+            <div class="bento-item">
+                <h2>Change Profile Privacy</h2>
+                <form action="{{ route('settings.users.public', ['id' => Auth::user()->id ]) }}" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <select class="form-control" id="public" name="public">
+                        <option value="1" {{ $user->is_public ? 'selected' : '' }}>Yes</option>
+                        <option value="0" {{ !$user->is_public ? 'selected' : '' }}>No</option>
+                    </select>
+                    <button type="submit" class="btn btn-primary">Change</button>
+                </div>
+            </div>
+
             <!-- Delete Account Section -->
             <div class="bento-item">
                 <h2>Delete Account</h2>
@@ -38,6 +52,7 @@
                     <button type="submit" class="btn btn-danger">Delete</button>
                 </form>
             </div>
+            
         </div>
     </div>
 @endsection
