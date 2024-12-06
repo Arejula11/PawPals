@@ -63,7 +63,7 @@ class GroupController extends Controller
         ]);
 
         // Return the message data as a JSON response
-        return view('groups.messages', compact('group'));
+        return redirect()->route('groups.messages', $group->id)->with('success', 'Message sent.');
     }
 
 
