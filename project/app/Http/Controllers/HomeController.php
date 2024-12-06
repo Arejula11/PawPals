@@ -13,6 +13,7 @@ class HomeController extends Controller
     public function index()
     {
         $allPostImages = [];
+        $pendingRequestsCount = 0;
 
     // Assuming User is your model for users
     $users = User::all(); // Fetch all users from the database
@@ -23,7 +24,21 @@ class HomeController extends Controller
         $allPostImages = array_merge($allPostImages, $userPostImages);
     }
 
-    return view('pages.home', ['postImages' => $allPostImages]);
+    // Fetch pending requests for the logged-in user
+    $loggedInUser = auth()->user();
+    if ($loggedInUser) {
+        $pendingRequestsCount = \App\Models\Follow::where('user2_id', $loggedInUser->id)
+            ->where('request_status', 'pending')
+            ->count();
+    }
+    if ($loggedInUser) {
+        $pendingRequests = \App\Models\Follow::with('follower')
+                                            ->where('user2_id', $loggedInUser->id)
+                                            ->where('request_status', 'pending')
+                                            ->get();
+    }
+
+    return view('pages.home', ['postImages' => $allPostImages,'pendingRequestsCount' => $pendingRequestsCount,'pendingRequests'=>$pendingRequests]);
 
     }
 

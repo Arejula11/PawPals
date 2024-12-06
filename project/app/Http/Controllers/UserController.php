@@ -102,7 +102,8 @@ class UserController extends Controller
                                             ->where('request_status', 'pending')
                                             ->get();
 
-        return view('requests.show', compact('pendingRequests','user'));
+        $pendingRequestsCount = $pendingRequests->count();
+        return view('requests.show', compact('pendingRequests','pendingRequestsCount','user'));
     }
 
     public function accept($user1_id, $user2_id)
@@ -116,10 +117,10 @@ class UserController extends Controller
             $request->request_status = 'accepted';
             $request->save();
 
-            return redirect()->route('requests.show')->with('success', 'Follow request accepted.');
+            return redirect()->route('home')->with('success', 'Request accepted.');
         }
 
-        return redirect()->route('requests.show')->with('error', 'Follow request not found.');
+        return redirect()->route('home')->with('error', 'Request not found.');
     }
 
     public function reject($user1_id, $user2_id)
@@ -129,10 +130,10 @@ class UserController extends Controller
                                     ->delete();
     
         if ($deleted) {
-            return redirect()->route('requests.show')->with('success', 'Follow request rejected.');
+            return redirect()->route('home')->with('success', 'Request rejected.');
         }
     
-        return redirect()->route('requests.show')->with('error', 'Follow request not found.');
+        return redirect()->route('home')->with('error', 'Request not found.');
     }
 
     /**
