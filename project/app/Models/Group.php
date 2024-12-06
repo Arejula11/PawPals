@@ -17,18 +17,9 @@ class Group extends Model
         'name',
         'description',
         'is_public',
-        'img_id',
         'owner_id',
     ];
-
-    /**
-     * Get the picture for the group.
-     */
-    public function picture()
-    {
-        return $this->belongsTo(Picture::class, 'img_id');
-    }
-
+    
     /**
      * Get the owner of the group.
      */
