@@ -71,7 +71,7 @@
                             <li><a href="#">Notifications</a></li>
                             <li><a href="{{ route('posts.create') }}">Create Post</a></li>
                             <li><a href="{{ route('groups.index') }}">Groups</a></li>
-                            <li><a href="#">Settings</a></li>
+                            <li><a href="{{ route('settings.show') }}">Settings</a></li>
                             @endif
                         </ul>
                     </nav>

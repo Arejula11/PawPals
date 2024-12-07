@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('head')
-    <!-- Include only the CSS for this view -->
+
     <link href="{{ asset('css/viewProfile.css') }}" rel="stylesheet">
 @endsection
 
