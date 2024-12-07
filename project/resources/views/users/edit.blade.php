@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('head')
-    <!-- Include only the CSS for this view -->
+
     <link href="{{ asset('css/editProfile.css') }}" rel="stylesheet">
 @endsection
 
@@ -20,11 +20,6 @@
         </div>
 
         <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" class="form-control" id="password" name="password">
-        </div>
-
-        <div class="form-group">
             <label for="profile_picture">Profile Picture</label>
             <input type="file" class="form-control-file" id="profile_picture" name="profile_picture">
         </div>
@@ -34,13 +29,8 @@
             <textarea class="form-control" id="bio" name="bio_description" rows="3">{{ $user->bio_description }}</textarea>
         </div>
 
-        <div class="form-group">
-            <label for="public">Public Profile</label>
-            <select class="form-control" id="public" name="public">
-                <option value="1" {{ $user->is_public ? 'selected' : '' }}>Yes</option>
-                <option value="0" {{ !$user->is_public ? 'selected' : '' }}>No</option>
-            </select>
-        </div>
+        
+        
 
         <div class="form-group">
             <label for="type">Type</label>

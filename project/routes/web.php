@@ -14,6 +14,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\FollowController;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -102,3 +103,9 @@ Route::post('/follow', [UserController::class, 'follow'])->name('follow.send');
 Route::get('/requests', [UserController::class, 'checkRequests'])->name('requests.show');
 Route::post('follow/accept/{user1_id}/{user2_id}', [UserController::class, 'accept'])->name('follow.accept');
 Route::post('follow/reject/{user1_id}/{user2_id}', [UserController::class, 'reject'])->name('follow.reject');
+
+
+Route::get('/settings', [UserController::class, 'settings'])->name('settings.show');
+Route::put('/settings/changePassword/{id}', [UserController::class, 'updatePassword'])->name('user.updatePassword');
+Route::put('/settings/user/delete/{id}', [UserController::class, 'deleteUser'])->name('settings.users.delete');
+Route::put('/settings/user/public/{id}', [UserController::class, 'privacity'])->name('settings.users.public');
