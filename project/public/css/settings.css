@@ -1,0 +1,110 @@
+h1 {
+    font-size: 30px;
+    font-weight:normal;
+    color: #9b4dca;
+    text-align: center;
+}
+
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.settings-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.settings-container h1 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #333;
+}
+
+/* Bento Layout */
+.bento {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.bento-item {
+    flex: 1 1 calc(50% - 10px); /* Adjust width for responsive layout */
+    background: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.bento-item:hover {
+    /* transform: translateY(-5px); */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.bento-item h2 {
+    margin-bottom: 1.5rem;
+    color: #9b4dca;
+}
+
+.bento-item form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.form-group {
+    text-align: left;
+}
+
+.form-group label {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    display: block;
+    color: #333;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+button.btn {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+    font-size: 1rem;
+}
+
+button.btn-primary {
+    background-color: #9b4dca;
+    transition: background-color 0.2s;
+}
+
+button.btn-primary:hover {
+    background-color: #9b4dca;
+}
+
+button.btn-danger {
+    background-color: #f44336;
+    transition: background-color 0.2s;
+}
+
+button.btn-danger:hover {
+    background-color: #e41f1f;
+}

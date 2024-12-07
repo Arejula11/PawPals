@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\GroupController;
@@ -15,6 +16,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\FollowController;
 use App\Http\Controllers\BanController;
 use App\Http\Controllers\AppealController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -39,11 +41,14 @@ Route::controller(LoginController::class)->group(function () {
     Route::post('/login', 'authenticate');
     Route::get('/logout', 'logout')->name('logout');
 });
-
 Route::controller(RegisterController::class)->group(function () {
     Route::get('/register', 'showRegistrationForm')->name('register');
     Route::post('/register', 'register');
     Route::post('/admin/register', 'registerAdmin')->name('admin.register');
+});
+Route::controller(PasswordController::class)->group(function() {
+    Route::get('/password-reset', 'index')->name('password');
+    Route::post('/password-reset/send', 'send')->name('password.send');
 });
 
 // Search Page
@@ -118,3 +123,9 @@ Route::post('/follow', [UserController::class, 'follow'])->name('follow.send');
 Route::get('/requests', [UserController::class, 'checkRequests'])->name('requests.show');
 Route::post('follow/accept/{user1_id}/{user2_id}', [UserController::class, 'accept'])->name('follow.accept');
 Route::post('follow/reject/{user1_id}/{user2_id}', [UserController::class, 'reject'])->name('follow.reject');
+
+
+Route::get('/settings', [UserController::class, 'settings'])->name('settings.show');
+Route::put('/settings/changePassword/{id}', [UserController::class, 'updatePassword'])->name('user.updatePassword');
+Route::put('/settings/user/delete/{id}', [UserController::class, 'deleteUser'])->name('settings.users.delete');
+Route::put('/settings/user/public/{id}', [UserController::class, 'privacity'])->name('settings.users.public');
