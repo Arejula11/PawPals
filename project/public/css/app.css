@@ -1075,18 +1075,105 @@ h1 {
 }
 
 .follow-container {
-  display: none; /* Hidden by default */
+  display: none;
   position: absolute;
-  width: 250px;
-  height: 400px;
+  width: 300px;
+  max-height: 400px;
   top: 70px;
   right: 50px;
-  background-color: white;
-  border: 1px solid #ddd;
-  padding: 5px;
-  z-index: 1000; /* Ensure it appears above other elements */
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  overflow: hidden; /* Evitar overflow no container principal */
 }
+
 .follow-container.active {
   display: block;
 }
+
+.follow-container h1 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin: 0; /* Remover margens externas */
+  text-align: center;
+  padding: 10px;
+  background-color: #fff; /* Fundo fixo do cabeçalho */
+  border-bottom: 1px solid #ddd;
+  position: sticky; /* Tornar o cabeçalho fixo */
+  top: 0;
+  z-index: 1; /* Garantir que fique sobre os itens roláveis */
+}
+
+.follow-container .scrollable-content {
+  max-height: 340px; /* Altura ajustada para conter o título */
+  overflow-y: auto; /* Ativar rolagem somente para o conteúdo */
+  padding: 10px 0; /* Espaçamento interno para os itens */
+}
+
+.request-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  margin: 0 10px 10px 10px; /* Margem lateral para alinhar com o conteúdo */
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.profile-picture-request {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+
+.request-item:hover {
+  transform: scale(1.02);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.request-phrase {
+  font-size: 14px;
+  color: #555;
+  margin-right: 10px;
+  flex-grow: 1;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+form {
+  margin: 0;
+}
+
+.request-accept,
+.request-decline {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 50%;
+  transition: background-color 0.3s;
+}
+
+.request-accept:hover {
+  background-color: #d4edda;
+}
+
+.request-decline:hover {
+  background-color: #f8d7da;
+}
+
+.request-accept img,
+.request-decline img {
+  width: 20px;
+  height: 20px;
+}
+

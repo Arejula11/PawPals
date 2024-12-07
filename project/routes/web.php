@@ -79,11 +79,6 @@ Route::get('/user/{id}', [UserController::class, 'show'])->name('users.show');
 Route::get('/user/edit/{id}', [UserController::class, 'edit'])->name('users.edit');
 Route::put('/user/edit/{id}', [UserController::class, 'update'])->name('users.update');
 
-// Users profile
-Route::get('/user/{id}', [UserController::class, 'show'])->name('users.show');
-Route::get('/user/edit/{id}', [UserController::class, 'edit'])->name('users.edit');
-Route::put('/user/edit/{id}', [UserController::class, 'update'])->name('users.update');
-
 //Route::post('/file/upload', [FileController::class, 'upload']);
 
 

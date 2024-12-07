@@ -108,14 +108,16 @@ class UserController extends Controller
 
     public function accept($user1_id, $user2_id)
     {
-        // Find the follow request using both user1_id and user2_id
         $request = \App\Models\Follow::where('user1_id', $user1_id)
                                     ->where('user2_id', $user2_id)
-                                    ->first();
+                                    ->delete();
 
         if ($request) {
-            $request->request_status = 'accepted';
-            $request->save();
+            \App\Models\Follow::create([
+                'user1_id' => $user1_id,
+                'user2_id' => $user2_id,
+                'request_status' => 'accepted',
+            ]);
 
             return redirect()->route('home')->with('success', 'Request accepted.');
         }
