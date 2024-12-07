@@ -39,7 +39,7 @@
                         <option value="1" {{ $user->is_public ? 'selected' : '' }}>Yes</option>
                         <option value="0" {{ !$user->is_public ? 'selected' : '' }}>No</option>
                     </select>
-                    <button type="submit" class="btn btn-primary">Change</button>
+                    <button type="submit" class="btn btn-primary" style="margin-top: 78px;">Change</button>
                 </div>
             </div>
 
