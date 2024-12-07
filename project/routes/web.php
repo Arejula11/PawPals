@@ -12,7 +12,10 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\FollowController;
+use App\Http\Controllers\BanController;
+use App\Http\Controllers\AppealController;
 
 
 /*
@@ -41,6 +44,7 @@ Route::controller(LoginController::class)->group(function () {
 Route::controller(RegisterController::class)->group(function () {
     Route::get('/register', 'showRegistrationForm')->name('register');
     Route::post('/register', 'register');
+    Route::post('/admin/register', 'registerAdmin')->name('admin.register');
 });
 Route::controller(PasswordController::class)->group(function() {
     Route::get('/password-reset', 'index')->name('password');
@@ -87,10 +91,26 @@ Route::put('/user/edit/{id}', [UserController::class, 'update'])->name('users.up
 //Route::post('/file/upload', [FileController::class, 'upload']);
 
 
-Route::get('admin/user/{id}', [UserController::class, 'show'])->name('admin.users.show');
-Route::get('admin/', [UserController::class, 'admin'])->name('users.admin');
-Route::get('admin/user/edit/{id}', [UserController::class, 'edit'])->name('admin.users.edit');
-Route::put('admin/user/edit/{id}', [UserController::class, 'update'])->name('admin.users.update');
+Route::get('admin/users/{id}', [AdminController::class, 'showUser'])->name('admin.users.show');
+Route::get('admin/', [AdminController::class, 'home'])->name('admin.home');
+Route::get('admin/user/create', [AdminController::class, 'create'])->name('admin.users.create');
+Route::get('admin/users', [AdminController::class, 'usersManage'])->name('admin.users.manage');
+Route::get('admin/user/edit/{id}', [AdminController::class, 'edit'])->name('admin.users.edit');
+Route::put('admin/user/edit/{id}', [AdminController::class, 'update'])->name('admin.users.update');
+Route::put('admin/user/delete/{id}', [UserController::class, 'deleteUser'])->name('admin.users.delete');
+Route::get('admin/user/ban/{id}', [BanController::class, 'create'])->name('admin.users.banForm');
+Route::post('admin/user/ban/{id}', [BanController::class, 'store'])->name('admin.users.ban');
+Route::get('admin/bans', [BanController::class, 'showAll'])->name('admin.bans');
+Route::get('admin/ban/{id}', [BanController::class, 'show'])->name('admin.bans.show');
+Route::get('admin/appeal/{id}', [AppealController::class, 'show'])->name('admin.appeal.show');
+Route::put('admin/appeal/{id}', [AppealController::class, 'update'])->name('admin.appeal.update');
+Route::get('admin/changePassword', [AdminController::class, 'changePassword'])->name('admin.changePassword');
+Route::put('admin/changePassword/{id}', [AdminController::class, 'updatePassword'])->name('admin.updatePassword');
+Route::get('admin/groups', [AdminController::class, 'groupsManage'])->name('admin.groups.manage');
+Route::get('admin/groups/{id}', [AdminController::class, 'showGroup'])->name('admin.groups.show');
+Route::delete('admin/groups/{id}', [GroupController::class, 'destroy'])->name('admin.groups.delete');
+Route::get('admin/groups/edit/{id}', [GroupController::class, 'edit'])->name('admin.groups.edit');
+
 
 Route::post('/update-message', [MessageController::class, 'updateMessage']);
 

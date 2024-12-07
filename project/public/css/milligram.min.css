@@ -472,10 +472,10 @@ a {
 	text-decoration: none
 }
 
-a:focus,
+/* a:focus,
 a:hover {
 	color: #606c76
-}
+} */
 
 dl,
 ol,

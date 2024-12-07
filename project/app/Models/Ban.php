@@ -35,4 +35,12 @@ class Ban extends Model
     {
         return $this->hasOne(Appeal::class, 'ban_id');
     }
+
+    /** 
+     * Get all the appeals for the ban
+    */
+    public function appeals()
+    {
+        return $this->hasMany(Appeal::class, 'ban_id');
+    }
 }

@@ -147,7 +147,6 @@ class UserController extends Controller
         $user = User::findOrFail($id);
 
         $this->authorize('update', $user);
-
         return view('users.edit', compact('user'));
     }
 
@@ -188,8 +187,13 @@ class UserController extends Controller
         // Save changes
         $user->save();
 
-        // Redirect back with a success message
-        return redirect()->route('users.show', $id)->with('success', 'Profile updated successfully.');
+        // Redirect back with a success message, if its an admin redirect to the admin's home else redirect to the user's profile
+        if (auth()->user()->admin) {
+            return redirect()->route('admin.home')->with('success', 'Profile updated successfully.');
+        }else{
+            return redirect()->route('users.show', $id)->with('success', 'Profile updated successfully.');
+        }
+
     }
 
     /**
@@ -204,15 +208,27 @@ class UserController extends Controller
     }
 
     /**
-     * Show the admin dashboard.
+     * Delete a user making it a anonymous user
      */
-    public function admin()
+    public function deleteUser(string $id)
     {
-        $user = auth()->user();
-        $this->authorize('admin', $user);
-        $users = User::all();
-        return view('users.admin', compact('users'));
+        $user = User::findOrFail($id);
+        $user->username = null;
+        $user->firstname = null;
+        $user->surname = null;
+        $user->password = null;
+        $user->email = null;
+        $user->bio_description = null;
+        $user->profile_picture = 'default.jpg';
+        $user->is_public = false;
+        $user->type = 'deleted';
+        $user->save();
+
+        return redirect()->route('admin.users.manage')->with('success', 'User deleted successfully.');
+
     }
+
+    
 
 
     /**

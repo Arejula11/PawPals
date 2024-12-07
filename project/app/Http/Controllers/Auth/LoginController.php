@@ -19,6 +19,9 @@ class LoginController extends Controller
     public function showLoginForm()
     {
         if (Auth::check()) {
+            if (Auth::user()->admin == 'true') {
+                return redirect('/admin');
+            }
             return redirect('/home');
         } else {
             return view('auth.login');
@@ -37,7 +40,9 @@ class LoginController extends Controller
  
         if (Auth::attempt($credentials, $request->filled('remember'))) {
             $request->session()->regenerate();
- 
+            if (Auth::user()->admin == 'true') {
+                return redirect('/admin');
+            }
             return redirect()->intended('/home');
         }
  

@@ -105,12 +105,15 @@ class GroupController extends Controller
     {
         $group = Group::findOrFail($id);
 
-        // Ensure only the owner can edit
-        if (auth()->id() !== $group->owner_id) {
-            abort(403, 'Unauthorized action.');
+        if(auth()->user()->admin){
+            return view('admin.groupsEdit', compact('group'));
+        }else{
+            // Ensure only the owner can edit
+            if (auth()->id() !== $group->owner_id ) {
+                abort(403, 'Unauthorized action.');
+            }
+            return view('groups.edit', compact('group'));
         }
-
-        return view('groups.edit', compact('group'));
     }
 
 
@@ -121,16 +124,27 @@ class GroupController extends Controller
     {
         $group = Group::findOrFail($id);
 
-        if (auth()->id() !== $group->owner_id) {
-            abort(403, 'Unauthorized action.');
-        }
-
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string',
         ]);
 
-        $group->update($validated);
+        if(auth()->user()->admin){
+            $group->update($validated);
+            return redirect()->route('admin.home')->with('success', 'Group deleted successfully.');
+        }else{
+            if (auth()->id() !== $group->owner_id) {
+                abort(403, 'Unauthorized action.');
+            }
+            $group->update($validated);
+            return redirect()->route('groups.show', $id)->with('success', 'Group updated successfully.');
+
+        }
+
+        
+
+
+
 
         return redirect()->route('groups.show', $id)->with('success', 'Group updated successfully.');
     }
@@ -141,6 +155,17 @@ class GroupController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $group = Group::findOrFail($id);
+        if (auth()->user()->admin) {
+            $group->delete();
+            return redirect()->route('admin.home')->with('success', 'Group deleted successfully.');
+        }else {
+            if (auth()->id() !== $group->owner_id) {
+                abort(403, 'Unauthorized action.');
+            }
+            return redirect()->route('groups.index')->with('success', 'Group deleted successfully.');
+        }
+
+        
     }
 }
