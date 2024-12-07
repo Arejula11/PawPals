@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
+use Illuminate\Support\Facades\Log;
 
 
 class UserPolicy
@@ -63,7 +64,14 @@ class UserPolicy
      */
     public function banned(User $user): bool
     {
-        return !($user->isBanned());
+        if ($user->isBanned()) {
+            Log::info('User is banned');
+            throw new \App\Exceptions\PolicyAuthorizationException('UserPolicy', 'update', 'You are banned.');
+        }
+
+        return true;
+
+
     }
 
 }
