@@ -15,7 +15,6 @@ class HomeController extends Controller
         $allPostImages = [];
         $pendingRequestsCount = 0;
         $pendingRequests = [];
-
     
         $users = User::all();
 
@@ -26,22 +25,20 @@ class HomeController extends Controller
             if (count($allPostImages) >= 10) {
                 break;
             }
-            
+
+            // Fetch pending requests for the logged-in user
+            $loggedInUser = auth()->user();
+            if ($loggedInUser) {
+                $pendingRequests = \App\Models\Follow::with('follower')
+                    ->where('user2_id', $loggedInUser->id)
+                    ->where('request_status', 'pending')
+                    ->get();
+
+                $pendingRequestsCount = $pendingRequests->count();
+            }
+
+            return view('pages.home', ['postImages' => $allPostImages,'pendingRequestsCount' => $pendingRequestsCount,'pendingRequests'=>$pendingRequests]);
         }
-
-        // Fetch pending requests for the logged-in user
-        $loggedInUser = auth()->user();
-        if ($loggedInUser) {
-            $pendingRequests = \App\Models\Follow::with('follower')
-                ->where('user2_id', $loggedInUser->id)
-                ->where('request_status', 'pending')
-                ->get();
-
-            $pendingRequestsCount = $pendingRequests->count();
-        }
-
-        return view('pages.home', ['postImages' => $allPostImages,'pendingRequestsCount' => $pendingRequestsCount,'pendingRequests'=>$pendingRequests]);
 
     }
-
 }

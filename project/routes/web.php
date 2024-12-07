@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\GroupController;
@@ -36,10 +37,13 @@ Route::controller(LoginController::class)->group(function () {
     Route::post('/login', 'authenticate');
     Route::get('/logout', 'logout')->name('logout');
 });
-
 Route::controller(RegisterController::class)->group(function () {
     Route::get('/register', 'showRegistrationForm')->name('register');
     Route::post('/register', 'register');
+});
+Route::controller(PasswordController::class)->group(function() {
+    Route::get('/password-reset', 'index')->name('password');
+    Route::post('/password-reset/send', 'send')->name('password.send');
 });
 
 // Search Page
