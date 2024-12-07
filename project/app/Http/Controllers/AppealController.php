@@ -20,7 +20,7 @@ class AppealController extends Controller
      */
     public function create()
     {
-        
+        return view('appeal.create');
     }
 
     /**
