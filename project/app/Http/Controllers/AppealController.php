@@ -28,7 +28,19 @@ class AppealController extends Controller
      */
     public function store(Request $request)
     {
-        
+        $request->validate([
+            'reason' => 'required',
+        ]);
+
+        $appeal = new Appeal();
+        $appeal->reason = $request->reason;
+        $appeal->date = date('Y-m-d H:i:s');
+        $appeal->status = false;
+        $appeal->ban_id = $request->ban_id;
+        $appeal->save();
+
+        auth()->logout();
+        return redirect()->route('login')->with('success', 'Appeal sent successfully.');
     }
 
     /**

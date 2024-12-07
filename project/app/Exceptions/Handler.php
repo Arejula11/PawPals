@@ -27,4 +27,16 @@ class Handler extends ExceptionHandler
             //
         });
     }
+
+    // App\Exceptions\Handler.php
+    public function render($request, Throwable $exception)
+    {
+        if ($exception instanceof \Illuminate\Auth\Access\AuthorizationException) {
+
+            return redirect()->route('banned.show')->with('error', $exception->getMessage());
+        }
+
+        return parent::render($request, $exception);
+    }
+
 }

@@ -124,3 +124,11 @@ Route::get('/settings', [UserController::class, 'settings'])->name('settings.sho
 Route::put('/settings/changePassword/{id}', [UserController::class, 'updatePassword'])->name('user.updatePassword');
 Route::put('/settings/user/delete/{id}', [UserController::class, 'deleteUser'])->name('settings.users.delete');
 Route::put('/settings/user/public/{id}', [UserController::class, 'privacity'])->name('settings.users.public');
+
+
+Route::get('/appeal', [AppealController::class, 'create'])->name('appeal.create');
+Route::post('/appeal', [AppealController::class, 'store'])->name('appeal.store');
+
+Route::get('/banned', function () {
+    return view('banned.show');
+})->name('banned.show');

@@ -12,6 +12,9 @@ class HomeController extends Controller
      */
     public function index()
     {
+        
+        $this->authorize('banned', User::class);
+
         $allPostImages = [];
         $pendingRequestsCount = 0;
         $pendingRequests = [];

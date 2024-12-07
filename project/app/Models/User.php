@@ -219,4 +219,12 @@ class User extends Authenticatable
         return $this->bans()->where('active', true)->exists();
     
     }
+
+    /**
+     * Return the id of the active ban.
+     */
+    public function getActiveBanId(): Ban
+    {
+        return $this->bans()->where('active', true)->first();
+    }
 }

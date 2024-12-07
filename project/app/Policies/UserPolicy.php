@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
+
 class UserPolicy
 {
     /**
@@ -55,6 +56,14 @@ class UserPolicy
     {
         return $user->admin;
         // return true;
+    }
+
+    /**
+     * Banned
+     */
+    public function banned(User $user): bool
+    {
+        return !($user->isBanned());
     }
 
 }
