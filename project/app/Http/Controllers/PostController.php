@@ -69,7 +69,12 @@ class PostController extends Controller
     public function show(string $id)
     {
         $post = Post::with('user')->findOrFail($id);
+        $user = auth()->user();
 
+        if (!$post->is_public && (!$user || (!$user->follows->contains($post->user_id) && $user->id !== $post->user_id))) {
+            abort(403, 'You do not have permission to view this post.');
+        }
+    
         return view('pages.post.show', compact('post'));
     }
 
@@ -78,9 +83,12 @@ class PostController extends Controller
      */
     public function edit(string $id)
     {
-        //**** VALIDATION REQUIRED
         $post = Post::findOrFail($id);
-        // Return the edit view with the post
+        $user = auth()->user();
+
+        if($user->id !== $post->user_id || !$user) {
+            abort(403, 'You do not have permission to edit this post.');
+        }
         return view('pages.post.edit', compact('post'));
     }
 
@@ -91,25 +99,20 @@ class PostController extends Controller
     {
         $post = Post::findOrFail($id);
     
-        // Validate the request
         $validated = $request->validate([
             'description' => 'nullable|string|max:500',
             'post_picture' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'is_public' => 'nullable|boolean',
         ]);
     
-        // Update description
         $post->description = $validated['description'];
         $post->is_public = $validated['is_public'];
     
-        // Update post picture if provided
         if ($request->hasFile('post_picture')) {
-            // Delete the old picture
             if ($post->post_picture && \Storage::disk('Images')->exists($post->post_picture)) {
                 \Storage::disk('Images')->delete($post->post_picture);
             }
     
-            // Save the new picture
             $file = $request->file('post_picture');
             $fileName = $file->hashName();
             $file->storeAs('post', $fileName, 'Images');
@@ -126,10 +129,13 @@ class PostController extends Controller
      */
     public function destroy(string $id)
     {
-        //**** VALIDATION REQUIRED
         $post = Post::findOrFail($id);
+        $user = auth()->user();
+        
+        if (!$user || $user->id !== $post->user_id) {
+            abort(403, 'You do not have permission to delete this post.');
+        }
     
-        // Delete the associated image if it exists
         if ($post->post_picture && \Storage::disk('Images')->exists($post->post_picture)) {
             \Storage::disk('Images')->delete($post->post_picture);
         }

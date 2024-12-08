@@ -22,6 +22,14 @@
             <input type="file" name="post_picture" id="post_picture" class="form-control">
         </div>
 
+        <div class="mb-3">  
+            <label for="is_public" class="form-label">Is Public:</label>
+            <select name="is_public" id="is_public" class="form-select">
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+            </select>
+        </div>
+
         <button type="submit" class="btn btn-success">Update</button>
         <a href="{{ route('posts.index') }}" class="btn btn-secondary">Cancel</a>
     </form>

@@ -8,14 +8,23 @@
 
 @if (Auth::check())
     <div="container"> Hello, {{ Auth::user()->username }}!
-    <div class="post-gallery-home">
-        <h1>Posts</h1>
-        @foreach ($postImages as $image)
-            <div class="post-item-home">
-                <img src="{{ asset($image) }}" alt="Post Image">
-            </div>
-        @endforeach
-    </div>
+        <div class="post-gallery-home">
+            <section class="timeline"> 
+                <h1>Public</h1>
+                <h1>Following</h1>        
+            </section>
+            @foreach ($posts as $post)
+                <div class="post-item-home">
+                    <section class="user">
+                        <section class="profile-picture2">
+                            <img src="{{ asset($post->user->getProfilePicture())  }}" alt="Profile Picture">
+                        </section>
+                        <a href="{{ route('users.show', $post->user->id) }}" > {{ $post->user->username }} </a>
+                    </section>
+                    <img src="{{ asset($post->getPostPicture()) }}" alt="Post Image">
+                </div>
+            @endforeach
+        </div>
     </div>
     
     <form action="{{ route('requests.show') }}" method="GET" style="position: absolute; top: 15px; right: 70px;">
