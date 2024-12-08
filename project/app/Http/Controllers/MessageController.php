@@ -9,6 +9,8 @@ class MessageController extends Controller
 {
     public function updateMessage(Request $request)
     {
+        $loguser = auth()->user();
+        $this->authorize('banned', $loguser);
         $validated = $request->validate([
             'id' => 'required|exists:messages,id',
             'content' => 'required|string|max:255',

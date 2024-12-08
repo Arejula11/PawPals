@@ -15,6 +15,8 @@ class GroupController extends Controller
      */
     public function index()
     {
+        $loguser = auth()->user();
+        $this->authorize('banned', $loguser);
         $userGroups = auth()->user()->groups;
         return view('groups.index', compact('userGroups'));
     }
@@ -24,6 +26,8 @@ class GroupController extends Controller
      */
     public function create()
     {
+        $loguser = auth()->user();
+        $this->authorize('banned', $loguser);
         return view('groups.create');
     }
 
@@ -32,6 +36,8 @@ class GroupController extends Controller
      */
     public function store(Request $request)
     {
+        $loguser = auth()->user();
+        $this->authorize('banned', $loguser);
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string',
@@ -50,6 +56,8 @@ class GroupController extends Controller
 
     public function storeMessage(Request $request, $id)
     {
+        $loguser = auth()->user();
+        $this->authorize('banned', $loguser);
         $group = Group::findOrFail($id);
 
         $validated = $request->validate([
@@ -72,12 +80,16 @@ class GroupController extends Controller
      */
     public function show($id)
     {
+        $loguser = auth()->user();
+        $this->authorize('banned', $loguser);
         $group = Group::with(['participants', 'messages'])->findOrFail($id);
         return view('groups.show', compact('group'));
     }
 
     public function join(Request $request, $id)
     {
+        $loguser = auth()->user();
+        $this->authorize('banned', $loguser);
         $group = Group::findOrFail($id);
         $group->participants()->attach(auth()->id());
 
@@ -86,6 +98,8 @@ class GroupController extends Controller
 
     public function search()
     {
+        $loguser = auth()->user();
+        $this->authorize('banned', $loguser);
         // Logic to retrieve groups, you can use Eloquent or DB queries here
         $groups = Group::where('is_public', true)->get();
         return view('groups.search', compact('groups'));
@@ -93,6 +107,8 @@ class GroupController extends Controller
 
     public function messages($id)
     {
+        $loguser = auth()->user();
+        $this->authorize('banned', $loguser);
         $group = Group::with('messages')->findOrFail($id);
         return view('groups.messages', compact('group'));
     }
@@ -103,6 +119,8 @@ class GroupController extends Controller
      */
     public function edit($id)
     {
+        $loguser = auth()->user();
+        $this->authorize('banned', $loguser);
         $group = Group::findOrFail($id);
 
         if(auth()->user()->admin){
@@ -122,6 +140,8 @@ class GroupController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $loguser = auth()->user();
+        $this->authorize('banned', $loguser);
         $group = Group::findOrFail($id);
 
         $validated = $request->validate([
@@ -155,6 +175,8 @@ class GroupController extends Controller
      */
     public function destroy(string $id)
     {
+        $loguser = auth()->user();
+        $this->authorize('banned', $loguser);
         $group = Group::findOrFail($id);
         if (auth()->user()->admin) {
             $group->delete();

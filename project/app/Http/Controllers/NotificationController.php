@@ -12,6 +12,8 @@ class NotificationController extends Controller
     public function index()
     {
         //
+        // $loguser = auth()->user();
+        // $this->authorize('banned', $loguser);
     }
 
     /**
@@ -20,6 +22,8 @@ class NotificationController extends Controller
     public function create()
     {
         //
+        // $loguser = auth()->user();
+        // $this->authorize('banned', $loguser);
     }
 
     /**
@@ -28,6 +32,8 @@ class NotificationController extends Controller
     public function store(Request $request)
     {
         //
+        // $loguser = auth()->user();
+        // $this->authorize('banned', $loguser);
     }
 
     /**
@@ -36,6 +42,8 @@ class NotificationController extends Controller
     public function show(string $id)
     {
         //
+        // $loguser = auth()->user();
+        // $this->authorize('banned', $loguser);
     }
 
     /**
@@ -44,6 +52,8 @@ class NotificationController extends Controller
     public function edit(string $id)
     {
         //
+        // $loguser = auth()->user();
+        // $this->authorize('banned', $loguser);
     }
 
     /**
@@ -52,6 +62,8 @@ class NotificationController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        // $loguser = auth()->user();
+        // $this->authorize('banned', $loguser);
     }
 
     /**
@@ -60,5 +72,7 @@ class NotificationController extends Controller
     public function destroy(string $id)
     {
         //
+        // $loguser = auth()->user();
+        // $this->authorize('banned', $loguser);
     }
 }

@@ -45,6 +45,8 @@ class BanController extends Controller
      */
     public function show(string $id)
     {
+        $loguser = auth()->user();
+        $this->authorize('admin', $loguser);
         return view('admin.banShow', ['ban' => Ban::findOrFail($id)]);
     }
 
@@ -69,6 +71,8 @@ class BanController extends Controller
      */
     public function destroy(string $id)
     {
+        $loguser = auth()->user();
+        $this->authorize('admin', $loguser);
         $user = User::findOrFail($id);
         $user->delete();
 
@@ -79,6 +83,8 @@ class BanController extends Controller
      * Show all bans
      */
     public function showAll(){
+        $loguser = auth()->user();
+        $this->authorize('admin', $loguser);
         $bans = Ban::all();
         return view('admin.showAllBans', ['bans' => $bans]);
     }

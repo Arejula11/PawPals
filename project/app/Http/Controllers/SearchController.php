@@ -12,6 +12,8 @@ class SearchController extends Controller
      */
     public function index()
     {
+        $loguser = auth()->user();
+        $this->authorize('banned', $loguser);
         return view('pages.search');
     }
 
@@ -20,6 +22,8 @@ class SearchController extends Controller
      */
     public function searchUsers(Request $request)
     {
+        $loguser = auth()->user();
+        $this->authorize('banned', $loguser);
         $request->validate([
             'query' => 'required|string|min:2',
         ]);

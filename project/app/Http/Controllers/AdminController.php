@@ -23,6 +23,8 @@ class AdminController extends Controller
      */
     public function create()
     {
+        $user = auth()->user();
+        $this->authorize('admin', $user);
         return view('admin.create');
     }
 
@@ -31,6 +33,8 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
+        $user = auth()->user();
+        $this->authorize('admin', $user);
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email',
@@ -57,6 +61,8 @@ class AdminController extends Controller
      */
     public function edit(string $id)
     {
+        $loguser = auth()->user();
+        $this->authorize('admin', $loguser);
         $user = User::findOrFail($id);
 
         $this->authorize('update', $user);
@@ -77,6 +83,8 @@ class AdminController extends Controller
      */
     public function destroy(string $id)
     {
+        $loguser = auth()->user();
+        $this->authorize('admin', $loguser);
         $user = User::findOrFail($id);
         $user->delete();
 
@@ -129,6 +137,8 @@ class AdminController extends Controller
      */
     public function showUser(string $id)
     {
+        $loguser = auth()->user();
+        $this->authorize('admin', $loguser);
         $user = User::findOrFail($id);
         return view('admin.showUser', compact('user'));
     }
@@ -138,6 +148,8 @@ class AdminController extends Controller
      */
     public function showGroup(string $id)
     {
+        $loguser = auth()->user();
+        $this->authorize('admin', $loguser);
         $group = Group::findOrFail($id);
         return view('admin.showGroup', compact('group'));
     }
@@ -147,9 +159,9 @@ class AdminController extends Controller
      * Ban a user
      */
     public function banUser(string $id){
+        $loguser = auth()->user();
+        $this->authorize('admin', $loguser);
         $user = User::findOrFail($id);
-        
-
         return redirect()->route('admin.users.manage')->with('success', 'User banned successfully.');
     }
 
@@ -158,6 +170,8 @@ class AdminController extends Controller
      */
     public function changePassword()
     {
+        $loguser = auth()->user();
+        $this->authorize('admin', $loguser);
         Log::info('Showing change password page');
         return view('admin.changePassword');
     }
@@ -167,6 +181,8 @@ class AdminController extends Controller
      */
     public function updatePassword(Request $request, string $id)
     {
+        $loguser = auth()->user();
+        $this->authorize('admin', $loguser);
         $validatedData = $request->validate([
             'old' => 'required|string|min:8',
             'new' => 'required|string|min:8',
