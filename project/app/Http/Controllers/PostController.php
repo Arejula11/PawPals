@@ -14,6 +14,9 @@ class PostController extends Controller
      */
     public function index()
     {
+        $loguser = auth()->user();
+        $this->authorize('banned', $loguser);
+        // Get the authenticated user's ID
         $userId = auth()->id();
             
         $posts = Post::with('user')
@@ -29,6 +32,8 @@ class PostController extends Controller
      */
     public function create()
     {
+        $loguser = auth()->user();
+        $this->authorize('banned', $loguser);
         return view('pages.post.create');
     }
 
@@ -37,6 +42,8 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        $loguser = auth()->user();
+        $this->authorize('banned', $loguser);
     $validated = $request->validate([
         'description' => 'required|string|max:500',
         'post_picture' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
@@ -68,6 +75,8 @@ class PostController extends Controller
      */
     public function show(string $id)
     {
+        $loguser = auth()->user();
+        $this->authorize('banned', $loguser);
         $post = Post::with('user')->findOrFail($id);
         $user = auth()->user();
 
@@ -83,6 +92,8 @@ class PostController extends Controller
      */
     public function edit(string $id)
     {
+        $loguser = auth()->user();
+        $this->authorize('banned', $loguser);
         $post = Post::findOrFail($id);
         $user = auth()->user();
 
@@ -97,6 +108,9 @@ class PostController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $loguser = auth()->user();
+        $this->authorize('banned', $loguser);
+
         $post = Post::findOrFail($id);
     
         $validated = $request->validate([
@@ -129,6 +143,9 @@ class PostController extends Controller
      */
     public function destroy(string $id)
     {
+        $loguser = auth()->user();
+        $this->authorize('banned', $loguser);
+        
         $post = Post::findOrFail($id);
         $user = auth()->user();
         

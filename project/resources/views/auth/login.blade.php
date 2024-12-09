@@ -34,6 +34,7 @@
                 Login
             </button>
             <a class="button button-outline" href="{{ route('register') }}">Register</a>
+            <a class="" href="{{ route('password') }}">Forgotten your password?</a>
             @if (session('success'))
                 <p class="success">
                     {{ session('success') }}

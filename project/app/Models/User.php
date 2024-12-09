@@ -220,4 +220,21 @@ class User extends Authenticatable
         return $this->belongsToMany(User::class, 'follows', 'user2_id', 'user1_id')
                     ->wherePivot('request_status', 'accepted');
     }
+
+    /**
+     * Return a bool if the user has an active ban.
+     */
+    public function isBanned(): bool
+    {
+        return $this->bans()->where('active', true)->exists();
+    
+    }
+
+    /**
+     * Return the id of the active ban.
+     */
+    public function getActiveBanId(): Ban
+    {
+        return $this->bans()->where('active', true)->first();
+    }
 }

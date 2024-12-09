@@ -9,6 +9,8 @@
 .env.backup
 .env.production
 .env.thingy
+env-local.txt
+env-production.txt
 .env.local
 .phpunit.result.cache
 Homestead.json

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -12,6 +13,8 @@ class UserController extends Controller
      */
     public function index()
     {
+        $loguser = auth()->user();
+        $this->authorize('banned', $loguser);
         $users = User::all();
         return view('users.index', compact('users'));
     }
@@ -21,6 +24,8 @@ class UserController extends Controller
      */
     public function create()
     {
+        $loguser = auth()->user();
+        $this->authorize('banned', $loguser);
         return view('users.create');
     }
 
@@ -29,6 +34,8 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        $loguser = auth()->user();
+        $this->authorize('banned', $loguser);
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email',
@@ -47,6 +54,8 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
+        $loguser = auth()->user();
+        $this->authorize('banned', $loguser);
         $user = User::findOrFail($id);
 
         if (!$user->is_public && !auth()->check()) {
@@ -74,6 +83,8 @@ class UserController extends Controller
 
     public function follow(Request $request)
     {
+        $loguser = auth()->user();
+        $this->authorize('banned', $loguser);
         $userToFollow = User::findOrFail($request->user2_id);
         $loggedInUser = auth()->user();
 
@@ -96,43 +107,52 @@ class UserController extends Controller
 
     public function checkRequests()
     {
+        $loguser = auth()->user();
+        $this->authorize('banned', $loguser);
         $user = auth()->user();
         $pendingRequests = \App\Models\Follow::with('follower')
                                             ->where('user2_id', $user->id)
                                             ->where('request_status', 'pending')
                                             ->get();
 
-        return view('requests.show', compact('pendingRequests','user'));
+        $pendingRequestsCount = $pendingRequests->count();
+        return view('requests.show', compact('pendingRequests','pendingRequestsCount','user'));
     }
 
     public function accept($user1_id, $user2_id)
     {
-        // Find the follow request using both user1_id and user2_id
+        $loguser = auth()->user();
+        $this->authorize('banned', $loguser);
         $request = \App\Models\Follow::where('user1_id', $user1_id)
                                     ->where('user2_id', $user2_id)
-                                    ->first();
+                                    ->delete();
 
         if ($request) {
-            $request->request_status = 'accepted';
-            $request->save();
+            \App\Models\Follow::create([
+                'user1_id' => $user1_id,
+                'user2_id' => $user2_id,
+                'request_status' => 'accepted',
+            ]);
 
-            return redirect()->route('requests.show')->with('success', 'Follow request accepted.');
+            return redirect()->route('home')->with('success', 'Request accepted.');
         }
 
-        return redirect()->route('requests.show')->with('error', 'Follow request not found.');
+        return redirect()->route('home')->with('error', 'Request not found.');
     }
 
     public function reject($user1_id, $user2_id)
     {
+        $loguser = auth()->user();
+        $this->authorize('banned', $loguser);
         $deleted = \App\Models\Follow::where('user1_id', $user1_id)
                                     ->where('user2_id', $user2_id)
                                     ->delete();
     
         if ($deleted) {
-            return redirect()->route('requests.show')->with('success', 'Follow request rejected.');
+            return redirect()->route('home')->with('success', 'Request rejected.');
         }
     
-        return redirect()->route('requests.show')->with('error', 'Follow request not found.');
+        return redirect()->route('home')->with('error', 'Request not found.');
     }
 
     /**
@@ -140,10 +160,11 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
+        $loguser = auth()->user();
+        $this->authorize('banned', $loguser);
         $user = User::findOrFail($id);
 
         $this->authorize('update', $user);
-
         return view('users.edit', compact('user'));
     }
 
@@ -152,14 +173,14 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $loguser = auth()->user();
+        $this->authorize('banned', $loguser);
         // Validate the incoming data
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'surname' => 'required|string|max:255',
-            'password' => 'nullable|string|min:8|confirmed',
             'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'bio_description' => 'nullable|string|max:1000',
-            'public' => 'required|boolean',
             'type' => 'required|string|in:pet owner,admin,veterinarian,adoption organization,rescue organization',
         ]);
 
@@ -169,10 +190,6 @@ class UserController extends Controller
         // Update the user's attributes
         $user->firstname = $validatedData['name'];
         $user->surname = $validatedData['surname'];
-
-        if ($request->filled('password')) {
-            $user->password = bcrypt($validatedData['password']);
-        }
 
         // Handle profile picture upload
         if ($request->hasFile('profile_picture')) {
@@ -185,14 +202,18 @@ class UserController extends Controller
         }
 
         $user->bio_description = $validatedData['bio_description'] ?? $user->bio_description;
-        $user->is_public = $validatedData['public'];
         $user->type = $validatedData['type'];
 
         // Save changes
         $user->save();
 
-        // Redirect back with a success message
-        return redirect()->route('users.show', $id)->with('success', 'Profile updated successfully.');
+        // Redirect back with a success message, if its an admin redirect to the admin's home else redirect to the user's profile
+        if (auth()->user()->admin) {
+            return redirect()->route('admin.home')->with('success', 'Profile updated successfully.');
+        }else{
+            return redirect()->route('users.show', $id)->with('success', 'Profile updated successfully.');
+        }
+
     }
 
     /**
@@ -200,6 +221,8 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
+        $loguser = auth()->user();
+        $this->authorize('banned', $loguser);
         $user = User::findOrFail($id);
         $user->delete();
 
@@ -207,13 +230,84 @@ class UserController extends Controller
     }
 
     /**
-     * Show the admin dashboard.
+     * Show the settings page.
      */
-    public function admin()
+    public function settings()
     {
+        $loguser = auth()->user();
+        $this->authorize('banned', $loguser);
         $user = auth()->user();
-        $this->authorize('admin', $user);
-        $users = User::all();
-        return view('users.admin', compact('users'));
+        return view('settings.show', compact('user'));
     }
+
+    /**
+     * Change the password.
+     */
+    public function updatePassword(Request $request, string $id)
+    {
+        $loguser = auth()->user();
+        $this->authorize('banned', $loguser);
+        $validatedData = $request->validate([
+            'old' => 'required|string|min:8',
+            'new' => 'required|string|min:8',
+        ]);
+        $user = User::findOrFail($id);
+
+        if (Hash::check($validatedData['old'], $user->password)) {
+            $user->password = bcrypt($validatedData['new']);
+            $user->save();
+
+            return redirect()->route('home')->with('success', 'Password changed successfully.');
+        }
+
+        return redirect()->route('settings.show', $id)->with('error', 'Old password is incorrect.');
+    }
+
+    /**
+     * Delete a user making it a anonymous user
+     */
+    public function deleteUser(string $id)
+    {
+        $loguser = auth()->user();
+        $this->authorize('banned', $loguser);
+        $loguser = auth()->user();
+        $this->authorize('banned', $loguser);
+        $user = User::findOrFail($id);
+        $user->username = null;
+        $user->firstname = null;
+        $user->surname = null;
+        $user->password = null;
+        $user->email = null;
+        $user->bio_description = null;
+        $user->profile_picture = 'default.jpg';
+        $user->is_public = false;
+        $user->type = 'deleted';
+        $user->save();
+        
+        if (auth()->user()->admin) {
+            return redirect()->route('admin.home')->with('success', 'Profile updated successfully.');
+        }else{
+            return redirect()->route('/logout', $id)->with('success', 'Profile updated successfully.');
+        }
+    }
+
+    /**
+     * Change the privacity of the user
+     */
+    public function privacity(Request $request, string $id)   
+    {
+        $loguser = auth()->user();
+        $this->authorize('banned', $loguser);
+        $user = User::findOrFail($id);
+
+        $validatedData = $request->validate([
+            'public' => 'required|boolean',
+        ]);
+        $user->is_public = $validatedData['public'];
+        $user->save();
+
+        return redirect()->route('settings.show', $id)->with('success', 'Privacity changed successfully.');
+    }
+
+
 }
