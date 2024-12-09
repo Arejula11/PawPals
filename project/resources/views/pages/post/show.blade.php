@@ -25,6 +25,8 @@
             <span class="description"> {{ $post->description }} </span>
         </section>
 
+        {{-- New: Tagged Users Section --}}
+
         <section class="d-i">
             @include('pages.post.likes')
             <p class="date">Created on: {{ $post->creation_date }}</p>

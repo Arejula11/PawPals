@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class CommentLike extends Model
 {
-    use HasFactory;
+    public $incrementing = false;
 
     protected $table = 'comment_like';
 

@@ -64,7 +64,7 @@ Route::get('/search-users', [SearchController::class, 'searchUsers'])->name('sea
 
 // Post
 Route::controller(PostController::class)->group(function () {
-    Route::get('/posts', 'index')->name('posts.index'); // List all posts
+    //Route::get('/posts', 'index')->name('posts.index'); // List all posts
     Route::get('/posts/create', 'create')->name('posts.create'); // Create a new post
     Route::post('/posts', 'store')->name('posts.store'); // Store a new post
     Route::get('/posts/{id}', 'show')->name('posts.show'); // Show a specific post
@@ -81,6 +81,8 @@ Route::post('/posts/{id}/like', [PostLikeController::class, 'store'])->name('pos
 Route::post('/posts/{id}/unlike', [PostLikeController::class, 'destroy'])->name('posts.likes.destroy');
 Route::post('/posts/{post}/comments/{comment}/like', [CommentLikeController::class, 'store'])->name('comments.likes.store');
 Route::post('/posts/{post}/comments/{comment}/unlike', [CommentLikeController::class, 'destroy'])->name('comments.likes.destroy'); 
+Route::post('/posts/{post_id}/tags/{user_id}', [PostTagController::class, 'store'])->name('post.tags.store');
+Route::delete('/posts/{post_id}/tags/{user_id}', [PostTagController::class, 'destroy'])->name('post.tags.destroy');
 
 Route::controller(GroupController::class)->group(function () {
     Route::get('/groups/search', 'search')->name('groups.search'); // Search for groups

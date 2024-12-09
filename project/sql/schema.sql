@@ -123,7 +123,6 @@ CREATE TABLE comment (
 );
 
 CREATE TABLE post_like (
-    id SERIAL PRIMARY KEY,
     post_id INT NOT NULL,
     user_id INT NOT NULL,
     FOREIGN KEY (post_id) REFERENCES post(id) ON UPDATE CASCADE ON DELETE CASCADE,
@@ -131,7 +130,6 @@ CREATE TABLE post_like (
 );
 
 CREATE TABLE comment_like (
-    id SERIAL PRIMARY KEY,
     comment_id INT NOT NULL,
     user_id INT NOT NULL,
     FOREIGN KEY (comment_id) REFERENCES comment(id) ON UPDATE CASCADE ON DELETE CASCADE,

@@ -59,7 +59,7 @@ class Post extends Model
      */
     public function tags()
     {
-        return $this->belongsToMany(User::class, 'post_tag', 'post_id', 'user_id');
+        return $this->hasMany(PostTag::class);
     }
 
     /**

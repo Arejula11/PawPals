@@ -5,13 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PostLike extends Model
+class PostTag extends Model
 {
     public $incrementing = false;
 
-    protected $table = 'post_like';
+    protected $table = 'post_tag';
 
     public $timestamps = false;
+
+    protected $primaryKey = ['post_id', 'user_id'];
 
     protected $fillable = [
         'post_id',

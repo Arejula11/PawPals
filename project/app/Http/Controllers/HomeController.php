@@ -16,19 +16,17 @@ class HomeController extends Controller
         
         $this->authorize('banned', User::class);
 
-        $allPostImages = [];
+        $posts = Post::with('user')
+        ->where('is_public', true)
+        ->orderBy('creation_date', 'desc')
+        ->limit(10)
+        ->get();
         $pendingRequestsCount = 0;
         $pendingRequests = [];
     
         $users = User::all();
 
         foreach ($users as $user) {
-            $userPostImages = FileController::getAllPostUserImages($user->id);
-            $allPostImages = array_merge($allPostImages, $userPostImages);
-            
-            if (count($allPostImages) >= 10) {
-                break;
-            }
 
             // Fetch pending requests for the logged-in user
             $loggedInUser = auth()->user();
@@ -41,7 +39,10 @@ class HomeController extends Controller
                 $pendingRequestsCount = $pendingRequests->count();
             }
 
-            return view('pages.home', ['postImages' => $allPostImages,'pendingRequestsCount' => $pendingRequestsCount,'pendingRequests'=>$pendingRequests]);
+            return view('pages.home', [
+                'posts' => $posts,
+                'pendingRequestsCount' => $pendingRequestsCount,
+                'pendingRequests'=>$pendingRequests]);
         }
 
     }

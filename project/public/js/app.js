@@ -179,7 +179,7 @@ function addEventListeners() {
   
   addEventListeners();
   
-// Likes and Comments JS
+// Likes
 
 function submitLike(event) {
     event.preventDefault();
@@ -188,6 +188,8 @@ function submitLike(event) {
         form.submit();
     }
 }
+
+// Comments
 
 function focusCommentBox() {
     const commentBox = document.getElementById('comment-box');
@@ -207,4 +209,41 @@ function setReplyToComment(commentId, username) {
       commentBox.focus(); 
       commentBox.scrollIntoView({ behavior: 'smooth', block: 'center' }); 
   }
+}
+
+// Tags
+
+function addTaggedUser(id, name, username) {
+  let taggedUsersList = document.getElementById('tagged-users-list');
+  let taggedUsersInput = document.getElementById('tagged-users-input');
+
+  if (!document.querySelector(`#tagged-user-${id}`)) {
+      let userTag = document.createElement('div');
+      userTag.classList.add('tagged-user');
+      userTag.id = `tagged-user-${id}`;
+      userTag.innerHTML = `
+          ${name} (@${username})
+          <button type="button" class="remove-tag" data-id="${id}">Remove</button>
+      `;
+
+      userTag.querySelector('.remove-tag').addEventListener('click', function() {
+          userTag.remove();
+          updateTaggedUsersInput();
+      });
+
+      taggedUsersList.appendChild(userTag);
+
+      updateTaggedUsersInput();
+  }
+}
+
+function updateTaggedUsersInput() {
+  let taggedUsersList = document.querySelectorAll('.tagged-user');
+  let taggedUsersInput = document.getElementById('tagged-users-input');
+
+  let userIds = Array.from(taggedUsersList).map(user => {
+      return user.id.replace('tagged-user-', '');
+  });
+
+  taggedUsersInput.value = userIds.join(',');
 }

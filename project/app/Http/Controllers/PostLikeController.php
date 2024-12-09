@@ -16,16 +16,22 @@ class PostLikeController extends Controller
         $like->post_id = $id;
         
         $like->save();
-        return redirect()->route('posts.show', compact('id'))->with('success', 'Like added successfully!');
+        return redirect()->route('posts.show', compact('id'))
+        ->with('success', 'Like added successfully!');
     }
 
     public function destroy(string $id) {
         
-        $like = PostLike::where('user_id', auth()->id())
-                    ->where('post_id', $id)
-                    ->firstOrFail();
-        $like->delete();
+        $deleted = PostLike::where('user_id', auth()->id())
+        ->where('post_id', $id)
+        ->delete();
 
-        return redirect()->route('posts.show', compact('id'))->with('success', 'Like removed successfully.');
+        if (!$deleted) {
+            return redirect()->route('posts.show', compact('id'))
+            ->with('error', 'Like not found or already removed.');
+        }
+
+        return redirect()->route('posts.show', compact('id'))
+                ->with('success', 'Like removed successfully.');
     }
 }

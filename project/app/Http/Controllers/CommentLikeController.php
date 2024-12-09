@@ -20,11 +20,16 @@ class CommentLikeController extends Controller
 
     public function destroy(string $post, string $comment) {
         
-        $like = CommentLike::where('user_id', auth()->id())
+        $deleted = CommentLike::where('user_id', auth()->id())
                     ->where('comment_id', $comment)
-                    ->firstOrFail();
-        $like->delete();
+                    ->delete();
+        
+        if (!$deleted) {
+            return redirect()->route('posts.show', ['id' => $post])
+            ->with('error', 'Like not found or already removed.');
+        }
 
-        return redirect()->route('posts.show', ['id' => $post])->with('success', 'Like removed successfully.');
+        return redirect()->route('posts.show', ['id' => $post])
+                ->with('success', 'Like removed successfully.');
     }
 }
