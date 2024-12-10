@@ -155,6 +155,19 @@ class UserController extends Controller
         return redirect()->route('home')->with('error', 'Request not found.');
     }
 
+    public function unfollow(Request $request)
+    {
+        $loguser = auth()->user();
+        $this->authorize('banned', $loguser);
+
+        \App\Models\Follow::where([
+            ['user1_id', '=', $request->user1_id],
+            ['user2_id', '=', $request->user2_id],
+        ])->delete();
+
+        return response()->json(['message' => 'Unfollowed successfully'], 200);
+    }
+
     /**
      * Show the form for editing the specified resource.
      */
