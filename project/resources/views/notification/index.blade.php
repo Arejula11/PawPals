@@ -13,6 +13,10 @@
                 @forelse($postNotifications as $notification)
                     <div class="notification">
                         <p>{{ $notification->description }}</p>
+                        @php
+                            $post = \App\Models\Post::find($notification->trigger_post_id);
+                        @endphp
+                        <p>{{ $post->description }}</p>
                         <p>{{ $notification->date }}</p>
                     </div>
                 @empty
@@ -27,6 +31,10 @@
                 @forelse($commentNotifications as $notification)
                     <div class="notification">
                         <p>{{ $notification->description }}</p>
+                        @php
+                            $comment = \App\Models\Comment::find($notification->trigger_comment_id);
+                        @endphp
+                        <p>{{ $comment->content }}</p>
                         <p>{{ $notification->date }}</p>
                     </div>
                 @empty
@@ -41,6 +49,10 @@
                 @forelse($groupOwnerNotifications as $notification)
                     <div class="notification">
                         <p>{{ $notification->description }}</p>
+                        @php
+                            $group = \App\Models\Group::find($notification->trigger_group_id);
+                        @endphp
+                        <p>{{ $group->name }}</p>
                         <p>{{ $notification->date }}</p>
                     </div>
                 @empty
@@ -55,6 +67,10 @@
                 @forelse($groupMemberNotifications as $notification)
                     <div class="notification">
                         <p>{{ $notification->description }}</p>
+                        @php
+                            $group = \App\Models\Group::find($notification->trigger_group_id);
+                        @endphp
+                        <p>{{ $group->name }}</p>
                         <p>{{ $notification->date }}</p>
                     </div>
                 @empty
