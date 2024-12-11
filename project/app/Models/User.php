@@ -168,7 +168,7 @@ class User extends Authenticatable
      */
     public function userNotifications(): HasMany
     {
-        return $this->hasMany(UserNotification::class, 'trigger_user_id');
+        return $this->hasMany(Notification::class);
     }
 
     /**
@@ -176,7 +176,7 @@ class User extends Authenticatable
      */
     public function postNotifications(): HasMany
     {
-        return $this->hasMany(PostNotification::class, 'trigger_post_id');
+        return $this->hasMany(Notification::class);
     }
 
     /**
@@ -184,7 +184,7 @@ class User extends Authenticatable
      */
     public function commentNotifications(): HasMany
     {
-        return $this->hasMany(CommentNotification::class, 'trigger_comment_id');
+        return $this->hasMany(Notification::class);
     }
 
     /**
@@ -192,7 +192,7 @@ class User extends Authenticatable
      */
     public function groupOwnerNotifications(): HasMany
     {
-        return $this->hasMany(GroupOwnerNotification::class, 'trigger_group_id');
+        return $this->hasMany(Notification::class);
     }
 
     /**
@@ -200,7 +200,7 @@ class User extends Authenticatable
      */
     public function groupMemberNotifications(): HasMany
     {
-        return $this->hasMany(GroupMemberNotification::class, 'trigger_group_id');
+        return $this->hasMany(Notification::class);
     }
 
     /**

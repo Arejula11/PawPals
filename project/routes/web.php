@@ -19,6 +19,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\FollowController;
 use App\Http\Controllers\BanController;
 use App\Http\Controllers\AppealController;
+use App\Http\Controllers\NotificationController;
 
 
 /*
@@ -147,3 +148,5 @@ Route::post('/appeal', [AppealController::class, 'store'])->name('appeal.store')
 Route::get('/banned', function () {
     return view('banned.show');
 })->name('banned.show');
+
+Route::get('/notifications', [NotificationController::class, 'index'])->name('notification.index');

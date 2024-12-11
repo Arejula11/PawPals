@@ -14,6 +14,7 @@ class NotificationController extends Controller
         //
         // $loguser = auth()->user();
         // $this->authorize('banned', $loguser);
+        return view('notification.index');
     }
 
     /**
@@ -41,9 +42,10 @@ class NotificationController extends Controller
      */
     public function show(string $id)
     {
-        //
+        
         // $loguser = auth()->user();
         // $this->authorize('banned', $loguser);
+        
     }
 
     /**

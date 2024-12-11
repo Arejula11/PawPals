@@ -231,26 +231,30 @@ CREATE TRIGGER group_join_request_notification
 
 ----------------------------------------
 -- New message notification
-CREATE FUNCTION notify_group_message() 
+CREATE OR REPLACE FUNCTION notify_group_message() 
 RETURNS TRIGGER AS 
 $BODY$
+DECLARE
+    notif_id BIGINT; -- Variable to store the generated notification_id
 BEGIN
     -- Insert a notification for each group member except the sender
-    INSERT INTO notification (description, date, user_id)
-    SELECT 'New message in your group.', CURRENT_DATE, user_id
-    FROM group_participant
-    WHERE group_id = NEW.group_id AND user_id != NEW.sender_id;
+    FOR notif_id IN
+        INSERT INTO notification (description, date, user_id)
+        SELECT 'New message in your group.', CURRENT_DATE, user_id
+        FROM group_participant
+        WHERE group_id = NEW.group_id AND user_id != NEW.sender_id
+        RETURNING id -- Return the notification_id for each inserted row
+    LOOP
+        -- Insert group-member-specific notification
+        INSERT INTO group_member_notification (notification_id, trigger_group_id, group_member_notification_type)
+        VALUES (notif_id, NEW.group_id, 'new_message');
+    END LOOP;
 
-    -- Insert group-member-specific notification
-    INSERT INTO group_member_notification (notification_id, trigger_group_id, group_member_notification_type)
-    SELECT currval('notification_id_seq'), NEW.group_id, 'new_message'
-    FROM group_participant
-    WHERE group_id = NEW.group_id AND user_id != NEW.sender_id;
-    
     RETURN NEW;
 END;
 $BODY$
 LANGUAGE plpgsql;
+
 
 CREATE TRIGGER group_message_notification
     AFTER INSERT ON message

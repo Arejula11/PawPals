@@ -68,7 +68,7 @@
                             <li><a href="{{ url('/home') }}">Home</a></li>
                             <li><a href="{{ route('search') }}">Search</a></li>
                             @if (Auth::check())
-                            <li><a href="#">Notifications</a></li>
+                            <li><a href="{{ route('notification.index') }}">Notifications</a></li>
                             <li><a href="{{ route('posts.create') }}">Create Post</a></li>
                             <li><a href="{{ route('groups.index') }}">Groups</a></li>
                             <li><a href="{{ route('settings.show') }}">Settings</a></li>
