@@ -16,6 +16,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\FollowController;
 use App\Http\Controllers\BanController;
 use App\Http\Controllers\AppealController;
+use App\Http\Controllers\StaticController;
 
 
 /*
@@ -132,3 +133,8 @@ Route::post('/appeal', [AppealController::class, 'store'])->name('appeal.store')
 Route::get('/banned', function () {
     return view('banned.show');
 })->name('banned.show');
+
+// Static pages
+Route::controller(StaticController::class)->group(function () {
+    Route::get('/about', 'showAbout')->name('static.about'); // Show about us
+});
