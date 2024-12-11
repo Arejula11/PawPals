@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class NotificationController extends Controller
 {
@@ -14,7 +15,31 @@ class NotificationController extends Controller
         //
         // $loguser = auth()->user();
         // $this->authorize('banned', $loguser);
-        return view('notification.index');
+
+        $id = auth()->user()->id;
+
+        $groupMemberNotifications = DB::table('notification') // Ensure the table name is correct here
+        ->join('group_member_notification', 'notification.id', '=', 'group_member_notification.notification_id')
+        ->where('notification.user_id', $id)
+        ->get();
+
+        $postNotifications = DB::table('notification') // Ensure the table name is correct here
+        ->join('post_notification', 'notification.id', '=', 'post_notification.notification_id')
+        ->where('notification.user_id', $id)
+        ->get();
+
+        $commentNotifications = DB::table('notification') // Ensure the table name is correct here
+        ->join('comment_notification', 'notification.id', '=', 'comment_notification.notification_id')
+        ->where('notification.user_id', $id)
+        ->get();
+
+
+        $groupOwnerNotifications = DB::table('notification') // Ensure the table name is correct here
+        ->join('group_owner_notification', 'notification.id', '=', 'group_owner_notification.notification_id')
+        ->where('notification.user_id', $id)
+        ->get();
+
+        return view('notification.index', compact('groupMemberNotifications', 'postNotifications', 'commentNotifications', 'groupOwnerNotifications'));
     }
 
     /**

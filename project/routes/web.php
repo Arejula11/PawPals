@@ -20,6 +20,7 @@ use App\Http\Controllers\FollowController;
 use App\Http\Controllers\BanController;
 use App\Http\Controllers\AppealController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\GroupMemberNotificationController;
 
 
 /*
@@ -150,3 +151,4 @@ Route::get('/banned', function () {
 })->name('banned.show');
 
 Route::get('/notifications', [NotificationController::class, 'index'])->name('notification.index');
+

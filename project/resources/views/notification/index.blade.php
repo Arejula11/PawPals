@@ -5,55 +5,62 @@
 @endsection
 
 @section('content')
-    <h1>Notifications center</h1>
-    @php
-        $userNotifications = auth()->user()->userNotifications;
-        $postNotifications = auth()->user()->postNotifications;
-        $commentNotifications = auth()->user()->commentNotifications;
-        $groupOwnerNotifications = auth()->user()->groupOwnerNotifications;
-        $groupMemberNotifications = auth()->user()->groupMemberNotifications;
-    @endphp
-    @if($groupMemberNotifications->count() > 0)
-        <div class="notification-container">
-            <div class="user-not">
-                <h2>User notifications</h2>
-                @foreach($userNotifications as $notification)
+    <h1>Notifications Center</h1>
+    <div class="notification-container">
+        <div class="notification-box">
+            <h2>Post Notifications</h2>
+            <div class="notification-content">
+                @forelse($postNotifications as $notification)
                     <div class="notification">
-                        <div class="notification-content">
-                            <p>{{ $notification->description }}</p>
-                            <p>{{ $notification->date }}</p>
-                        </div>
+                        <p>{{ $notification->description }}</p>
+                        <p>{{ $notification->date }}</p>
                     </div>
-                @endforeach
+                @empty
+                    <p>No notifications found.</p>
+                @endforelse
             </div>
-            
-            <div class="user-not">
-                <h2>Post notifications</h2>
-                @foreach($postNotifications as $notification)
-                    <div class="notification">
-                        <div class="notification-content">
-                            <p>{{ $notification->description }}</p>
-                            <p>{{ $notification->date }}</p>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-
-            <div class="user-not">
-                <h2>Comment notifications</h2>
-                @foreach($commentNotifications as $notification)
-                    <div class="notification">
-                        <div class="notification-content">
-                            <p>{{ $notification->description }}</p>
-                            <p>{{ $notification->date }}</p>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-
-
         </div>
-    @else
-        <p>No notifications found</p>
-    @endif
+
+        <div class="notification-box">
+            <h2>Comment Notifications</h2>
+            <div class="notification-content">
+                @forelse($commentNotifications as $notification)
+                    <div class="notification">
+                        <p>{{ $notification->description }}</p>
+                        <p>{{ $notification->date }}</p>
+                    </div>
+                @empty
+                    <p>No notifications found.</p>
+                @endforelse
+            </div>
+        </div>
+
+        <div class="notification-box">
+            <h2>Group Owner Notifications</h2>
+            <div class="notification-content">
+                @forelse($groupOwnerNotifications as $notification)
+                    <div class="notification">
+                        <p>{{ $notification->description }}</p>
+                        <p>{{ $notification->date }}</p>
+                    </div>
+                @empty
+                    <p>No notifications found.</p>
+                @endforelse
+            </div>
+        </div>
+
+        <div class="notification-box">
+            <h2>Group Member Notifications</h2>
+            <div class="notification-content">
+                @forelse($groupMemberNotifications as $notification)
+                    <div class="notification">
+                        <p>{{ $notification->description }}</p>
+                        <p>{{ $notification->date }}</p>
+                    </div>
+                @empty
+                    <p>No notifications found.</p>
+                @endforelse
+            </div>
+        </div>
+    </div>
 @endsection
