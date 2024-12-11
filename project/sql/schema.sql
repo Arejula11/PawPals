@@ -17,8 +17,6 @@ SET DateStyle TO European;
 -- Drop old schema
 -----------------------------------------
 
-
-
 DROP TABLE IF EXISTS group_participant;
 DROP TABLE IF EXISTS group_member_notification;
 DROP TABLE IF EXISTS group_owner_notification;
