@@ -8,9 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class PostLike extends Model
 {
     public $incrementing = false;
-
+    protected $primaryKey = ['post_id', 'user_id'];
     protected $table = 'post_like';
-
     public $timestamps = false;
 
     protected $fillable = [

@@ -16,22 +16,34 @@ class PostLikeController extends Controller
         $like->post_id = $id;
         
         $like->save();
-        return redirect()->route('posts.show', compact('id'))
-        ->with('success', 'Like added successfully!');
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Like added successfully!',
+            'likeCount' => Post::findOrFail($id)->likes()->count(),
+        ]);
     }
 
     public function destroy(string $id) {
         
-        $deleted = PostLike::where('user_id', auth()->id())
-        ->where('post_id', $id)
-        ->delete();
-
-        if (!$deleted) {
-            return redirect()->route('posts.show', compact('id'))
-            ->with('error', 'Like not found or already removed.');
+        $userId = auth()->id();
+        $postId = $id;
+    
+        $deletedRows = PostLike::where('user_id', $userId)
+            ->where('post_id', $postId)
+            ->delete();
+    
+        if ($deletedRows === 0) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Like not found or already removed.',
+            ], 404);
         }
-
-        return redirect()->route('posts.show', compact('id'))
-                ->with('success', 'Like removed successfully.');
+    
+        return response()->json([
+            'success' => true,
+            'message' => 'Like removed successfully!',
+            'likeCount' => Post::findOrFail($postId)->likes()->count(),
+        ]);
     }
 }

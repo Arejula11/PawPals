@@ -31,11 +31,12 @@ body {
     display: flex;
     min-width: 750px;
     max-width: 750px;
-    border-right: 1px solid black;
 }
 
 .image img {
     width: max-content;
+    border-right: 2px outset black;
+    border-radius: 5px;
 }
 
 
@@ -247,40 +248,36 @@ body {
     gap: 5px;
 }
 
-/* New: Tagged Users Section */
 .tagged-users-container {
     position: relative;
 }
 
-/* Tagged Users Icon */
 .show-tagged-users-icon {
     font-size: 1.5rem;
-    color: #9b4dca; /* Purple color */
+    color: #9b4dca; 
     cursor: pointer;
     transition: color 0.3s ease;
 }
 
 .show-tagged-users-icon:hover {
-    color: darkblue; /* Darker purple on hover */
+    color: darkblue; 
 }
 
-/* Tagged Users List */
 .tagged-users-list {
-    display: none; /* Initially hidden */
+    display: none; 
     position: absolute;
     background-color: white;
     border: 1px solid #ddd;
     border-right: 1px solid gray;
     border-bottom: 1px solid gray;
     border-radius: 5px;
-    max-height: 120px; /* Limit height for scrolling */
+    max-height: 120px; 
     overflow-y: auto;
-    width: 250px; /* Fixed width */
+    width: 250px; 
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 10px;
 }
 
-/* Individual Tagged User */
 .tagged-user {
     display: flex;
     align-items: center;
@@ -288,7 +285,7 @@ body {
 }
 
 .tagged-user:last-child {
-    margin-bottom: 0; /* No margin for last user */
+    margin-bottom: 0; 
 }
 
 .tagged-user img {
@@ -304,18 +301,17 @@ body {
     color: #333;
 }
 
-/* Visible class to show tagged users list */
 .tagged-users-list.visible {
     display: block;
 }
 
 .tagged-user-link {
     text-decoration: none;
-    color: inherit; /* Inherit the text color */
-    display: block; /* Make the entire link clickable */
+    color: inherit; 
+    display: block; 
 }
 
 .tagged-user-link:hover .tagged-user {
-    background-color: #f9f9f9; /* Light gray hover effect */
+    background-color: #f9f9f9; 
     border-radius: 5px;
 }

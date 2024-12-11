@@ -27,16 +27,13 @@
             </select>
         </div>
 
-        {{-- Tagged Users Section --}}
         <label for="tagged_users" class="form-label">Tagged Users:</label>
         <div class="tagged">
             <div id="tagged-users-list" class="tagged-users">
-                {{-- Tagged users will be displayed here dynamically --}}
             </div>
             <input type="hidden" name="tagged_users" id="tagged-users-input" value="">
         </div>
 
-        {{-- Search for Users --}}
         <div class="search-part">
             <input type="text" name="query" id="search-input" placeholder="Search for users..." autocomplete="off" />
             <div id="user-results"></div>

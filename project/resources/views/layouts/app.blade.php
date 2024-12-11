@@ -63,7 +63,7 @@
                 <!-- Left Column -->
                 <div class="column">
                     <h1><a href="{{ url('/home') }}">PetPawls</a></h1>
-                    <nav>
+                    <nav class="nav-menu">
                         <ul>
                             <li><a href="{{ url('/home') }}">Home</a></li>
                             <li><a href="{{ route('search') }}">Search</a></li>

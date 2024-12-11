@@ -4,23 +4,18 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 @endsection
 
-<div class="icons">
+<div class="d-i">
     <span class="comment-like-button" 
         data-post-id="{{ $post->id }}" 
-        data-comment-id="{{ $comment->id }}" 
-        data-liked="{{ Auth::user()->likesComment($comment) ? 'true' : 'false' }}">
-        @if (Auth::user()->likesComment($comment))
-            <i class="fas fa-heart"></i> <span class="like-count">{{ $comment->likes()->count() }}</span>
+        data-comment-id="{{ $reply->id }}" 
+        data-liked="{{ Auth::user()->likesComment($reply) ? 'true' : 'false' }}">
+        @if (Auth::user()->likesComment($reply))
+            <i class="fas fa-heart"></i> <span class="like-count">{{ $reply->likes()->count() }}</span>
         @else
-            <i class="far fa-heart"></i> <span class="like-count">{{ $comment->likes()->count() }}</span>
+            <i class="far fa-heart"></i> <span class="like-count">{{ $reply->likes()->count() }}</span>
         @endif
     </span>
-    <span
-        class="fa fa-comments" 
-        onclick="setReplyToComment('{{ $comment->id }}', '{{ $comment->user->username }}')"
-        title="Reply to this comment">
-        {{ $comment->childComments()->count() }}
-    </span>
+    <p class="date">Created on: {{ $reply->date }}</p>
 </div>
 
 <script>

@@ -25,8 +25,6 @@
             <span class="description"> {{ $post->description }} </span>
         </section>
 
-        {{-- New: Tagged Users Section --}}
-
         <section class="d-i">
             @include('pages.post.likes')
             <p class="date">Created on: {{ $post->creation_date }}</p>
@@ -60,29 +58,7 @@
                                 
                                 <p>{{ $reply->content }}</p>
                                 
-                                <section class="d-i">
-                                    @auth
-                                    @if (Auth::user()->likesComment($reply))
-                                        <form action="{{ route('comments.likes.destroy', ['post' => $post->id, 'comment' => $reply->id]) }}" method="POST">
-                                            @csrf 
-                                            <span class="fas fa-heart" onclick="submitLike(event)"> {{ $reply->likes()->count() }} </span>
-                                        </form>
-                                    @else
-                                        <form action="{{ route('comments.likes.store', ['post' => $post->id, 'comment' => $reply->id]) }}" method="POST">
-                                            @csrf
-                                            <span class="far fa-heart" onclick="submitLike(event)"> {{ $reply->likes()->count() }} </span>    
-                                        </form>
-                                    @endif 
-
-                                    @endauth
-                                    @guest
-                                        <form action=" {{ route('register') }} " method="POST">
-                                            @csrf
-                                            <span class="far fa-heart" onclick="submitLike(event)"> {{ $reply->likes()->count() }} </span> 
-                                        </form>
-                                    @endguest
-                                    <p class="date">Created on: {{ $reply->date }}</p>
-                                </section>
+                                @include('pages.post.comments.child-likes', ['post' => $post, 'comment' => $reply])
                             </div>
                         @endforeach
                     </div>
@@ -103,6 +79,7 @@
     </section>
 </div>
 @endsection
+
 
 
 
