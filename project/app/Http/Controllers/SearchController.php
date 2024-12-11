@@ -26,7 +26,7 @@ class SearchController extends Controller
         $this->authorize('banned', $loguser);
         $request->validate([
             'query' => 'nullable|string|min:2',
-            'type'  => 'required|string',
+            'type'  => 'nullable|string',
         ]);
 
         $query = strtolower($request->input('query', ''));
