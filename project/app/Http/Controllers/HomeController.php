@@ -16,7 +16,6 @@ class HomeController extends Controller
         $this->authorize('banned', User::class);
     
         $posts = Post::with('user')
-            ->where('is_public', true)
             ->orderBy('creation_date', 'desc')
             ->paginate(10);
     
