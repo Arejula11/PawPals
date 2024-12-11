@@ -112,9 +112,7 @@
                     |
                     <a href="/contact" class="footer-link">Contact</a>
                     |
-                    <a href="/help" class="footer-link">Help</a>
-                    |
-                    <a href="/faq" class="footer-link">FAQ</a>
+                    <a href="/faq" class="footer-link">FAQ & Help</a>
                 </small>
             </div>
             <div>

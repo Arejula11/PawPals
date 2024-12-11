@@ -137,4 +137,7 @@ Route::get('/banned', function () {
 // Static pages
 Route::controller(StaticController::class)->group(function () {
     Route::get('/about', 'showAbout')->name('static.about'); // Show about us
+    Route::get('/contact', 'showContact')->name('static.contact'); // Show contact
+    Route::post('/contact', 'sendContact')->name('static.contact.send'); // Show contact
+    Route::get('/faq', 'showFAQ')->name('static.faw'); // Show FAQ
 });

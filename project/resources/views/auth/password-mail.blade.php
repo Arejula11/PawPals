@@ -6,6 +6,6 @@ Here is your new password:<br>
 <br>
 You can change this password in your profile edit section.<br>
 <br>
-Have fun using PetPawls!<br>
-Your PetPawls Team<br>
+Have fun using PawPawls!<br>
+Your PawPawls Team<br>
 </p>
