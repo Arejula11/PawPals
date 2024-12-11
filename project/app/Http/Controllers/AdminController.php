@@ -172,7 +172,6 @@ class AdminController extends Controller
     {
         $loguser = auth()->user();
         $this->authorize('admin', $loguser);
-        Log::info('Showing change password page');
         return view('admin.changePassword');
     }
 
@@ -186,8 +185,14 @@ class AdminController extends Controller
         $validatedData = $request->validate([
             'old' => 'required|string|min:8',
             'new' => 'required|string|min:8',
+            'repeat' => 'required|string|min:8',
         ]);
         $user = User::findOrFail($id);
+
+        if ( $validatedData['new'] != $validatedData['repeat'] ) {
+            return redirect()->route('admin.changePassword', $id)->with('error', 'Passwords did not match.');
+        }
+
 
         if (Hash::check($validatedData['old'], $user->password)) {
             $user->password = bcrypt($validatedData['new']);
