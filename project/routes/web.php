@@ -11,6 +11,9 @@ use App\Http\Controllers\GroupController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\PostLikeController;
+use App\Http\Controllers\CommentLikeController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\FollowController;
@@ -69,6 +72,17 @@ Route::controller(PostController::class)->group(function () {
     Route::put('/posts/{id}', 'update')->name('posts.update'); // Update a specific post
     Route::delete('/posts/{id}', 'destroy')->name('posts.destroy'); // Delete a specific post
 });
+
+Route::controller(CommentController::class)->group(function () {
+    Route::post('/posts/{id}/comments', 'store')->name('posts.comments.store'); // Store a new comment on a post
+});
+
+Route::post('/posts/{post}/likes/store', [PostLikeController::class, 'store'])->name('posts.likes.store');
+Route::delete('/posts/{post}/likes/destroy', [PostLikeController::class, 'destroy'])->name('posts.likes.destroy');
+Route::post('/posts/{post}/comments/{comment}/likes/store', [CommentLikeController::class, 'store'])->name('comments.likes.store');
+Route::delete('/posts/{post}/comments/{comment}/likes/destroy', [CommentLikeController::class, 'destroy'])->name('comments.likes.destroy'); 
+Route::post('/posts/{post_id}/tags/{user_id}', [PostTagController::class, 'store'])->name('post.tags.store');
+Route::delete('/posts/{post_id}/tags/{user_id}', [PostTagController::class, 'destroy'])->name('post.tags.destroy');
 
 Route::controller(GroupController::class)->group(function () {
     Route::get('/groups/search', 'search')->name('groups.search'); // Search for groups

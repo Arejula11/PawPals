@@ -18,7 +18,8 @@ class Post extends Model
         'creation_date',
         'description',
         'user_id',
-        'post_picture_id',
+        'post_picture',
+        'is_public',
     ];
 
     /**
@@ -27,14 +28,6 @@ class Post extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
-    }
-
-    /**
-     * Get the picture for the post.
-     */
-    public function picture()
-    {
-        return $this->belongsTo(Picture::class, 'post_picture_id');
     }
 
     /**
@@ -58,7 +51,7 @@ class Post extends Model
      */
     public function likes()
     {
-        return $this->belongsToMany(User::class, 'post_like', 'post_id', 'user_id');
+        return $this->belongsToMany(User::class, 'post_like');
     }
 
     /**
@@ -66,7 +59,7 @@ class Post extends Model
      */
     public function tags()
     {
-        return $this->belongsToMany(User::class, 'post_tag', 'post_id', 'user_id');
+        return $this->hasMany(PostTag::class);
     }
 
     /**
@@ -76,5 +69,6 @@ class Post extends Model
     {
         return $this->all();
     }
+
 }
 

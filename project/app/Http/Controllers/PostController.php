@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
-use App\Models\Picture;
+use App\Models\PostTag;
 use Illuminate\Support\Facades\Log;
 
 
@@ -17,17 +17,14 @@ class PostController extends Controller
     {
         $loguser = auth()->user();
         $this->authorize('banned', $loguser);
-        // Get the authenticated user's ID
         $userId = auth()->id();
             
-        // Fetch posts belonging to the authenticated user
         $posts = Post::with('user')
             ->where('user_id', $userId)
             ->orderBy('creation_date', 'desc')
-            ->paginate(10); // Paginate with 10 posts per page
+            ->paginate(10); 
             
-        // Return the index view with user's posts
-        return view('pages.post.index', compact('posts'));
+        return view('pages.home', compact('posts'));
     }
 
     /**
@@ -47,27 +44,41 @@ class PostController extends Controller
     {
         $loguser = auth()->user();
         $this->authorize('banned', $loguser);
-    $validated = $request->validate([
+    
+        $validated = $request->validate([
         'description' => 'required|string|max:500',
         'post_picture' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-    ]);
+        'is_public' => 'required|boolean',
+        'tagged_users' => 'nullable|string',
+        ]);
 
-    $post = new Post($validated);
-    $post->description = $request->description;
-    $post->creation_date = now();
-    $post->user_id = auth()->id();
+        $post = new Post($validated);
+        $post->description = $request->description;
+        $post->creation_date = now();
+        $post->is_public = $request->is_public;
+        $post->user_id = auth()->id();
 
-    if ($request->hasFile('post_picture')) {
-        $file = $request->file('post_picture');
-        $fileName = $file->hashName();
-        $file->storeAs('post', $fileName, 'Images');
+        if ($request->hasFile('post_picture')) {
+            $file = $request->file('post_picture');
+            $fileName = $file->hashName();
+            $file->storeAs('post', $fileName, 'Images');
 
-        $post->post_picture = "$fileName";
-    }
+            $post->post_picture = "$fileName";
+        }
 
-    $post->save();
+        $post->save();
 
-    return redirect()->route('home')->with('success', 'Post created successfully!');
+        if (!empty($validated['tagged_users'])) {
+            $taggedUserIds = explode(',', $validated['tagged_users']);
+            foreach ($taggedUserIds as $userId) {
+                PostTag::create([
+                    'post_id' => $post->id,
+                    'user_id' => $userId,
+                ]);
+            }
+        }
+
+        return redirect()->route('home')->with('success', 'Post created successfully!');
     }
 
     
@@ -79,7 +90,12 @@ class PostController extends Controller
         $loguser = auth()->user();
         $this->authorize('banned', $loguser);
         $post = Post::with('user')->findOrFail($id);
+        $user = auth()->user();
 
+        if (!$post->is_public && (!$user || (!$user->follows->contains($post->user_id) && $user->id !== $post->user_id))) {
+            abort(403, 'You do not have permission to view this post.');
+        }
+    
         return view('pages.post.show', compact('post'));
     }
 
@@ -91,13 +107,11 @@ class PostController extends Controller
         $loguser = auth()->user();
         $this->authorize('banned', $loguser);
         $post = Post::findOrFail($id);
+        $user = auth()->user();
 
-        // Ensure the authenticated user owns the post
-        if ($post->user_id !== auth()->id()) {
-            abort(403, 'Unauthorized action.');
+        if($user->id !== $post->user_id || !$user) {
+            abort(403, 'You do not have permission to edit this post.');
         }
-    
-        // Return the edit view with the post
         return view('pages.post.edit', compact('post'));
     }
 
@@ -110,29 +124,22 @@ class PostController extends Controller
         $this->authorize('banned', $loguser);
 
         $post = Post::findOrFail($id);
-
-        // Ensure the authenticated user owns the post
-        if ($post->user_id !== auth()->id()) {
-            abort(403, 'Unauthorized action.');
-        }
     
-        // Validate the request
         $validated = $request->validate([
-            'description' => 'required|string|max:500',
+            'description' => 'nullable|string|max:500',
             'post_picture' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'is_public' => 'nullable|boolean',
+            'tagged_users' => 'nullable|string',
         ]);
     
-        // Update description
         $post->description = $validated['description'];
+        $post->is_public = $validated['is_public'];
     
-        // Update post picture if provided
         if ($request->hasFile('post_picture')) {
-            // Delete the old picture
             if ($post->post_picture && \Storage::disk('Images')->exists($post->post_picture)) {
                 \Storage::disk('Images')->delete($post->post_picture);
             }
     
-            // Save the new picture
             $file = $request->file('post_picture');
             $fileName = $file->hashName();
             $file->storeAs('post', $fileName, 'Images');
@@ -140,6 +147,30 @@ class PostController extends Controller
         }
     
         $post->save();
+
+
+        if (!empty($validated['tagged_users'])) {
+            $newTaggedUserIds = explode(',', $validated['tagged_users']); 
+            $currentTaggedUserIds = $post->tags->pluck('user_id')->toArray(); 
+
+            $tagsToAdd = array_diff($newTaggedUserIds, $currentTaggedUserIds); 
+            $tagsToRemove = array_diff($currentTaggedUserIds, $newTaggedUserIds);
+            foreach ($tagsToAdd as $userId) { 
+                PostTag::create([
+                    'post_id' => $post->id,
+                    'user_id' => $userId,
+                ]);
+            }
+
+            if (!empty($tagsToRemove)) { 
+                PostTag::where('post_id', $post->id)
+                    ->whereIn('user_id', $tagsToRemove)
+                    ->delete();
+            }
+        } 
+        else { 
+            PostTag::where('post_id', $post->id)->delete();
+        }
     
         return redirect()->route('posts.index')->with('success', 'Post updated successfully!');
     }
@@ -153,13 +184,12 @@ class PostController extends Controller
         $this->authorize('banned', $loguser);
         
         $post = Post::findOrFail($id);
-
-        // Ensure the authenticated user owns the post
-        if ($post->user_id !== auth()->id()) {
-            abort(403, 'Unauthorized action.');
+        $user = auth()->user();
+        
+        if (!$user || $user->id !== $post->user_id) {
+            abort(403, 'You do not have permission to delete this post.');
         }
     
-        // Delete the associated image if it exists
         if ($post->post_picture && \Storage::disk('Images')->exists($post->post_picture)) {
             \Storage::disk('Images')->delete($post->post_picture);
         }
