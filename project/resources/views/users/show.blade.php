@@ -26,7 +26,7 @@
                 @if ($followStatus === 'pending')
                     <button class="btn btn-secondary" disabled>Request Sent</button>
                 @elseif ($followStatus === 'accepted')
-                    <button class="btn btn-success" disabled>Following</button>
+                    <button id="following-btn" class="btn btn-success">Following</button>
                 @else
                     <form method="POST" action="{{ route('follow.send') }}">
                         @csrf
@@ -49,6 +49,17 @@
             @endif
         </div>
     </header>
+
+    <!-- Unfollow Confirmation Modal -->
+    <div id="unfollow-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <p>Would you like to unfollow?</p>
+            <div class="modal-actions">
+                <button id="unfollow-yes" class="btn btn-danger">Yes</button>
+                <button id="unfollow-no" class="btn btn-secondary">No</button>
+            </div>
+        </div>
+    </div>
 
     <!-- Body -->
     <div class="profile-body">
@@ -81,4 +92,65 @@
         </div>
     </div>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const followingBtn = document.getElementById('following-btn');
+        const modal = document.getElementById('unfollow-modal');
+        const unfollowYesBtn = document.getElementById('unfollow-yes');
+        const unfollowNoBtn = document.getElementById('unfollow-no');
+
+        // Create and add overlay element
+        const overlay = document.createElement('div');
+        overlay.classList.add('overlay');
+        document.body.appendChild(overlay);
+
+        // Function to show modal with animation
+        function showModal() {
+            modal.style.display = 'block';
+            overlay.style.display = 'block';
+            setTimeout(() => {
+                modal.style.opacity = '1';
+                modal.style.transform = 'translate(-50%, -50%) scale(1)';
+            }, 10);
+        }
+
+        // Function to hide modal with animation
+        function hideModal() {
+            modal.style.opacity = '0';
+            modal.style.transform = 'translate(-50%, -50%) scale(0.8)';
+            setTimeout(() => {
+                modal.style.display = 'none';
+                overlay.style.display = 'none';
+            }, 300);
+        }
+
+        // Show modal when "Following" button is clicked
+        followingBtn?.addEventListener('click', showModal);
+
+        // Hide modal on "No" click
+        unfollowNoBtn.addEventListener('click', hideModal);
+
+        // Handle "Yes" action
+        unfollowYesBtn.addEventListener('click', () => {
+            fetch("{{ route('follow.remove') }}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({
+                    user1_id: {{ Auth::id() }},
+                    user2_id: {{ $user->id }}
+                })
+            }).then(response => {
+                if (response.ok) {
+                    window.location.reload();
+                } else {
+                    alert('Failed to unfollow. Please try again.');
+                    hideModal();
+                }
+            });
+        });
+    });
+</script>
 @endsection

@@ -132,6 +132,7 @@ Route::post('/follow', [UserController::class, 'follow'])->name('follow.send');
 Route::get('/requests', [UserController::class, 'checkRequests'])->name('requests.show');
 Route::post('follow/accept/{user1_id}/{user2_id}', [UserController::class, 'accept'])->name('follow.accept');
 Route::post('follow/reject/{user1_id}/{user2_id}', [UserController::class, 'reject'])->name('follow.reject');
+Route::post('/follow/remove', [UserController::class, 'unfollow'])->name('follow.remove');
 
 
 Route::get('/settings', [UserController::class, 'settings'])->name('settings.show');

@@ -25,29 +25,35 @@ class SearchController extends Controller
         $loguser = auth()->user();
         $this->authorize('banned', $loguser);
         $request->validate([
-            'query' => 'required|string|min:2',
+            'query' => 'nullable|string|min:2',
+            'type'  => 'required|string',
         ]);
 
-        $query = $request->input('query');
-        $query = strtolower($query);
+        $query = strtolower($request->input('query', ''));
+        $type = strtolower($request->input('type', 'pet owner'));
         
-        // Query users based on username
-        $users = User::whereRaw('LOWER(username) LIKE ?', ['%' . $query . '%'])
-                    ->orWhereRaw('LOWER(firstname) LIKE ?', ['%' . $query . '%'])
-                    ->orWhereRaw('LOWER(surname) LIKE ?', ['%' . $query . '%'])
-                    ->orWhereRaw('LOWER(CAST(type AS TEXT)) LIKE ?', ['%' . strtolower($query) . '%'])
-                    ->limit(5)
-                    ->get()
-                    ->map(function ($user) {
-                        return [
-                            'id' => $user->id,
-                            'first_name' => $user->firstname,
-                            'username' => $user->username,
-                            'profile_image' => $user->profile_picture ? asset('profile/' . $user->profile_picture) : asset('profile/default.png'), // Fallback image
-                            'profile_url' => route('users.show', $user->id),
-                        ];
-                    });
-
+        $users = User::query()
+            ->when($query, function ($queryBuilder) use ($query) {
+                $queryBuilder->where(function ($subQuery) use ($query) {
+                    $subQuery->whereRaw('LOWER(username) LIKE ?', ['%' . $query . '%'])
+                            ->orWhereRaw('LOWER(firstname) LIKE ?', ['%' . $query . '%'])
+                            ->orWhereRaw('LOWER(surname) LIKE ?', ['%' . $query . '%']);
+                });
+            })
+            ->whereRaw('LOWER(CAST(type AS TEXT)) = ?', [$type])
+            ->limit(5)
+            ->get()
+            ->map(function ($user) {
+                return [
+                    'id'            => $user->id,
+                    'first_name'    => $user->firstname,
+                    'username'      => $user->username,
+                    'profile_image' => $user->profile_picture 
+                                        ? asset('profile/' . $user->profile_picture) 
+                                        : asset('profile/default.png'),
+                    'profile_url'   => route('users.show', $user->id),
+                ];
+            });
         return response()->json($users);
     }
 
