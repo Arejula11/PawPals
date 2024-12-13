@@ -84,6 +84,7 @@ Route::delete('/posts/{post}/comments/{comment}/likes/destroy', [CommentLikeCont
 Route::post('/posts/{post_id}/tags/{user_id}', [PostTagController::class, 'store'])->name('post.tags.store');
 Route::delete('/posts/{post_id}/tags/{user_id}', [PostTagController::class, 'destroy'])->name('post.tags.destroy');
 
+Route::delete('/groups/{group}/participants/{user}', [GroupController::class, 'removeParticipant'])->name('groups.participants.remove');
 Route::controller(GroupController::class)->group(function () {
     Route::get('/groups/search', 'search')->name('groups.search'); // Search for groups
     Route::get('/groups', 'index')->name('groups.index'); // List of groups
