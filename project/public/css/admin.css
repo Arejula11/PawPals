@@ -551,3 +551,79 @@ body {
     background-color: #ff6f61;
     border-color: #ff6f61;
 }
+
+
+/* Posts List */
+.posts {
+    width: 90%;
+    max-width: 1200px;
+    margin: 20px auto;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.post-header {
+    font-size: 20px;
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 15px;
+    text-align: left;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+}
+
+/* Individual Post */
+.post {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+    transition: background-color 0.2s ease;
+}
+
+.post:hover {
+    background-color: #f1f1f1;
+}
+
+.post:last-child {
+    border-bottom: none;
+}
+
+.post a {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    width: 100%;
+}
+
+.post-details {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+}
+
+/* Post Image */
+.post-img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+/* Post Meta Information */
+.post-meta {
+    font-size: 14px;
+    color: #555;
+    margin: 5px 0;
+}
+
+.post-meta:first-of-type {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}

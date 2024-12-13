@@ -115,7 +115,8 @@ Route::get('admin/groups', [AdminController::class, 'groupsManage'])->name('admi
 Route::get('admin/groups/{id}', [AdminController::class, 'showGroup'])->name('admin.groups.show');
 Route::delete('admin/groups/{id}', [GroupController::class, 'destroy'])->name('admin.groups.delete');
 Route::get('admin/groups/edit/{id}', [GroupController::class, 'edit'])->name('admin.groups.edit');
-
+Route::get('admin/posts', [AdminController::class, 'postsManage'])->name('admin.posts.manage');
+Route::get('admin/posts/{id}', [AdminController::class, 'showPost'] )->name('admin.posts.show');
 
 Route::post('/update-message', [MessageController::class, 'updateMessage']);
 

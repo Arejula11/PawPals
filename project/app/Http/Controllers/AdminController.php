@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Group;
+use App\Models\Post;
 use Illuminate\Support\Facades\Hash;
 
 
@@ -181,6 +182,24 @@ class AdminController extends Controller
         }
 
         return redirect()->route('admin.changePassword', $id)->with('error', 'Old password is incorrect.');
+    }
+
+    /**
+     * Show all posts
+     */
+    public function postsManage()
+    {
+        $posts = Post::orderBy('creation_date', 'desc')->simplePaginate(10);
+        return view('admin.postsManage', compact('posts'));
+    }
+
+    /**
+     * Show a post
+     */
+    public function showPost() {
+
+        return view('admin.showPost');
+        
     }
 
 }
