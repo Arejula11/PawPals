@@ -3,6 +3,10 @@
     <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
 @endsection
 
+@php
+    use App\Models\User;
+@endphp
+
 @section('content')
     <div class="header">
         <a href="{{route('admin.home')}}" class="name">PetPawls</a>
@@ -18,14 +22,19 @@
                         <img class="post-img" src="{{ asset($post->getPostPicture()) }}" alt="Post Picture">
                         <p class="post-meta">Title: {{ $post->description }}</p>
                         <p class="post-meta">Date: {{ $post->creation_date }}</p>
-                        <p class="post-meta">User ID: {{ $post->user_id }}</p>
+                        @php
+                            
+                            $user = User::find($post->user_id);
+                        @endphp
+                        <p class="post-meta">User: {{ $user->username }}</p>
                     </div>
                 </a>
             </div>
         @endforeach
         </div>
+        <div class="pagination-posts">
+            {{ $posts->links() }}
+        </div>
     </div>
-    <div class="pagination">
-        {{ $posts->links() }}
-    </div>
+    
 @endsection

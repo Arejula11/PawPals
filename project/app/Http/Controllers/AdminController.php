@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Group;
 use App\Models\Post;
+use App\Models\Comment;
 use Illuminate\Support\Facades\Hash;
 
 
@@ -201,5 +202,77 @@ class AdminController extends Controller
         return view('admin.showPost');
         
     }
+
+    /**
+     * Show the form for editing the specified post.
+     */
+    public function editPost(string $id)
+    {
+        $post = Post::findOrFail($id);
+        return view('admin.editPost', compact('post'));
+    }
+
+    /**
+     * Update the specified post in storage.
+     */
+    public function updatePost(Request $request, string $id)
+    {
+        $validated = $request->validate([
+            'description' => 'required|string|max:255',
+
+        ]);
+
+        $post = Post::findOrFail($id);
+        $post->update($validated);
+
+        return redirect()->route('admin.postsManage')->with('success', 'Post updated successfully.');
+    }
+
+    /**
+     * Remove the specified post from storage.
+     */
+    public function destroyPost(string $id)
+    {
+        $post = Post::findOrFail($id);
+        $post->delete();
+
+        return redirect()->route('admin.postsManage')->with('success', 'Post deleted successfully.');
+    }
+
+    /**
+     * Show the specified comment.
+     */
+    public function showComment(string $id)
+    {
+        $comment = Comment::findOrFail($id);
+        return view('admin.showComment', compact('comment'));
+    }
+
+    /**
+     * Update the specified comment in storage.
+     */
+    public function updateComment(Request $request, string $id)
+    {
+        $validated = $request->validate([
+            'content' => 'required|string',
+        ]);
+
+        $comment = Comment::findOrFail($id);
+        $comment->update($validated);
+
+        return redirect()->route('admin.comments.show', $id)->with('success', 'Comment updated successfully.');
+    }
+
+    /**
+     * Remove the specified comment from storage.
+     */
+    public function destroyComment(string $id)
+    {
+        $comment = Comment::findOrFail($id);
+        $comment->delete();
+
+        return redirect()->route('admin.postsManage')->with('success', 'Comment deleted successfully.');
+    }
+
 
 }
