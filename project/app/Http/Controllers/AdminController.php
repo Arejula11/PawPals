@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Group;
 use App\Models\Post;
 use App\Models\Comment;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Hash;
 
 
@@ -131,6 +132,8 @@ class AdminController extends Controller
      */
     public function showUser(string $id)
     {
+        $user = auth()->user();
+        $this->authorize('admin', $user);
         $user = User::findOrFail($id);
         return view('admin.showUser', compact('user'));
     }
@@ -140,6 +143,8 @@ class AdminController extends Controller
      */
     public function showGroup(string $id)
     {
+        $user = auth()->user();
+        $this->authorize('admin', $user);
         $group = Group::findOrFail($id);
         return view('admin.showGroup', compact('group'));
     }
@@ -149,6 +154,8 @@ class AdminController extends Controller
      * Ban a user
      */
     public function banUser(string $id){
+        $user = auth()->user();
+        $this->authorize('admin', $user);
         $user = User::findOrFail($id);
         
 
@@ -160,6 +167,8 @@ class AdminController extends Controller
      */
     public function changePassword()
     {
+        $user = auth()->user();
+        $this->authorize('admin', $user);
         Log::info('Showing change password page');
         return view('admin.changePassword');
     }
@@ -169,6 +178,8 @@ class AdminController extends Controller
      */
     public function updatePassword(Request $request, string $id)
     {
+        $user = auth()->user();
+        $this->authorize('admin', $user);
         $validatedData = $request->validate([
             'old' => 'required|string|min:8',
             'new' => 'required|string|min:8',
@@ -190,6 +201,8 @@ class AdminController extends Controller
      */
     public function postsManage()
     {
+        $user = auth()->user();
+        $this->authorize('admin', $user);
         $posts = Post::orderBy('creation_date', 'desc')->simplePaginate(10);
         return view('admin.postsManage', compact('posts'));
     }
@@ -199,6 +212,8 @@ class AdminController extends Controller
      */
     public function showPost() {
 
+        $user = auth()->user();
+        $this->authorize('admin', $user);
         return view('admin.showPost');
         
     }
@@ -208,6 +223,8 @@ class AdminController extends Controller
      */
     public function editPost(string $id)
     {
+        $user = auth()->user();
+        $this->authorize('admin', $user);
         $post = Post::findOrFail($id);
         return view('admin.editPost', compact('post'));
     }
@@ -217,6 +234,8 @@ class AdminController extends Controller
      */
     public function updatePost(Request $request, string $id)
     {
+        $user = auth()->user();
+        $this->authorize('admin', $user);
         $validated = $request->validate([
             'description' => 'required|string|max:255',
 
@@ -225,7 +244,7 @@ class AdminController extends Controller
         $post = Post::findOrFail($id);
         $post->update($validated);
 
-        return redirect()->route('admin.postsManage')->with('success', 'Post updated successfully.');
+        return redirect()->route('admin.posts.manage')->with('success', 'Post updated successfully.');
     }
 
     /**
@@ -233,10 +252,12 @@ class AdminController extends Controller
      */
     public function destroyPost(string $id)
     {
+        $user = auth()->user();
+        $this->authorize('admin', $user);
         $post = Post::findOrFail($id);
         $post->delete();
 
-        return redirect()->route('admin.postsManage')->with('success', 'Post deleted successfully.');
+        return redirect()->route('admin.posts.manage')->with('success', 'Post deleted successfully.');
     }
 
     /**
@@ -244,6 +265,8 @@ class AdminController extends Controller
      */
     public function showComment(string $id)
     {
+        $user = auth()->user();
+        $this->authorize('admin', $user);
         $comment = Comment::findOrFail($id);
         return view('admin.showComment', compact('comment'));
     }
@@ -253,6 +276,8 @@ class AdminController extends Controller
      */
     public function updateComment(Request $request, string $id)
     {
+        $user = auth()->user();
+        $this->authorize('admin', $user);
         $validated = $request->validate([
             'content' => 'required|string',
         ]);
@@ -260,7 +285,7 @@ class AdminController extends Controller
         $comment = Comment::findOrFail($id);
         $comment->update($validated);
 
-        return redirect()->route('admin.comments.show', $id)->with('success', 'Comment updated successfully.');
+        return redirect()->route('admin.home', $id)->with('success', 'Comment updated successfully.');
     }
 
     /**
@@ -268,10 +293,12 @@ class AdminController extends Controller
      */
     public function destroyComment(string $id)
     {
+        $user = auth()->user();
+        $this->authorize('admin', $user);
         $comment = Comment::findOrFail($id);
         $comment->delete();
 
-        return redirect()->route('admin.postsManage')->with('success', 'Comment deleted successfully.');
+        return redirect()->route('admin.posts.manage')->with('success', 'Comment deleted successfully.');
     }
 
 

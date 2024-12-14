@@ -120,7 +120,7 @@ Route::get('admin/posts/{id}', [AdminController::class, 'showPost'] )->name('adm
 Route::put('admin/posts/edit/{id}', [AdminController::class, 'updatePost'])->name('admin.posts.update');
 Route::delete('admin/posts/{id}', [AdminController::class, 'destroyPost'])->name('admin.posts.delete');
 Route::get('admin/comment/{id}', [AdminController::class, 'showComment'])->name('admin.comments.show');
-Route::put('admin/comment/{id}', [AdminController::class, 'edit'])->name('admin.comments.edit');
+Route::put('admin/comment/{id}', [AdminController::class, 'updateComment'])->name('admin.comments.edit');
 Route::delete('admin/comment/{id}', [AdminController::class, 'destroyComment'])->name('admin.comments.delete');
 
 

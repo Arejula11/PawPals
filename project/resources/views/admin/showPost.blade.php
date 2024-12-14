@@ -26,7 +26,9 @@
             <div class="post-show-details">
                 <img class="post-show-img" src="{{ asset($post->getPostPicture()) }}" alt="Post Picture">
                 <div class="post-show-meta-container">
-                    <form action="{{ route('admin.posts.update', $post->id) }}" method="GET" class="edit-form">
+                    <form action="{{ route('admin.posts.update', $post->id) }}" method="POST" class="edit-form">
+                        @csrf
+                        @method('PUT')
                         <input name="description" value="{{ $post->description }}">
                         <button type="submit" class="btn edit-btn">Edit</button>
                     </form>
