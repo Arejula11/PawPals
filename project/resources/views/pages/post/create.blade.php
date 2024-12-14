@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             </div>
                         `;
                         userDiv.addEventListener('click', function() {
-                            addTaggedUser(user.id, user.first_name, user.username);
+                            addTaggedUser(user.id, user.username);
                         });
                         resultsDiv.appendChild(userDiv);
                     });

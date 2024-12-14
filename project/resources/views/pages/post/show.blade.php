@@ -19,6 +19,12 @@
                 <img src="{{ $post->user->getProfilePicture()  }}" alt="Profile Picture">
             </section>
             <a href="{{ route('users.show', $post->user->id) }}" > {{ $post->user->username }} </a>
+            @if ($post->user->id == auth()->id())
+                <a href=" {{ route('posts.edit', $post->id) }} " class="edit-post">
+                    <span>Edit post</span>
+                    <i class="fa-regular fa-pen-to-square"></i>
+                </a>
+            @endif
         </section>
 
         <section class="content">

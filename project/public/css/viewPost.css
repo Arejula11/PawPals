@@ -56,6 +56,15 @@ body {
     width: 350px;
 }
 
+.edit-post{
+    margin-left: 130px;
+}
+
+.edit-post:hover{
+    cursor: pointer;
+    color: darkblue;
+}
+
 .profile-picture img {
     width: 30px;
     height: 30px;

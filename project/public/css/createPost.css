@@ -1,3 +1,8 @@
+.container {
+    width: 50%;
+    align-items: center;
+}
+
 .user-result {
     display: flex;
     flex-direction: row;
@@ -7,9 +12,15 @@
 
 .user-link {
     display: flex;
+    padding: 10px;
     align-items: center;
     text-decoration: none;
     color: inherit;
+}
+
+.user-link:hover {
+    cursor: pointer;
+    background-color: rgb(155, 77, 202, .3);
 }
 
 .profile-image {
@@ -34,13 +45,15 @@
 }
 
 .tagged-users {
-    display: flex; 
+    display: flex;
     flex-wrap: wrap; 
+    justify-content: center;
     gap: 10px; 
     margin-bottom: 10px;
 }
 
 .tagged-user {
+    width: 33%;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -48,7 +61,11 @@
     padding: 5px;
     border-radius: 20px;
     font-size: 1.6rem;
-    white-space: nowrap; 
+    white-space: wrap; 
+}
+
+.tagged-user:hover {
+    background-color: rgb(155, 77, 202, .3);
 }
 
 .tagged-user button {

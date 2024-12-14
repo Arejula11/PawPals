@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('head')
     <link href="{{ asset('css/createPost.css') }}" rel="stylesheet">
+    <script src="{{ asset('js/app.js') }}" defer></script>
 @endsection
 
 @section('content')
@@ -13,11 +14,6 @@
         <div class="desc">
             <label for="description" class="form-label">Description</label>
             <textarea id="description" name="description" class="form-control" rows="4" required>{{ old('description', $post->description) }}</textarea>
-        </div>
-
-        <div class="pic">
-            <label for="post_picture" class="form-label">Upload Picture</label>
-            <input type="file" id="post_picture" name="post_picture" class="form-control">
         </div>
 
         <div class="privacy">  
@@ -35,7 +31,7 @@
                 @foreach ($post->tags as $tag)
                     @if ($tag->user)
                     <div id="tagged-user-{{ $tag->user->id }}" class="tagged-user">
-                        {{ $tag->user->firstname }} (@ {{ $tag->user->username }})
+                        @ {{ $tag->user->username }}
                         <button type="button" class="remove-tag" data-id="{{ $tag->user->id }}">Remove</button>
                     </div>
                     @endif
@@ -90,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             </div>
                         `;
                         userDiv.addEventListener('click', function() {
-                            addTaggedUser(user.id, user.first_name, user.username);
+                            addTaggedUser(user.id, user.username);
                         });
                         resultsDiv.appendChild(userDiv);
                     });
@@ -107,42 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
     searchInput.addEventListener('input', () => debounce(fetchUsers, 300));
 });
 
-    function addTaggedUser(id, name, username) {
-        let taggedUsersList = document.getElementById('tagged-users-list');
-        let taggedUsersInput = document.getElementById('tagged-users-input');
-
-        if (!document.querySelector(`#tagged-user-${id}`)) {
-            let userTag = document.createElement('div');
-            userTag.classList.add('tagged-user');
-            userTag.id = `tagged-user-${id}`;
-            userTag.innerHTML = `
-                ${name} (@${username})
-                <button type="button" class="remove-tag" data-id="${id}">Remove</button>
-            `;
-
-            userTag.querySelector('.remove-tag').addEventListener('click', function() {
-                userTag.remove();
-                updateTaggedUsersInput();
-            });
-
-            taggedUsersList.appendChild(userTag);
-
-            updateTaggedUsersInput();
-        }
-    }
-
-    function updateTaggedUsersInput() {
-        let taggedUsersList = document.querySelectorAll('.tagged-user');
-        let taggedUsersInput = document.getElementById('tagged-users-input');
-
-        let userIds = Array.from(taggedUsersList).map(user => {
-            return user.id.replace('tagged-user-', '');
-        });
-
-        taggedUsersInput.value = userIds.join(',');
-    }
-
-    document.querySelectorAll('.remove-tag').forEach(button => {
+document.querySelectorAll('.remove-tag').forEach(button => {
     button.addEventListener('click', function() {
         let userTag = document.getElementById(`tagged-user-${this.dataset.id}`);
         if (userTag) {
@@ -150,6 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
             updateTaggedUsersInput();
         }
     });
-    });
+});
+
 </script>
 @endsection
