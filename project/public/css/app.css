@@ -269,8 +269,8 @@ input[type=password]:focus {
   transform: translateY(-2px);
 }
 
-.login-form .error,
-.login-form .success {
+.error,
+.success {
   display: block;
   margin-top: 10px;
   font-size: 0.9rem;
@@ -279,7 +279,7 @@ input[type=password]:focus {
   text-align: center;
 }
 
-.login-form .error {
+.error {
   background-color: #ffe0e0;
   color: #cc0000;
 }

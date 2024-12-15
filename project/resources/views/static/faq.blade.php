@@ -1,7 +1,9 @@
 @extends('layouts.app')
+
 @section('head')
 
 <link href="{{ asset('css/static.css') }}" rel="stylesheet">
+
 @endsection
 
 @section('content')
@@ -41,7 +43,7 @@
 
 <button class="accordion">How do I join or create a group?</button>
 <div class="panel">
-  <p>To join a group, press the Search Groups button on the group section. Look for a group that you want to join and press the Join button.<br>
+  <p>To join a group, press the Search Groups button on the group section. Look for a group that you want to join and press the Join button.<br><br>
 To create a group, click on the Create Group button in the group section. Then, enter the group name, its description and privacy settings and press the Create Group button.
 </p>
 </div>
