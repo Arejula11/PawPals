@@ -1,10 +1,11 @@
 @extends('layouts.admin')
 @section('head')
-    <!-- Include only the CSS for this view -->
-    <link href="{{ asset('css/ban.css') }}" rel="stylesheet">
+
+    <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')
+
     <form action="{{ route('admin.updatePassword', ['id' => Auth::user()->id ]) }}" method="POST">
         @csrf
         @method('PUT')
@@ -18,6 +19,15 @@
             <label for="reason">New password</label>
             <input type="password" class="form-control" id="new" name="new" required>
         </div>
+        <div class="form-group">
+            <label for="reason">Repeat new password</label>
+            <input type="password" class="form-control" id="repeat" name="repeat" required>
+        </div>
+        @if(session('error'))
+            <div class="error">
+                {{ session('error') }}
+            </div>
+        @endif
         <button type="submit" class="btn btn-primary">Change</button>
     </form>
 

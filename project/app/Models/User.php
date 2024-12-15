@@ -85,7 +85,7 @@ class User extends Authenticatable
      */
     public function posts() 
     {
-        $postImages =FileController::getAllPostUserImages( $this->id);
+        $postImages = FileController::getAllPostUserImages( $this->id);
         return view('post_images', ['images' => $postImages]);
     }
 
@@ -100,17 +100,27 @@ class User extends Authenticatable
     /**
      * Get the likes given by the user on posts.
      */
-    public function postLikes(): BelongsToMany
+    public function postLikes()
     {
-        return $this->belongsToMany(Post::class, 'post_like', 'user_id', 'post_id');
+        return $this->belongsToMany(Post::class, 'post_like');
+    }
+
+    public function likesPost(Post $post) 
+    {
+        return $this->postLikes()->where('post_id', $post->id)->exists();
     }
 
     /**
      * Get the likes given by the user on comments.
      */
-    public function commentLikes(): BelongsToMany
+    public function commentLikes()
     {
-        return $this->belongsToMany(Comment::class, 'comment_like', 'user_id', 'comment_id');
+        return $this->belongsToMany(Comment::class, 'comment_like');
+    }
+
+    public function likesComment(Comment $comment) 
+    {
+        return $this->commentLikes()->where('comment_id', $comment->id)->exists();
     }
 
     /**
@@ -218,5 +228,13 @@ class User extends Authenticatable
     {
         return $this->bans()->where('active', true)->exists();
     
+    }
+
+    /**
+     * Return the id of the active ban.
+     */
+    public function getActiveBanId(): Ban
+    {
+        return $this->bans()->where('active', true)->first();
     }
 }

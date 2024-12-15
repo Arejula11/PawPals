@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use Illuminate\Support\Facades\Log;
 
 class Handler extends ExceptionHandler
 {
@@ -27,4 +28,18 @@ class Handler extends ExceptionHandler
             //
         });
     }
+
+    // App\Exceptions\Handler.php
+    public function render($request, Throwable $exception)
+    {   
+        Log::info('inside render', ['exception' => $exception]);
+        if ($exception instanceof \App\Exceptions\PolicyAuthorizationException) {
+            Log::info('inside policy authorization exception');
+            return redirect()->route('banned.show')
+                             ->with('error', "Policy: {$exception->policy}, Action: {$exception->action}, Message: {$exception->getMessage()}");
+        }
+    
+        return parent::render($request, $exception);
+    }
+
 }

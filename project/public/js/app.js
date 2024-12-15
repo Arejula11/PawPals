@@ -179,3 +179,71 @@ function addEventListeners() {
   
   addEventListeners();
   
+// Likes
+
+function submitLike(event) {
+    event.preventDefault();
+    const form = event.target.closest('form');
+    if (form) {
+        form.submit();
+    }
+}
+
+// Comments
+
+function focusCommentBox() {
+    const commentBox = document.getElementById('comment-box');
+    if (commentBox) {
+        commentBox.focus();
+        commentBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+}
+
+function setReplyToComment(commentId, username) {
+  const replyInput = document.getElementById('reply-to');
+  const commentBox = document.getElementById('comment-box');
+
+  if (replyInput && commentBox) {
+      replyInput.value = commentId; 
+      commentBox.placeholder = `Replying to comment from #${username}...`; 
+      commentBox.focus(); 
+      commentBox.scrollIntoView({ behavior: 'smooth', block: 'center' }); 
+  }
+}
+
+// Tags
+
+function addTaggedUser(id, name, username) {
+  let taggedUsersList = document.getElementById('tagged-users-list');
+  let taggedUsersInput = document.getElementById('tagged-users-input');
+
+  if (!document.querySelector(`#tagged-user-${id}`)) {
+      let userTag = document.createElement('div');
+      userTag.classList.add('tagged-user');
+      userTag.id = `tagged-user-${id}`;
+      userTag.innerHTML = `
+          ${name} (@${username})
+          <button type="button" class="remove-tag" data-id="${id}">Remove</button>
+      `;
+
+      userTag.querySelector('.remove-tag').addEventListener('click', function() {
+          userTag.remove();
+          updateTaggedUsersInput();
+      });
+
+      taggedUsersList.appendChild(userTag);
+
+      updateTaggedUsersInput();
+  }
+}
+
+function updateTaggedUsersInput() {
+  let taggedUsersList = document.querySelectorAll('.tagged-user');
+  let taggedUsersInput = document.getElementById('tagged-users-input');
+
+  let userIds = Array.from(taggedUsersList).map(user => {
+      return user.id.replace('tagged-user-', '');
+  });
+
+  taggedUsersInput.value = userIds.join(',');
+}

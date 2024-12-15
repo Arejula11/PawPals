@@ -17,8 +17,6 @@ SET DateStyle TO European;
 -- Drop old schema
 -----------------------------------------
 
-
-
 DROP TABLE IF EXISTS group_participant;
 DROP TABLE IF EXISTS group_member_notification;
 DROP TABLE IF EXISTS group_owner_notification;
@@ -106,6 +104,7 @@ CREATE TABLE post (
     description TEXT,
     user_id INT NOT NULL,
     post_picture TEXT,
+    is_public BOOLEAN NOT NULL DEFAULT TRUE,
     FOREIGN KEY (user_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
@@ -124,7 +123,6 @@ CREATE TABLE comment (
 CREATE TABLE post_like (
     post_id INT NOT NULL,
     user_id INT NOT NULL,
-    PRIMARY KEY (post_id, user_id),
     FOREIGN KEY (post_id) REFERENCES post(id) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
@@ -132,7 +130,6 @@ CREATE TABLE post_like (
 CREATE TABLE comment_like (
     comment_id INT NOT NULL,
     user_id INT NOT NULL,
-    PRIMARY KEY (comment_id, user_id),
     FOREIGN KEY (comment_id) REFERENCES comment(id) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE
 );

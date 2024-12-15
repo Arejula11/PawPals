@@ -11,6 +11,9 @@ use App\Http\Controllers\GroupController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\PostLikeController;
+use App\Http\Controllers\CommentLikeController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\FollowController;
@@ -70,6 +73,18 @@ Route::controller(PostController::class)->group(function () {
     Route::delete('/posts/{id}', 'destroy')->name('posts.destroy'); // Delete a specific post
 });
 
+Route::controller(CommentController::class)->group(function () {
+    Route::post('/posts/{id}/comments', 'store')->name('posts.comments.store'); // Store a new comment on a post
+});
+
+Route::post('/posts/{post}/likes/store', [PostLikeController::class, 'store'])->name('posts.likes.store');
+Route::delete('/posts/{post}/likes/destroy', [PostLikeController::class, 'destroy'])->name('posts.likes.destroy');
+Route::post('/posts/{post}/comments/{comment}/likes/store', [CommentLikeController::class, 'store'])->name('comments.likes.store');
+Route::delete('/posts/{post}/comments/{comment}/likes/destroy', [CommentLikeController::class, 'destroy'])->name('comments.likes.destroy'); 
+Route::post('/posts/{post_id}/tags/{user_id}', [PostTagController::class, 'store'])->name('post.tags.store');
+Route::delete('/posts/{post_id}/tags/{user_id}', [PostTagController::class, 'destroy'])->name('post.tags.destroy');
+
+Route::delete('/groups/{group}/participants/{user}', [GroupController::class, 'removeParticipant'])->name('groups.participants.remove');
 Route::controller(GroupController::class)->group(function () {
     Route::get('/groups/search', 'search')->name('groups.search'); // Search for groups
     Route::get('/groups', 'index')->name('groups.index'); // List of groups
@@ -82,11 +97,6 @@ Route::controller(GroupController::class)->group(function () {
     Route::get('/groups/{id}', 'show')->name('groups.show'); // Group details
     Route::post('/groups/{id}/messages/store', [GroupController::class, 'storeMessage'])->name('groups.messages.store');
 });
-
-// Users profile
-Route::get('/user/{id}', [UserController::class, 'show'])->name('users.show');
-Route::get('/user/edit/{id}', [UserController::class, 'edit'])->name('users.edit');
-Route::put('/user/edit/{id}', [UserController::class, 'update'])->name('users.update');
 
 // Users profile
 Route::get('/user/{id}', [UserController::class, 'show'])->name('users.show');
@@ -130,9 +140,18 @@ Route::post('/follow', [UserController::class, 'follow'])->name('follow.send');
 Route::get('/requests', [UserController::class, 'checkRequests'])->name('requests.show');
 Route::post('follow/accept/{user1_id}/{user2_id}', [UserController::class, 'accept'])->name('follow.accept');
 Route::post('follow/reject/{user1_id}/{user2_id}', [UserController::class, 'reject'])->name('follow.reject');
+Route::post('/follow/remove', [UserController::class, 'unfollow'])->name('follow.remove');
 
 
 Route::get('/settings', [UserController::class, 'settings'])->name('settings.show');
 Route::put('/settings/changePassword/{id}', [UserController::class, 'updatePassword'])->name('user.updatePassword');
 Route::put('/settings/user/delete/{id}', [UserController::class, 'deleteUser'])->name('settings.users.delete');
 Route::put('/settings/user/public/{id}', [UserController::class, 'privacity'])->name('settings.users.public');
+
+
+Route::get('/appeal', [AppealController::class, 'create'])->name('appeal.create');
+Route::post('/appeal', [AppealController::class, 'store'])->name('appeal.store');
+
+Route::get('/banned', function () {
+    return view('banned.show');
+})->name('banned.show');

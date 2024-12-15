@@ -42,6 +42,8 @@ class LoginController extends Controller
             $request->session()->regenerate();
             if (Auth::user()->admin == 'true') {
                 return redirect('/admin');
+            }else if (Auth::user()->isBanned()) {
+                return redirect('/appeal');
             }
             return redirect()->intended('/home');
         }

@@ -1,0 +1,36 @@
+.banned-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f9f9f9;
+}
+
+.banned-content {
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center; 
+}
+
+h1 {
+    font-size: 50px;
+}
+
+.link {
+    display: inline-block;
+    margin-top: 20px; 
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white; 
+    text-decoration: none;
+    border-radius: 5px; 
+    font-size: 18px; 
+    transition: background-color 0.3s ease;
+}
+
+.link:hover {
+    background-color: #45a049; 
+}

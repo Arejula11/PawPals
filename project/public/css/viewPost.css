@@ -1,0 +1,317 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+}
+
+/* Main Div */
+
+.post-view {
+    display: flex; 
+    flex-direction: row;
+    width: 1100px;
+    height: 600px;
+    border: 3px outset black;
+    border-radius: 10px;
+    box-sizing: border-box;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 40px;
+    box-shadow: 3px 3px 2px 2px gray;
+}
+
+/* Image side */
+
+.image {
+    display: flex;
+    min-width: 750px;
+    max-width: 750px;
+}
+
+.image img {
+    width: max-content;
+    border-right: 2px outset black;
+    border-radius: 5px;
+}
+
+
+/* Post info side */
+
+/* User pic, username, description and date */
+.user {
+    display: flex;
+    flex-direction: row;
+    padding-top: 20px;
+    gap: 10px;
+}
+
+.image-info {
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 350px;
+}
+
+.profile-picture img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.d-i {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-left: 10px;
+    padding-right: 10px;
+    height: 25px;
+}
+
+.icons {
+    display: flex;
+    flex-direction: row;
+    align-items: top;
+    gap: 10px;
+}   
+
+.icons span {  
+    cursor: pointer;
+    align-self: center;
+}
+
+.icons span:hover {
+    color: darkblue;
+}
+
+.content {
+    display: flex; 
+    flex-direction: column; 
+    height: 120px;
+}
+
+.description {
+    font-size: 1.6rem;
+    padding: 6px;
+    margin-bottom: 0px;
+    height: 200px;
+    color: #333;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: thin; 
+    scrollbar-color: #9b4dca #f0f0f0;
+    border: 1px solid #ccc;
+    border-bottom: 1px solid gray;
+    border-right: 1px solid gray;
+    border-radius: 10px;
+    
+}
+
+.date {
+    margin: 0;
+    text-align: right;
+    font-size: xx-small;
+    color: #494949;
+}
+
+.comments-section {
+    font-size: 1.2rem; 
+    height: 300px;
+    margin-top: 5px;
+    overflow-y: auto; 
+    overflow-x: hidden; 
+    scrollbar-width: medium; 
+    scrollbar-color: #9b4dca #f0f0f0; 
+}
+
+.comment {
+    display: flex;
+    margin-top: 10px;
+    flex-direction: column;
+    border: 1px solid #ccc;
+    padding-left: 5px;
+    border-right: 1px solid gray;
+    border-bottom: 1px solid gray;
+    border-radius: 10px;
+}
+
+
+.comment span.user {
+    padding: 0;
+    font-weight: bold;
+    color: #9b4dca; 
+}
+
+.comment p {
+    padding-left: 5px;
+    padding-top: 5px;
+    color: #333;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: thin; 
+    scrollbar-color: #9b4dca #f0f0f0; 
+    max-height: 100px;
+}
+
+.image-info::-webkit-scrollbar {
+    width: 8px; 
+}
+
+.image-info::-webkit-scrollbar-track {
+    background: #f0f0f0; 
+}
+
+.image-info::-webkit-scrollbar-thumb {
+    background-color: #9b4dca; 
+    border-radius: 10px; 
+    border: 2px solid #f0f0f0; 
+}
+
+.comment-input form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px; 
+    margin-top: 0; 
+    border-top: 1px solid #ccc; 
+    padding-top: 10px; 
+}
+
+.comment-input form textarea {
+    resize: none;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccccccac;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.comment-input form textarea:focus {
+    outline: 2px solid #9b4dca;
+    box-shadow: 0 0 5px rgba(155, 77, 202, 0.5);
+}
+
+.comment-input form button {
+    padding: 8px 12px;
+    background-color: #9b4dca;
+    color: white;
+    font-size: 0.9rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    height: 30px;
+    width: 70px;
+}
+
+.comment-input form button:hover {
+    background-color: #7e3ba8; 
+}
+
+.replies {
+    margin-left: 15px;
+    margin-right: 10px;
+    border-left: 2px solid #ccc;
+    padding-left: 10px;
+}
+
+.comment.reply {
+    background-color: #f9f9f9;
+    margin-bottom: 10px;
+    padding: 5px;
+}
+
+.replies span {  
+    cursor: pointer;
+    align-self: left;
+}
+
+.replies span:hover {
+    color: darkblue;
+}
+
+.profile-picture2 img {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.user2 {
+    display: flex;
+    flex-direction: row;
+    padding-top: 10px;
+    gap: 5px;
+}
+
+.tagged-users-container {
+    position: relative;
+}
+
+.show-tagged-users-icon {
+    font-size: 1.5rem;
+    color: #9b4dca; 
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.show-tagged-users-icon:hover {
+    color: darkblue; 
+}
+
+.tagged-users-list {
+    display: none; 
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-right: 1px solid gray;
+    border-bottom: 1px solid gray;
+    border-radius: 5px;
+    max-height: 120px; 
+    overflow-y: auto;
+    width: 250px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+}
+
+.tagged-user {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.tagged-user:last-child {
+    margin-bottom: 0; 
+}
+
+.tagged-user img {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+}
+
+.tagged-user span {
+    font-size: 1rem;
+    color: #333;
+}
+
+.tagged-users-list.visible {
+    display: block;
+}
+
+.tagged-user-link {
+    text-decoration: none;
+    color: inherit; 
+    display: block; 
+}
+
+.tagged-user-link:hover .tagged-user {
+    background-color: #f9f9f9; 
+    border-radius: 5px;
+}

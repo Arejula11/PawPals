@@ -3,26 +3,39 @@
 @section('content')
     <div class="search-part">
         <input type="text" name="query" id="search-input" placeholder="Search for users..." autocomplete="off"/>
+        <select class="input-type" id="user-type-select">
+            <option value="pet owner" selected>Pet Owner</option>
+            <option value="veterinarian">Veterinarian</option>
+            <option value="adoption organization">Adoption Organization</option>
+            <option value="rescue organization">Rescue Organization</option>
+        </select>
         <div id="user-results"></div>
 
         <script>
-            document.getElementById('search-input').addEventListener('input', function() {
-                let query = this.value;
+            document.addEventListener('DOMContentLoaded', () => {
+                const searchInput = document.getElementById('search-input');
+                const userTypeSelect = document.getElementById('user-type-select');
+                const resultsDiv = document.getElementById('user-results');
 
-                if (query.length >= 2) {
-                    // Make an AJAX request to get the matching users
-                    fetch(`/search-users?query=${query}`)
+                // Debounce function to avoid frequent calls
+                let debounceTimer;
+                function debounce(func, delay) {
+                    clearTimeout(debounceTimer);
+                    debounceTimer = setTimeout(func, delay);
+                }
+
+                function fetchUsers() {
+                    const query = searchInput.value.trim();
+                    const userType = userTypeSelect.value;
+
+                    fetch(`/search-users?query=${encodeURIComponent(query)}&type=${encodeURIComponent(userType)}`)
                         .then(response => response.json())
                         .then(data => {
-                            let resultsDiv = document.getElementById('user-results');
                             resultsDiv.innerHTML = '';
-                            
                             if (data.length > 0) {
                                 data.forEach(user => {
-                                    let userDiv = document.createElement('div');
+                                    const userDiv = document.createElement('div');
                                     userDiv.classList.add('user-result');
-
-                                    // Add the user's profile image, first name, and username
                                     userDiv.innerHTML = `
                                         <a href="${user.profile_url}" class="user-link">
                                             <img src="${user.profile_image}" alt="${user.username}'s profile image" class="profile-image" />
@@ -32,25 +45,33 @@
                                             </div>
                                         </a>
                                     `;
-
                                     resultsDiv.appendChild(userDiv);
                                 });
                             } else {
-                                resultsDiv.innerHTML = 'No users found.';
+                                resultsDiv.innerHTML = '<p>No users found.</p>';
                             }
                         })
                         .catch(error => {
                             console.error('Error:', error);
-                            document.getElementById('user-results').innerHTML = 'There was an error with the search.';
+                            resultsDiv.innerHTML = '<p>There was an error with the search.</p>';
                         });
-                } else {
-                    document.getElementById('user-results').innerHTML = '';
                 }
+
+                searchInput.addEventListener('input', () => debounce(fetchUsers, 300));
+                userTypeSelect.addEventListener('change', fetchUsers);
             });
         </script>
     </div>
 
     <style>
+        #search-input{
+            width: 70%;
+        }
+
+        .input-type{
+            width: auto;
+        }
+
         .user-result {
             display: flex;
             align-items: center;

@@ -553,6 +553,7 @@ body {
 }
 
 
+<<<<<<< project/public/css/admin.css
 /* Posts List */
 .posts {
     width: 90%;
@@ -858,3 +859,12 @@ body {
     margin: 5px 0;
     font-weight: 500;
 }
+
+.error{
+    color: red;
+    font-size: 1.5rem;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+

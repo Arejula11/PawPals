@@ -25,12 +25,52 @@
         @if($group->participants->isEmpty())
             <p class="no-participants">No participants yet. Be the first to join!</p>
         @else
-            <ul class="participants-list">
-                @foreach($group->participants as $participant)
-                    <li class="participant-item">{{ $participant->username }}</li>
-                @endforeach
-            </ul>
+            @foreach ($group->participants as $participant)
+                <div class="participant-item">
+                    <p>{{ $participant->username }}</p>
+                    @if (auth()->id() === $group->owner_id && $participant->id !== $group->owner_id)
+                        <button class="confirm-deleting-user-group" onclick="toggleKickConfirm({{ $participant->id }})">Kick</button>
+                        <div id="overlay2" class="overlay-deleting-user "></div>
+                        <div class="deleting-user-group" id="kick-confirm-{{ $participant->id }}" style="display: none;">
+                            <p>Do you want to kick {{$participant->username}} from the group?</p>
+                            <div class="button-container">
+                                <button class="button-deleting-user-group" onclick="kickUser({{ $group->id }}, {{ $participant->id }})">Yes</button>
+                                <button class="button-deleting-user-group" onclick="toggleKickConfirm({{ $participant->id }})">No</button>
+                            </div>
+                        </div>
+                    @endif
+                </div>
+            @endforeach
         @endif
     </div>
 </div>
+<script>
+    function toggleKickConfirm(userId) {
+        const confirmBox = document.getElementById(`kick-confirm-${userId}`);
+        const overlay = document.getElementById("overlay2");
+
+        const isHidden = confirmBox.style.display === "none";
+
+        confirmBox.style.display = isHidden ? "block" : "none";
+        overlay.style.display = isHidden ? "block" : "none";
+        overlay.style.background = isHidden ? "rgba(0, 0, 0, 0.5)" : "rgba(0, 0, 0, 0)";
+    }
+
+
+    async function kickUser(groupId, userId) {
+        const response = await fetch(`/groups/${groupId}/participants/${userId}`, {
+            method: 'DELETE',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Accept': 'application/json'
+            }
+        });
+
+        if (response.ok) {
+            location.reload();
+        } else {
+            alert('Failed to remove user');
+        }
+    }
+</script>
 @endsection
