@@ -1,5 +1,8 @@
 @extends('layouts.app')
+@section('head')
 
+<link href="{{ asset('css/static.css') }}" rel="stylesheet">
+@endsection
 @section('content')
 
 <h2>About us</h2>
@@ -8,5 +11,10 @@
 <h2>Your Admins</h2>
 <p>Meet our admins, who want to make your experience with PawPawls pleasant and ensure secure communciation and networking.</p>
 
+<div class="profile-picture">
+    <a href="{{ route('users.show', ['id' => Auth::user()->id]) }}">
+        <img src="{{ Auth::user()->getProfilePicture() }}" alt="Profile Picture" class="profile-img">
+    </a>
+</div>
 
 @endsection

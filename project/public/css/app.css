@@ -32,6 +32,10 @@ body {
   overflow: hidden;
 }
 
+p {
+  color: #333333; 
+}
+
 main {
   flex-grow: 1;
   overflow-y: hidden;
@@ -49,6 +53,7 @@ main > header {
 main > header h1 {
   margin: 0;
 }
+
 main > header a.button {
   margin: 1em;
   justify-self: center;
@@ -59,6 +64,9 @@ main > header span {
 }
 #content label {
   font-weight: normal;
+}
+body > p {
+  color: #333,
 }
 #content > form {
   margin: 0 auto;

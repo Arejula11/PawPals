@@ -1,12 +1,93 @@
 @extends('layouts.app')
+@section('head')
+
+<link href="{{ asset('css/static.css') }}" rel="stylesheet">
+@endsection
 
 @section('content')
 
-<h2>FAQ & Help</h2>
-<p>Here, we want to help you.</p>
+<div class="row">
+  <h2>FAQ & Help</h2>
+</div>
+<div class="row">
+  <p>We summarized frequently asked questions below. If those do not help with your issues, please <b><a href="{{  route('static.contact')  }}">contact us</a></b> with your problem.</p>
+</div>
+<div class="row">
+  <h2>FAQ</h2>
+</div>
 
-<h2>FAW</h2>
-<p>Here goes an accordeon.</p>
+<button class="accordion">How do I create an account?</button>
+<div class="panel">
+  <p>To create an account, click on the Login button on the homepage, then go to the registration and fill the form with your username, name, email, and password.
+</p>
+</div>
 
+<button class="accordion">How can I reset my password?</button>
+<div class="panel">
+  <p>If you have forgotten your password, click Forgot Password? link on the login page. Enter your registered email, and you will receive an email with a new password.</p>
+</div>
+
+<button class="accordion">How do I change my password?</button>
+<div class="panel">
+  <p>If you want to change your password, login and go to the settings section. There, you can change your password and your page privacy.</p>
+</div>
+
+<button class="accordion">How do I share a post about my pet?</button>
+<div class="panel">
+  <p>To share a post, first login to your account. Then, go to the Create Post section. Insert a caption and upload a picture or video. You can upload jpg, jpeg or png file formats. Then, click the button to create your post.</p>
+</div>
+
+<button class="accordion">Can I edit or delete a post I have shared?</button>
+<div class="panel">
+  <p>Yes, you can edit or delete your posts. Navigate to the post you wish to change, click the three dots in the top-right corner, and select Edit or Delete from the dropdown menu.</p>
+</div>
+
+<button class="accordion">How do I join or create a group?</button>
+<div class="panel">
+  <p>x</p>
+</div>
+
+<button class="accordion">x</button>
+<div class="panel">
+  <p>x</p>
+</div>
+
+<button class="accordion">x</button>
+<div class="panel">
+  <p>x</p>
+</div>
+
+</div>
+
+@endsection
+
+@section('scripts')
+<script>
+  var acc = document.getElementsByClassName("accordion");
+  var i;
+
+  for (i = 0; i < acc.length; i++) {
+    acc[i].addEventListener("click", function() {
+      // Close all other accordion items
+      for (var j = 0; j < acc.length; j++) {
+        if (acc[j] !== this && acc[j].classList.contains("active")) {
+          acc[j].classList.remove("active");
+          var openPanel = acc[j].nextElementSibling;
+          openPanel.style.maxHeight = null; // Close the panel
+        }
+      }
+
+      // Toggle the current accordion item
+      this.classList.toggle("active");
+      var panel = this.nextElementSibling;
+      if (panel.style.maxHeight) {
+        panel.style.maxHeight = null;
+      } else {
+        panel.style.maxHeight = panel.scrollHeight + "px";
+      }
+    });
+  }
+
+</script>
 
 @endsection
