@@ -23,23 +23,28 @@ class NotificationController extends Controller
         ->where('notification.user_id', $id)
         ->get();
 
-        $postNotifications = DB::table('notification') // Ensure the table name is correct here
+        $postNotifications = DB::table('notification') 
         ->join('post_notification', 'notification.id', '=', 'post_notification.notification_id')
         ->where('notification.user_id', $id)
         ->get();
 
-        $commentNotifications = DB::table('notification') // Ensure the table name is correct here
+        $commentNotifications = DB::table('notification') 
         ->join('comment_notification', 'notification.id', '=', 'comment_notification.notification_id')
         ->where('notification.user_id', $id)
         ->get();
 
 
-        $groupOwnerNotifications = DB::table('notification') // Ensure the table name is correct here
+        $groupOwnerNotifications = DB::table('notification') 
         ->join('group_owner_notification', 'notification.id', '=', 'group_owner_notification.notification_id')
         ->where('notification.user_id', $id)
         ->get();
 
-        return view('notification.index', compact('groupMemberNotifications', 'postNotifications', 'commentNotifications', 'groupOwnerNotifications'));
+        $userNotifications = DB::table('notification')
+        ->join('user_notification', 'notification.id', '=', 'user_notification.notification_id') 
+        ->where('notification.user_id', $id)
+        ->get();
+
+        return view('notification.index', compact('groupMemberNotifications', 'postNotifications', 'commentNotifications', 'groupOwnerNotifications', 'userNotifications'));
     }
 
     /**

@@ -55,7 +55,7 @@ CREATE TYPE response_type AS ENUM ('accepted', 'rejected', 'pending');
 CREATE TYPE user_notification_type AS ENUM('follow_request', 'follow_response', 'start_following');
 CREATE TYPE post_notification_type AS ENUM('post_likes', 'post_comments', 'post_tags');
 CREATE TYPE comment_notification_type AS ENUM('comment_answer', 'comment_likes', 'comment_tags');
-CREATE TYPE group_owner_notification_type AS ENUM('join_request', 'member_leave');
+CREATE TYPE group_owner_notification_type AS ENUM('join_request', 'member_leave', 'new_user_join');
 CREATE TYPE group_member_notification_type AS ENUM('join_response', 'new_message', 'group_removed');
 
 -----------------------------

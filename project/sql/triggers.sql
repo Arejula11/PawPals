@@ -216,6 +216,14 @@ BEGIN
         -- Insert group-owner-specific notification
         INSERT INTO group_owner_notification (notification_id, trigger_group_id, group_owner_notification_type)
         VALUES (currval('notification_id_seq'), NEW.group_id, 'join_request');
+    ELSE
+        -- Insert a notification for the user who requested to join the group
+        INSERT INTO notification (description, date, user_id)
+        VALUES ('A user has join the group!', CURRENT_DATE, (SELECT owner_id FROM groups WHERE id = NEW.group_id));
+
+        -- Insert user-specific notification
+        INSERT INTO group_owner_notification (notification_id, trigger_group_id, group_owner_notification_type)
+        VALUES (currval('notification_id_seq'), NEW.group_id, 'new_user_join');
     END IF;
 
     RETURN NEW;

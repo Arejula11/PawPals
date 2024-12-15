@@ -78,5 +78,23 @@
                 @endforelse
             </div>
         </div>
+
+        <div class="notification-box">
+            <h2>User Notifications</h2>
+            <div class="notification-content">
+                @forelse($userNotifications as $notification)
+                    <div class="notification">
+                        <p>{{ $notification->description }}</p>
+                        @php
+                            $user = \App\Models\User::find($notification->trigger_user_id);
+                        @endphp
+                        <p>User: {{ $user->username }}</p>
+                        <p>{{ $notification->date }}</p>
+                    </div>
+                @empty
+                    <p>No notifications found.</p>
+                @endforelse
+            </div>
+        </div>
     </div>
 @endsection
