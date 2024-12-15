@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
+use App\Models\GroupParticipant;
 class GroupController extends Controller
 {
     /**
@@ -94,6 +95,12 @@ class GroupController extends Controller
         $group->participants()->attach(auth()->id());
 
         return redirect()->route('groups.show', $id)->with('success', 'You joined the group.');
+    }
+
+    
+    public function removeParticipant($groupId, $userId) {
+        GroupParticipant::where('group_id', $groupId)->where('user_id', $userId)->delete();
+        return response()->json(['success' => true]);
     }
 
     public function search()

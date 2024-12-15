@@ -46,49 +46,54 @@
 </div>
 
 <script>
-    document.getElementById('search-input').addEventListener('input', function() {
-        let query = this.value;
+document.addEventListener('DOMContentLoaded', () => {
+    const searchInput = document.getElementById('search-input');
+    const resultsDiv = document.getElementById('user-results');
 
-        if (query.length >= 2) {
-            fetch(`/search-users?query=${query}`)
-                .then(response => response.json())
-                .then(data => {
-                    let resultsDiv = document.getElementById('user-results');
-                    resultsDiv.innerHTML = '';
+    // Debounce function to avoid frequent calls
+    let debounceTimer;
+    function debounce(func, delay) {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(func, delay);
+    }
 
-                    if (data.length > 0) {
-                        data.forEach(user => {
-                            let userDiv = document.createElement('div');
-                            userDiv.classList.add('user-result');
+    function fetchUsers() {
+        const query = searchInput.value.trim();
 
-                            userDiv.innerHTML = `
-                                <div class="user-link" data-id="${user.id}" data-name="${user.first_name}" data-username="${user.username}">
-                                    <img src="${user.profile_picture}" alt="${user.username}'s profile image" class="profile-image" />
-                                    <div class="user-info">
-                                        <span class="first-name">${user.first_name}</span>
-                                        <span class="username">@${user.username}</span>
-                                    </div>
+        fetch(`/search-users?query=${encodeURIComponent(query)}`)
+            .then(response => response.json())
+            .then(data => {
+                resultsDiv.innerHTML = '';
+                if (data.length > 0) {
+                    data.forEach(user => {
+                        const userDiv = document.createElement('div');
+                        userDiv.classList.add('user-result');
+                        userDiv.innerHTML = `
+                            <div class="user-link" data-id="${user.id}" data-name="${user.first_name}" data-username="${user.username}">
+                                <img src="${user.profile_image}" alt="${user.username}'s profile image" class="profile-image" />
+                                <div class="user-info">
+                                    <span class="first-name">${user.first_name}</span>
+                                    <span class="username">@${user.username}</span>
                                 </div>
-                            `;
-
-                            userDiv.addEventListener('click', function() {
-                                addTaggedUser(user.id, user.first_name, user.username);
-                            });
-
-                            resultsDiv.appendChild(userDiv);
+                            </div>
+                        `;
+                        userDiv.addEventListener('click', function() {
+                            addTaggedUser(user.id, user.first_name, user.username);
                         });
-                    } else {
-                        resultsDiv.innerHTML = 'No users found.';
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    document.getElementById('user-results').innerHTML = 'There was an error with the search.';
-                });
-        } else {
-            document.getElementById('user-results').innerHTML = '';
-        }
-    });
+                        resultsDiv.appendChild(userDiv);
+                    });
+                } else {
+                    resultsDiv.innerHTML = '<p>No users found.</p>';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                resultsDiv.innerHTML = '<p>There was an error with the search.</p>';
+            });
+    }
+
+    searchInput.addEventListener('input', () => debounce(fetchUsers, 300));
+});
 </script>
 @endsection
 

@@ -788,6 +788,8 @@ input[type=password]:focus {
 .participant-item {
   background: #e8eaf6;
   padding: 10px;
+  padding-bottom:0;
+  margin-bottom: 5px;
   border-radius: 5px;
   text-align: center;
   font-size: 1.3rem;
@@ -1237,3 +1239,57 @@ form {
   color: white; /* White arrows on hover */
 }
 
+.confirm-deleting-user-group {
+  width: 200px;
+  height: 100%;
+  right: 0;
+  background: #dc3545;
+  color: white;
+  border: none;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background 0.3s;
+}
+.participant-item p{
+  padding-top: 10px;
+  margin-right: auto
+}
+
+.deleting-user-group {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.button-deleting-user-group{
+  width: 100%;
+  height: 50px;
+}
+
+.overlay-deleting-user {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0);
+  transition: background 0.5s ease;
+  z-index: 999;
+  display: none;
+}

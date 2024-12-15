@@ -31,7 +31,7 @@
                 <p>Edit and delete user groups.</p>
             </div>
         </a>
-        <a href="{{ 4 }}" class="bento-option">
+        <a href="{{ route('admin.posts.manage') }}" class="bento-option">
             <div class="bento-content">
                 <h3>Manage Posts</h3>
                 <p>Edit and delete user posts and their comments.</p>
