@@ -12,9 +12,6 @@
 <div class="row">
   <p>We summarized frequently asked questions below. If those do not help with your issues, please <b><a href="{{  route('static.contact')  }}">contact us</a></b> with your problem.</p>
 </div>
-<div class="row">
-  <h2>FAQ</h2>
-</div>
 
 <button class="accordion">How do I create an account?</button>
 <div class="panel">
@@ -39,22 +36,32 @@
 
 <button class="accordion">Can I edit or delete a post I have shared?</button>
 <div class="panel">
-  <p>Yes, you can edit or delete your posts. Navigate to the post you wish to change, click the three dots in the top-right corner, and select Edit or Delete from the dropdown menu.</p>
+  <p>Yes, you can edit or delete your posts. Navigate to the post you wish to change, TBD.</p>
 </div>
 
 <button class="accordion">How do I join or create a group?</button>
 <div class="panel">
-  <p>x</p>
+  <p>TBD</p>
 </div>
 
-<button class="accordion">x</button>
+<button class="accordion">Who can see my posts?</button>
 <div class="panel">
-  <p>x</p>
+  <p>The visibility of your posts depends on your privacy settings. If your profile is public, everyone can see your posts. But if your profile is private, only your followers can see and interact with your posts.</p>
 </div>
 
-<button class="accordion">x</button>
+<button class="accordion">What should I do if someone is being rude or offensive?</button>
 <div class="panel">
-  <p>x</p>
+  <p>TBD</p>
+</div>
+
+<button class="accordion">How do I customize my profile?</button>
+<div class="panel">
+  <p>To customize your profile, go to your profile by clicking your username or profile picture. Click on Edit Profile and update your profile picture, cover photo, bio, and pet details. Don't forget to save your changes.</p>
+</div>
+
+<button class="accordion">How can I delete my account?</button>
+<div class="panel">
+  <p>If you wish to delete your account, navigate to Settings in the menu, click on Delete Account, TBD. This will permanently remove your profile and data from PawPals.</p>
 </div>
 
 </div>
