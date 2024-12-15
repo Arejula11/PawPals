@@ -41,8 +41,11 @@
 
 <button class="accordion">How do I join or create a group?</button>
 <div class="panel">
-  <p>TBD</p>
+  <p>To join a group, press the Search Groups button on the group section. Look for a group that you want to join and press the Join button.<br>
+To create a group, click on the Create Group button in the group section. Then, enter the group name, its description and privacy settings and press the Create Group button.
+</p>
 </div>
+
 
 <button class="accordion">Who can see my posts?</button>
 <div class="panel">
@@ -51,7 +54,7 @@
 
 <button class="accordion">What should I do if someone is being rude or offensive?</button>
 <div class="panel">
-  <p>TBD</p>
+  <p>Go to the contact page and send us a message. You should give us the username and the reason for reporting this person. We will then process your request as soon as possible and ban them if</p>
 </div>
 
 <button class="accordion">How do I customize my profile?</button>
@@ -61,7 +64,7 @@
 
 <button class="accordion">How can I delete my account?</button>
 <div class="panel">
-  <p>If you wish to delete your account, navigate to Settings in the menu, click on Delete Account, TBD. This will permanently remove your profile and data from PawPals.</p>
+  <p>If you wish to delete your account, navigate to Settings in the menu and click on Delete Account. This will permanently remove your profile and your data from PawPals. Your comments and likes will be anonymized.</p>
 </div>
 
 </div>
