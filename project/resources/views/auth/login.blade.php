@@ -9,7 +9,9 @@
     <div class="login-container" style="background-image: url('{{ asset('images/paws_photo.jpg') }}');">
         
         <form method="POST" action="{{ route('login') }}" class="login-form">
+
             {{ csrf_field() }}
+
             <label for="email">E-mail</label>
             <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus>
             @if ($errors->has('email'))
@@ -30,11 +32,12 @@
                 <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me
             </label>
 
-            <button type="submit">
-                Login
-            </button>
+            <button type="submit">Login</button>
+
             <a class="button button-outline" href="{{ route('register') }}">Register</a>
+
             <a class="" href="{{ route('password') }}">Forgotten your password?</a>
+
             @if (session('success'))
                 <p class="success">
                     {{ session('success') }}
@@ -43,4 +46,5 @@
         </form>
     </div>
 </div>
+
 @endsection

@@ -19,6 +19,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\FollowController;
 use App\Http\Controllers\BanController;
 use App\Http\Controllers\AppealController;
+use App\Http\Controllers\StaticController;
 
 
 /*
@@ -155,3 +156,11 @@ Route::post('/appeal', [AppealController::class, 'store'])->name('appeal.store')
 Route::get('/banned', function () {
     return view('banned.show');
 })->name('banned.show');
+
+// Static pages
+Route::controller(StaticController::class)->group(function () {
+    Route::get('/about', 'showAbout')->name('static.about'); // Show about us
+    Route::get('/contact', 'showContact')->name('static.contact'); // Show contact
+    Route::post('/contact', 'sendContact')->name('static.contact.send'); // Show contact
+    Route::get('/faq', 'showFAQ')->name('static.faw'); // Show FAQ
+});

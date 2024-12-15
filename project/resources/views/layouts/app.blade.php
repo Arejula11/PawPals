@@ -11,9 +11,10 @@
         <title>{{ config('app.name', 'Laravel') }}</title>
 
         <!-- Styles -->
+        @yield('head')
         <link href="{{ url('css/milligram.min.css') }}" rel="stylesheet">
         <link href="{{ url('css/app.css') }}" rel="stylesheet">
-        @yield('head')
+        
         <script type="text/javascript">
             // Fix for Firefox autofocus CSS bug
         </script>
@@ -53,6 +54,19 @@
                 margin-top: 1em;
             }
 
+            footer {
+                background-color: #f1f1f1;
+                padding: 0px 0;
+                text-align: center;
+                line-height: 1.5;
+                font-size: 0.9em;
+            }
+
+            footer .footer-link {
+                margin: 0 15px;
+
+            }
+
         </style>
         
     </head>
@@ -90,6 +104,24 @@
                 </div>
             </div>
         </main>
+
+        <!-- Footer -->
+        <footer style="background: ">
+            <div>
+                <small>
+                    <a href="/about" class="footer-link">About</a>
+                    |
+                    <a href="/contact" class="footer-link">Contact</a>
+                    |
+                    <a href="/faq" class="footer-link">FAQ & Help</a>
+                </small>
+            </div>
+            <div>
+                <small>© 2024 PetPawls. All rights reserved.</small>
+            </div>
+        </footer>
+
         @yield('scripts')
+
     </body>
 </html>
