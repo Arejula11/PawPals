@@ -36,10 +36,15 @@ class StaticController extends Controller
     }
 
     /**
-     * Display the about us page.
+     * Send a mail from the contact form.
      */
     public function sendContact(Request $request) 
     {
+        $validated = $request->validate([
+            'email' => 'required|email',
+            'topic' => 'required|string|max:255',
+            'message' => 'required|string|min:10',
+        ]);
 
         $missingVariables = [];
         $requiredEnvVariables = [
@@ -86,6 +91,7 @@ class StaticController extends Controller
         $request->session()->flash('status', $status);
         $request->session()->flash('message', $message);
         $request->session()->flash('details', $missingVariables);
+
 
         if ($status='Success') {
             return redirect()->route('static.contact')

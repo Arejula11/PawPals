@@ -15,9 +15,12 @@
    
         <label for="topic">Topic</label>
         <input id="topic" type="text" name="topic" value="{{ old('topic') }}" required>
+        @if ($errors->has('topic'))
+            <span class="error">{{ $errors->first('topic') }}</span>
+        @endif
 
         <label for="message">Message</label>
-        <textarea id="message" name="message" style="height:300px">{{ old('message') }}</textarea>
+        <input id="message" name="message" type="text" style="height:300px">{{ old('message') }}</input>
         @if ($errors->has('message'))
             <span class="error">{{ $errors->first('message') }}</span>
         @endif
