@@ -125,6 +125,13 @@ Route::get('admin/groups', [AdminController::class, 'groupsManage'])->name('admi
 Route::get('admin/groups/{id}', [AdminController::class, 'showGroup'])->name('admin.groups.show');
 Route::delete('admin/groups/{id}', [GroupController::class, 'destroy'])->name('admin.groups.delete');
 Route::get('admin/groups/edit/{id}', [GroupController::class, 'edit'])->name('admin.groups.edit');
+Route::get('admin/posts', [AdminController::class, 'postsManage'])->name('admin.posts.manage');
+Route::get('admin/posts/{id}', [AdminController::class, 'showPost'] )->name('admin.posts.show');
+Route::put('admin/posts/edit/{id}', [AdminController::class, 'updatePost'])->name('admin.posts.update');
+Route::delete('admin/posts/{id}', [AdminController::class, 'destroyPost'])->name('admin.posts.delete');
+Route::get('admin/comment/{id}', [AdminController::class, 'showComment'])->name('admin.comments.show');
+Route::put('admin/comment/{id}', [AdminController::class, 'updateComment'])->name('admin.comments.edit');
+Route::delete('admin/comment/{id}', [AdminController::class, 'destroyComment'])->name('admin.comments.delete');
 
 
 Route::post('/update-message', [MessageController::class, 'updateMessage']);
