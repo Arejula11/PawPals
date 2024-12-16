@@ -38,7 +38,7 @@
 
 <button class="accordion">Can I edit or delete a post I have shared?</button>
 <div class="panel">
-  <p>Yes, you can edit or delete your posts. Navigate to the post you wish to change, TBD.</p>
+  <p>Yes, you can edit and delete a post you shared. To do that, while viewing your post, next to your username, there is an option Edit Post. Upon pressing it, you are taken to a page, where you can perform actions like editing your description, your tags, your post privacy status and also deleting the post itself.</p>  
 </div>
 
 <button class="accordion">How do I join or create a group?</button>
