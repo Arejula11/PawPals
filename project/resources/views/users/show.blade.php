@@ -104,14 +104,17 @@
         <!-- Left column (user's posts) -->
         <div class="posts">
             <h2>Posts</h2>
-            <div class="post-gallery-show">
-                @foreach ($postImages as $image)
-                    <div class="post-item-show">
-                        <img src="{{ asset($image) }}" alt="Post Image">
-                    </div>
-                @endforeach
-            </div>
-            
+            @if(auth()->user()->follows->contains($user) || $user->is_public)
+                <div class="post-gallery-show">
+                    @foreach ($postImages as $image)
+                        <div class="post-item-show">
+                            <img src="{{ asset($image) }}" alt="Post Image">
+                        </div>
+                    @endforeach
+                </div>
+            @else
+                <p>This profile is private</p>
+            @endif
         </div>
         </div>
 
