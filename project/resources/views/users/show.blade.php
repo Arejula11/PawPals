@@ -17,6 +17,7 @@
             <div class="follower-stats" id="followers-toggle">
                 <span id="followers-count" style="cursor: pointer;"><strong>{{ $user->followers()->count() }}</strong> Followers</span>
                 <span id="follows-count" style="cursor: pointer;"><strong>{{ $user->follows()->count() }}</strong> Following</span>
+                <span id="posts-count" style="cursor: pointer;"><strong>{{ count($postImages) }}</strong> Posts</span>
                 <div class="my-followers" id="followers-list">
                     @foreach ($user->followers as $userfollower)
                         <a href="{{ route('users.show', $userfollower->id) }}" class="user-link-profile">
