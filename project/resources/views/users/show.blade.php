@@ -14,15 +14,35 @@
             <h1 class="username">{{ $user->username }}</h1>
             <h3>{{ $user->firstname }} {{ $user->surname }}</h2>
             <h3>{{ $user->type}}</h2>
-            <div class="follower-stats">
-                <span><strong> {{ $user->followers()->count() }}</strong> Followers</span>
-                <span><strong>{{ $user->follows()->count() }}</strong> Following</span>
-            </div>
-            <div class="my-followers">
-                @foreach ($user->followers() as $userfollower)
-                    <p>found user</p>
-                @endforeach
-
+            <div class="follower-stats" id="followers-toggle">
+                <span id="followers-count" style="cursor: pointer;"><strong>{{ $user->followers()->count() }}</strong> Followers</span>
+                <span id="follows-count" style="cursor: pointer;"><strong>{{ $user->follows()->count() }}</strong> Following</span>
+                <div class="my-followers" id="followers-list">
+                    @foreach ($user->followers as $userfollower)
+                        <a href="{{ route('users.show', $userfollower->id) }}" class="user-link-profile">
+                            <img src="{{ asset('./profile/' . ($userfollower->profile_picture ?? './profile/default.png')) }}" 
+                                alt="{{ $userfollower->firstname }}'s profile image" 
+                                class="profile-image-profile" />
+                            <div class="user-info-profile">
+                                <span class="first-name-follower">{{ $userfollower->firstname ?? 'Anonymous' }}</span>
+                                <span class="username-follower">@ {{ $userfollower->username ?? 'unknown' }}</span>
+                            </div>
+                        </a>
+                    @endforeach
+                </div>
+                <div class="my-follows" id="follow-list">
+                    @foreach ($user->follows as $userfollow)
+                        <a href="{{ route('users.show', $userfollow->id) }}" class="user-link-profile">
+                            <img src="{{ asset('./profile/' . ($userfollow->profile_picture ?? './profile/default.png')) }}" 
+                                alt="{{ $userfollow->firstname }}'s profile image" 
+                                class="profile-image-profile" />
+                            <div class="user-info-profile">
+                                <span class="first-name-follower">{{ $userfollow->firstname ?? 'Anonymous' }}</span>
+                                <span class="username-follower">@ {{ $userfollow->username ?? 'unknown' }}</span>
+                            </div>
+                        </a>
+                    @endforeach
+                </div>
             </div>
             <span><strong>About me:</strong></span>
             <p class="profile-description">{{ $user->bio_description }}</p>
@@ -215,5 +235,16 @@
             });
         });
     });
+
+    document.getElementById('followers-count').addEventListener('click', () => {
+        const followersList = document.getElementById('followers-list');
+        followersList.style.display = (followersList.style.display === 'block') ? 'none' : 'block';
+    });
+
+    document.getElementById('follows-count').addEventListener('click', () => {
+        const followsList = document.getElementById('follow-list');
+        followsList.style.display = (followsList.style.display === 'block') ? 'none' : 'block';
+    });
+
 </script>
 @endsection
