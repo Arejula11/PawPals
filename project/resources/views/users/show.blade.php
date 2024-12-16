@@ -18,6 +18,12 @@
                 <span><strong> {{ $user->followers()->count() }}</strong> Followers</span>
                 <span><strong>{{ $user->follows()->count() }}</strong> Following</span>
             </div>
+            <div class="my-followers">
+                @foreach ($user->followers() as $userfollower)
+                    <p>found user</p>
+                @endforeach
+
+            </div>
             <span><strong>About me:</strong></span>
             <p class="profile-description">{{ $user->bio_description }}</p>
             @if ($isOwnProfile)

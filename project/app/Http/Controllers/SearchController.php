@@ -30,7 +30,7 @@ class SearchController extends Controller
         ]);
 
         $query = strtolower($request->input('query', ''));
-        $type = strtolower($request->input('type', 'pet owner'));
+        $type = strtolower($request->input('type', 'all'));
         
         $users = User::query()
             ->when($query, function ($queryBuilder) use ($query) {
@@ -40,7 +40,9 @@ class SearchController extends Controller
                             ->orWhereRaw('LOWER(surname) LIKE ?', ['%' . $query . '%']);
                 });
             })
-            ->whereRaw('LOWER(CAST(type AS TEXT)) = ?', [$type])
+            ->when($type !== 'all', function ($queryBuilder) use ($type) {
+                $queryBuilder->whereRaw('LOWER(CAST(type AS TEXT)) = ?', [$type]);
+            })
             ->limit(5)
             ->get()
             ->map(function ($user) {

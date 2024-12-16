@@ -4,7 +4,8 @@
     <div class="search-part">
         <input type="text" name="query" id="search-input" placeholder="Search for users..." autocomplete="off"/>
         <select class="input-type" id="user-type-select">
-            <option value="pet owner" selected>Pet Owner</option>
+            <option value="all" selected>All Types</option>
+            <option value="pet owner">Pet Owner</option>
             <option value="veterinarian">Veterinarian</option>
             <option value="adoption organization">Adoption Organization</option>
             <option value="rescue organization">Rescue Organization</option>
