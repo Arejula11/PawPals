@@ -32,6 +32,10 @@ body {
   overflow: hidden;
 }
 
+p {
+  color: #333333; 
+}
+
 main {
   flex-grow: 1;
   overflow-y: hidden;
@@ -49,6 +53,7 @@ main > header {
 main > header h1 {
   margin: 0;
 }
+
 main > header a.button {
   margin: 1em;
   justify-self: center;
@@ -59,6 +64,9 @@ main > header span {
 }
 #content label {
   font-weight: normal;
+}
+body > p {
+  color: #333,
 }
 #content > form {
   margin: 0 auto;
@@ -261,8 +269,8 @@ input[type=password]:focus {
   transform: translateY(-2px);
 }
 
-.login-form .error,
-.login-form .success {
+.error,
+.success {
   display: block;
   margin-top: 10px;
   font-size: 0.9rem;
@@ -271,7 +279,7 @@ input[type=password]:focus {
   text-align: center;
 }
 
-.login-form .error {
+.error {
   background-color: #ffe0e0;
   color: #cc0000;
 }
@@ -728,12 +736,35 @@ input[type=password]:focus {
   background: #4a148c;
 }
 
+.crown-owner{
+  width: 25px;
+  margin-bottom: 19px;
+  margin-left: 3px;
+}
+
 .join-form{
   width: 100%;
 }
 
 .join-button {
   background-color: #388e3c;
+  color: #fff;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s, transform 0.3s;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+
+.leave-button {
+  background-color: #dc3545;
   color: #fff;
   padding: 12px 24px;
   font-size: 1rem;
@@ -798,7 +829,6 @@ input[type=password]:focus {
   height: 50px;
   display: flex;
   align-items: center;
-  justify-content: center;
 }
 
 
@@ -1252,9 +1282,14 @@ form {
   font-size: 1em;
   transition: background 0.3s;
 }
-.participant-item p{
+.participant-name{
   padding-top: 10px;
-  margin-right: auto
+  margin-right: auto;
+}
+
+.owner-name{
+  padding-top: 10px;
+  margin-right: 0;
 }
 
 .deleting-user-group {

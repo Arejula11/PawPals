@@ -108,3 +108,11 @@ button.btn-danger {
 button.btn-danger:hover {
     background-color: #e41f1f;
 }
+
+.error {
+    color: #f44336; /* Red color for error */
+    font-size: 0.875rem; /* Slightly smaller font size */
+    margin-top: 0.5rem;
+    display: none; /* Hidden by default */
+    text-align: left; /* Align error messages to the left */
+}
