@@ -4,8 +4,9 @@
 @endsection
 
 @section('content')
-<div class="container">
+<div class="container-post">
 
+    <h1>Create Post</h1>
     {{-- Post Creation Form --}}
     <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
@@ -39,8 +40,8 @@
             <div id="user-results"></div>
         </div>
 
-        <div class="text-center">
-            <button type="submit" class="btn btn-primary" style="width: auto; height: auto; font-size: 0.9rem; padding: 8px 16px;">Create Post</button>
+        <div class="button-create">
+            <button type="submit" class="btn btn-primary">Create Post</button>
         </div>
     </form>
 </div>
@@ -78,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             </div>
                         `;
                         userDiv.addEventListener('click', function() {
-                            addTaggedUser(user.id, user.first_name, user.username);
+                            addTaggedUser(user.id, user.username);
                         });
                         resultsDiv.appendChild(userDiv);
                     });

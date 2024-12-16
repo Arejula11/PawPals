@@ -213,7 +213,7 @@ function setReplyToComment(commentId, username) {
 
 // Tags
 
-function addTaggedUser(id, name, username) {
+function addTaggedUser(id, username) {
   let taggedUsersList = document.getElementById('tagged-users-list');
   let taggedUsersInput = document.getElementById('tagged-users-input');
 
@@ -222,7 +222,7 @@ function addTaggedUser(id, name, username) {
       userTag.classList.add('tagged-user');
       userTag.id = `tagged-user-${id}`;
       userTag.innerHTML = `
-          ${name} (@${username})
+          @${username}
           <button type="button" class="remove-tag" data-id="${id}">Remove</button>
       `;
 
@@ -236,6 +236,7 @@ function addTaggedUser(id, name, username) {
       updateTaggedUsersInput();
   }
 }
+
 
 function updateTaggedUsersInput() {
   let taggedUsersList = document.querySelectorAll('.tagged-user');

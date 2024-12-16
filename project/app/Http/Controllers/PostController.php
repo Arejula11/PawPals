@@ -24,7 +24,7 @@ class PostController extends Controller
             ->orderBy('creation_date', 'desc')
             ->paginate(10); 
             
-        return view('pages.home', compact('posts'));
+        return view('pages.post.index', compact('posts'));
     }
 
     /**
@@ -172,7 +172,7 @@ class PostController extends Controller
             PostTag::where('post_id', $post->id)->delete();
         }
     
-        return redirect()->route('posts.index')->with('success', 'Post updated successfully!');
+        return redirect()->route('posts.show', $post->id)->with('success', 'Post updated successfully!');
     }
 
     /**
@@ -196,6 +196,6 @@ class PostController extends Controller
     
         $post->delete();
     
-        return redirect()->route('posts.index')->with('success', 'Post deleted successfully!');        
+        return redirect()->route('home')->with('success', 'Post deleted successfully!');        
     }
 }

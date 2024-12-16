@@ -1,3 +1,27 @@
+.container-post {
+    width: 50%;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    margin-left: 15vw;
+    margin-top: 5vh;
+    border: 1px outset black;
+    border-radius: 10px;
+    box-shadow: 3px 3px 2px 2px gray;
+}
+
+.container-post h1 {
+    font-weight: 600;
+    border-bottom: 1px outset black;
+    box-shadow: 0px 3px 0px 0px gray;
+}
+
+.container-post textarea {
+    resize: none;
+}
+
 .user-result {
     display: flex;
     flex-direction: row;
@@ -7,9 +31,15 @@
 
 .user-link {
     display: flex;
+    padding: 10px;
     align-items: center;
     text-decoration: none;
     color: inherit;
+}
+
+.user-link:hover {
+    cursor: pointer;
+    background-color: rgb(155, 77, 202, .3);
 }
 
 .profile-image {
@@ -34,13 +64,15 @@
 }
 
 .tagged-users {
-    display: flex; 
+    display: flex;
     flex-wrap: wrap; 
-    gap: 10px; 
+    justify-content: center;
+    gap: 30px; 
     margin-bottom: 10px;
 }
 
 .tagged-user {
+    width: 33%;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -48,7 +80,11 @@
     padding: 5px;
     border-radius: 20px;
     font-size: 1.6rem;
-    white-space: nowrap; 
+    white-space: wrap; 
+}
+
+.tagged-user:hover {
+    background-color: rgb(155, 77, 202, .3);
 }
 
 .tagged-user button {
@@ -63,4 +99,36 @@
 
 .tagged-user button:hover {
     color: #ff5252; 
+}
+
+.button-update {
+    display: flex;
+    justify-content: center;
+}
+
+.button-create {
+    display: flex;
+    justify-content: center;
+}
+
+.button-update button {
+    height: auto;
+    width: auto;
+    padding: 10px;
+}
+
+.button-create button {
+    height: auto;
+    width: auto;
+    padding: 10px;
+}
+
+.button-delete button {
+    height: auto;
+    width: auto;
+    padding: 10px;
+}
+
+body .container-post .search-part {
+    margin-right: 0;
 }

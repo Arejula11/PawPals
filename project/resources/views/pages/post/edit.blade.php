@@ -1,10 +1,11 @@
 @extends('layouts.app')
 @section('head')
     <link href="{{ asset('css/createPost.css') }}" rel="stylesheet">
+    <script src="{{ asset('js/app.js') }}" defer></script>
 @endsection
 
 @section('content')
-<div class="container">
+<div class="container-post">
 
     <h1>Edit Post</h1>
     <form action="{{ route('posts.update', $post->id) }}" method="POST" enctype="multipart/form-data">
@@ -13,11 +14,6 @@
         <div class="desc">
             <label for="description" class="form-label">Description</label>
             <textarea id="description" name="description" class="form-control" rows="4" required>{{ old('description', $post->description) }}</textarea>
-        </div>
-
-        <div class="pic">
-            <label for="post_picture" class="form-label">Upload Picture</label>
-            <input type="file" id="post_picture" name="post_picture" class="form-control">
         </div>
 
         <div class="privacy">  
@@ -35,7 +31,7 @@
                 @foreach ($post->tags as $tag)
                     @if ($tag->user)
                     <div id="tagged-user-{{ $tag->user->id }}" class="tagged-user">
-                        {{ $tag->user->firstname }} (@ {{ $tag->user->username }})
+                        @ {{ $tag->user->username }}
                         <button type="button" class="remove-tag" data-id="{{ $tag->user->id }}">Remove</button>
                     </div>
                     @endif
@@ -45,16 +41,22 @@
             <input type="hidden" name="tagged_users" id="tagged-users-input" value="{{ $post->tags->pluck('user_id')->join(',') }}">
         </div>
 
-        {{-- Search for Users --}}
         <div class="search-part">
             <input type="text" name="query" id="search-input" placeholder="Search for users..." autocomplete="off" />
             <div id="user-results"></div>
         </div>
 
-        <div class="text-center">
-            <button type="submit" class="btn btn-primary" style="width: auto; height: auto; font-size: 0.9rem; padding: 8px 16px;">Update Post</button>
+        <div class="button-update">
+            <button type="submit" class="btn btn-primary">Update Post</button>
         </div>
     </form>
+    <div class="button-delete"> 
+        <form action="{{ route('posts.destroy', $post->id) }}" method="POST">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this post?')">Delete</button>
+        </form>
+    </div>
 </div>
 
 <script>
@@ -90,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             </div>
                         `;
                         userDiv.addEventListener('click', function() {
-                            addTaggedUser(user.id, user.first_name, user.username);
+                            addTaggedUser(user.id, user.username);
                         });
                         resultsDiv.appendChild(userDiv);
                     });
@@ -107,42 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
     searchInput.addEventListener('input', () => debounce(fetchUsers, 300));
 });
 
-    function addTaggedUser(id, name, username) {
-        let taggedUsersList = document.getElementById('tagged-users-list');
-        let taggedUsersInput = document.getElementById('tagged-users-input');
-
-        if (!document.querySelector(`#tagged-user-${id}`)) {
-            let userTag = document.createElement('div');
-            userTag.classList.add('tagged-user');
-            userTag.id = `tagged-user-${id}`;
-            userTag.innerHTML = `
-                ${name} (@${username})
-                <button type="button" class="remove-tag" data-id="${id}">Remove</button>
-            `;
-
-            userTag.querySelector('.remove-tag').addEventListener('click', function() {
-                userTag.remove();
-                updateTaggedUsersInput();
-            });
-
-            taggedUsersList.appendChild(userTag);
-
-            updateTaggedUsersInput();
-        }
-    }
-
-    function updateTaggedUsersInput() {
-        let taggedUsersList = document.querySelectorAll('.tagged-user');
-        let taggedUsersInput = document.getElementById('tagged-users-input');
-
-        let userIds = Array.from(taggedUsersList).map(user => {
-            return user.id.replace('tagged-user-', '');
-        });
-
-        taggedUsersInput.value = userIds.join(',');
-    }
-
-    document.querySelectorAll('.remove-tag').forEach(button => {
+document.querySelectorAll('.remove-tag').forEach(button => {
     button.addEventListener('click', function() {
         let userTag = document.getElementById(`tagged-user-${this.dataset.id}`);
         if (userTag) {
@@ -150,6 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
             updateTaggedUsersInput();
         }
     });
-    });
+});
+
 </script>
 @endsection

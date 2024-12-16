@@ -78,10 +78,13 @@ Route::controller(CommentController::class)->group(function () {
     Route::post('/posts/{id}/comments', 'store')->name('posts.comments.store'); // Store a new comment on a post
 });
 
+// Post Likes
 Route::post('/posts/{post}/likes/store', [PostLikeController::class, 'store'])->name('posts.likes.store');
 Route::delete('/posts/{post}/likes/destroy', [PostLikeController::class, 'destroy'])->name('posts.likes.destroy');
+// Comment Likes
 Route::post('/posts/{post}/comments/{comment}/likes/store', [CommentLikeController::class, 'store'])->name('comments.likes.store');
 Route::delete('/posts/{post}/comments/{comment}/likes/destroy', [CommentLikeController::class, 'destroy'])->name('comments.likes.destroy'); 
+// Post Tags
 Route::post('/posts/{post_id}/tags/{user_id}', [PostTagController::class, 'store'])->name('post.tags.store');
 Route::delete('/posts/{post_id}/tags/{user_id}', [PostTagController::class, 'destroy'])->name('post.tags.destroy');
 
