@@ -4,8 +4,9 @@
 @endsection
 
 @section('content')
-<div class="container">
+<div class="container-post">
 
+    <h1>Create Post</h1>
     {{-- Post Creation Form --}}
     <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
@@ -39,8 +40,8 @@
             <div id="user-results"></div>
         </div>
 
-        <div class="text-center">
-            <button type="submit" class="btn btn-primary" style="width: auto; height: auto; font-size: 0.9rem; padding: 8px 16px;">Create Post</button>
+        <div class="button-create">
+            <button type="submit" class="btn btn-primary">Create Post</button>
         </div>
     </form>
 </div>

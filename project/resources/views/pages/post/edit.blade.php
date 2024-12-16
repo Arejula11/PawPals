@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-<div class="container">
+<div class="container-post">
 
     <h1>Edit Post</h1>
     <form action="{{ route('posts.update', $post->id) }}" method="POST" enctype="multipart/form-data">
@@ -41,16 +41,22 @@
             <input type="hidden" name="tagged_users" id="tagged-users-input" value="{{ $post->tags->pluck('user_id')->join(',') }}">
         </div>
 
-        {{-- Search for Users --}}
         <div class="search-part">
             <input type="text" name="query" id="search-input" placeholder="Search for users..." autocomplete="off" />
             <div id="user-results"></div>
         </div>
 
-        <div class="text-center">
-            <button type="submit" class="btn btn-primary" style="width: auto; height: auto; font-size: 0.9rem; padding: 8px 16px;">Update Post</button>
+        <div class="button-update">
+            <button type="submit" class="btn btn-primary">Update Post</button>
         </div>
     </form>
+    <div class="button-delete"> 
+        <form action="{{ route('posts.destroy', $post->id) }}" method="POST">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this post?')">Delete</button>
+        </form>
+    </div>
 </div>
 
 <script>

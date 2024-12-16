@@ -29,8 +29,7 @@ body {
 
 .image {
     display: flex;
-    min-width: 750px;
-    max-width: 750px;
+    width: 750px;
 }
 
 .image img {
@@ -57,7 +56,8 @@ body {
 }
 
 .edit-post{
-    margin-left: 130px;
+    margin-left: 110px;
+    flex-wrap: nowrap;
 }
 
 .edit-post:hover{
