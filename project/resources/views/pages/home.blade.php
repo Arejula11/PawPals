@@ -5,72 +5,88 @@
     <link href="{{ asset('css/home.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 @endsection
+
 @section('content')
 
+<h2 style="margin-top:2.0rem;margin-left:2.0rem;margin-right:15.0rem">Latest PetPawls updates</h2>
+
 @if (Auth::check())
-    <div="container">
-        <div class="timeline"> 
-            <h1>Public</h1>
-            <h1>Following</h1>        
-        </div>
+<div class="button-container">
+    <a href="{{ route('home', ['filter' => 'following']) }}"
+       id="btn-following"
+       class="toggle-button {{ $currentFilter == 'following' ? 'active' : '' }}">
+        Following
+    </a>
+    <a href="{{ route('home', ['filter' => 'public']) }}"
+       id="btn-public"
+       class="toggle-button {{ $currentFilter == 'public' ? 'active' : '' }}">
+        Public
+    </a>
+</div>
+
+@endif
+
+<div="container">    
+    <div class="post-columns">
         <div class="post-gallery-home" data-loading="false">
             @foreach ($posts as $post)
                 @include('pages.post-list', ['post' => $post])
             @endforeach
-        </div>
-        <div class="pagination-container">
-            {{ $posts->links() }}
-        </div>
-    </div>
-    
-    <form action="{{ route('requests.show') }}" method="GET" style="position: absolute; top: 15px; right: 70px;">
-        <button type="button" style="background-color:white; border:none">
-            <img src="/images/follow.png" alt="Follow Requests" class="requests-follow">
-            @if ($pendingRequestsCount > 0)
-                <span class="badge" style="text-align:center">{{ $pendingRequestsCount }}</span>
-            @endif
-        </button>
-    </form>
-
-
-    <div class="follow-container">
-        <h1>Requests to follow</h1>
-        <div class="scrollable-content">
-            @foreach ($pendingRequests as $request)
-                <div class="request-item">
-                    <a href="{{ route('users.show', $request->follower->id) }}" class="user-link">
-                        <img class="profile-picture-request" src="profile/{{ $request->follower->profile_picture }}" alt="{{ $request->follower->username }}'s profile picture">
-                    </a>
-                    <p class="request-phrase">{{ $request->follower->username }}</p>
-                    <form action="{{ route('follow.accept', ['user1_id' => $request->follower->id, 'user2_id' => $request->user2_id]) }}" method="POST">
-                        @csrf
-                        <button type="submit" class="request-accept">
-                            <img src="/images/accept.png" alt="Follow accepted">
-                        </button>
-                    </form>
-                    <form action="{{ route('follow.reject', ['user1_id' => $request->follower->id, 'user2_id' => $request->user2_id]) }}" method="POST">
-                        @csrf
-                        <button type="submit" class="request-decline">
-                            <img src="/images/decline.png" alt="Follow declined">
-                        </button>
-                    </form>
-                </div>
-            @endforeach
+            <div class="pagination-container">
+                {{ $posts->links() }}
+            </div>
         </div>
     </div>
+</div>
 
+@if (Auth::check())
 
-    <div class="profile-picture" style="position: absolute; top: 10px; right: 10px;">
-        <a href="{{ route('users.show', ['id' => Auth::user()->id]) }}">
-            <img src="{{ Auth::user()->getProfilePicture() }}" alt="Profile Picture" class="profile-img">
-        </a>
+<form action="{{ route('requests.show') }}" method="GET" style="position: absolute; top: 15px; right: 70px;">
+    <button type="button" style="background-color:white; border:none">
+        <img src="/images/follow.png" alt="Follow Requests" class="requests-follow">
+        @if ($pendingRequestsCount > 0)
+            <span class="badge" style="text-align:center">{{ $pendingRequestsCount }}</span>
+        @endif
+    </button>
+</form>
+
+<div class="follow-container">
+    <h1>Requests to follow</h1>
+    <div class="scrollable-content">
+        @foreach ($pendingRequests as $request)
+            <div class="request-item">
+                <a href="{{ route('users.show', $request->follower->id) }}" class="user-link">
+                    <img class="profile-picture-request" src="profile/{{ $request->follower->profile_picture }}" alt="{{ $request->follower->username }}'s profile picture">
+                </a>
+                <p class="request-phrase">{{ $request->follower->username }}</p>
+                <form action="{{ route('follow.accept', ['user1_id' => $request->follower->id, 'user2_id' => $request->user2_id]) }}" method="POST">
+                    @csrf
+                    <button type="submit" class="request-accept">
+                        <img src="/images/accept.png" alt="Follow accepted">
+                    </button>
+                </form>
+                <form action="{{ route('follow.reject', ['user1_id' => $request->follower->id, 'user2_id' => $request->user2_id]) }}" method="POST">
+                    @csrf
+                    <button type="submit" class="request-decline">
+                        <img src="/images/decline.png" alt="Follow declined">
+                    </button>
+                </form>
+            </div>
+        @endforeach
     </div>
+</div>
 
 
-@else
-    <div="container"> Hello, Stranger!</div>
+<div class="profile-picture" style="position: absolute; top: 10px; right: 10px;">
+    <a href="{{ route('users.show', ['id' => Auth::user()->id]) }}">
+        <img src="{{ Auth::user()->getProfilePicture() }}" alt="Profile Picture" class="profile-img">
+    </a>
+</div>
+
 @endif
+
 @endsection
+
 @section('scripts')
 <script>
 
@@ -145,7 +161,16 @@ document.addEventListener('DOMContentLoaded', function () {
             .catch(error => console.error('Error:', error));
     });
 });
-//
+
+function showPublic() {
+    document.getElementById('btn-public').classList.add('active');
+    document.getElementById('btn-following').classList.remove('active');
+}
+
+function showFollowing() {
+    document.getElementById('btn-following').classList.add('active');
+    document.getElementById('btn-public').classList.remove('active');
+}
 
 </script>
 @endsection
