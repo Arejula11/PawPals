@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
@@ -134,6 +135,27 @@ class UserController extends Controller
                 'request_status' => 'accepted',
             ]);
 
+            $notification = new \App\Models\Notification([
+                'user_id' => $user1_id,
+                'description' => 'Your follow request has been accepted!',
+                'date' => date('Y-m-d H:i:s'),
+            ]);
+
+            $notification->save();
+            //get the id from the notification just created
+            $notificationID = \App\Models\Notification::where('user_id', $user1_id)
+                                                    ->where('description', 'Your follow request has been accepted!')
+                                                    ->where('date', date('Y-m-d H:i:s'))
+                                                    ->first()->id;
+            Log::info("notif");
+            Log::info($notificationID);
+
+            $userNotifiaction = new \App\Models\UserNotification([
+                'notification_id' => $notificationID,
+                'trigger_user_id' => $user2_id,
+                'user_notification_type' => 'follow_response',
+            ]);
+            $userNotifiaction->save();
             return redirect()->route('home')->with('success', 'Request accepted.');
         }
 
