@@ -106,9 +106,11 @@
             <h2>Posts</h2>
             @if(auth()->user()->follows->contains($user) || $user->is_public)
                 <div class="post-gallery-show">
-                    @foreach ($postImages as $image)
+                    @foreach ($postImages as $postImage)
                         <div class="post-item-show">
-                            <img src="{{ asset($image) }}" alt="Post Image">
+                            <a href="{{ route('posts.show', $postImage['id']) }}">
+                                <img src="{{ asset($postImage['image']) }}" alt="Post Image">
+                            </a>
                         </div>
                     @endforeach
                 </div>

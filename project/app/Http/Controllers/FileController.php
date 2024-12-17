@@ -161,7 +161,10 @@ class FileController extends Controller
         $posts = Post::where('user_id', $userId)->get();
         $images = [];
         foreach($posts as $post) {
-            $images[] = $post ? $post->getPostPicture() : null;
+            $images[] = [
+                'id' => $post->id,
+                'image' => $post ? $post->getPostPicture() : null
+            ];
         }
         return $images;
     }
