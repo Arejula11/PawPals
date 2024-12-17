@@ -45,8 +45,28 @@ body {
 .user {
     display: flex;
     flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
     padding-top: 20px;
-    gap: 10px;
+    padding-right: 10px;
+}
+
+.username-pic {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    flex: 2;
+    gap: 5px;
+}
+
+.user2 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    padding-top: 10px;
+    padding-right: 5px;
 }
 
 .image-info {
@@ -56,13 +76,31 @@ body {
 }
 
 .edit-post{
-    margin-left: 110px;
-    flex-wrap: nowrap;
+    font-size: small;
 }
 
 .edit-post:hover{
     cursor: pointer;
     color: darkblue;
+}
+
+.edit-comment{
+    height: auto;
+    width: auto;
+    color: #9b4dca;
+    border: 0;
+    background-color: transparent;
+    padding: 5px;
+}
+
+.edit-comment span {
+    font-size: xx-small;
+}
+
+.edit-comment:hover{
+    cursor: pointer;
+    color: darkblue;
+    background-color: transparent;
 }
 
 .profile-picture img {
@@ -95,6 +133,11 @@ body {
 
 .icons span:hover {
     color: darkblue;
+}
+
+.like-count {
+    font-size: 1.7rem;
+    font-weight: 500;
 }
 
 .content {
@@ -250,15 +293,8 @@ body {
     object-fit: cover;
 }
 
-.user2 {
-    display: flex;
-    flex-direction: row;
-    padding-top: 10px;
-    gap: 5px;
-}
-
 .tagged-users-container {
-    position: relative;
+    align-self: center;
 }
 
 .show-tagged-users-icon {
@@ -323,4 +359,51 @@ body {
 .tagged-user-link:hover .tagged-user {
     background-color: #f9f9f9; 
     border-radius: 5px;
+}
+
+.button-sc {
+    font-size: 1rem;
+    padding: 5px;
+    height: 10px;
+    width: auto;
+    color: #9b4dca;
+    background-color: transparent;
+    border: none;
+}
+
+.button-sc:hover {
+    color: white;
+    background-color: #9b4dca;
+}
+
+.button-delete {
+    font-size: 1rem;
+    padding: 5px;
+    height: 10px;
+    width: auto;
+    color: red;
+    background-color: transparent;
+    border: none;
+}
+
+.button-delete:hover {
+    color: white;
+    background-color: red;
+}
+
+.new-comment {
+    resize: none; 
+    width: 75%;
+}
+
+.edit-container {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.edit-button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 }

@@ -54,7 +54,7 @@
         <form action="{{ route('posts.destroy', $post->id) }}" method="POST">
             @csrf
             @method('DELETE')
-            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this post?')">Delete</button>
+            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this post?')">Delete Post</button>
         </form>
     </div>
 </div>
@@ -64,7 +64,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.getElementById('search-input');
     const resultsDiv = document.getElementById('user-results');
 
-    // Debounce function to avoid frequent calls
     let debounceTimer;
     function debounce(func, delay) {
         clearTimeout(debounceTimer);

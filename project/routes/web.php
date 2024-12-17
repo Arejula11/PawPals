@@ -76,7 +76,13 @@ Route::controller(PostController::class)->group(function () {
 
 Route::controller(CommentController::class)->group(function () {
     Route::post('/posts/{id}/comments', 'store')->name('posts.comments.store'); // Store a new comment on a post
+    Route::get('/posts/{post}/comments/{comment}/id', 'edit')->name('posts.comments.edit'); // Edit your comment on a post
 });
+
+Route::put('posts/{post}/comments/{comment}/update', [CommentController::class, 'update'])->name('comments.update');
+Route::delete('/posts/{post}/comments/{comment}/delete', [CommentController::class, 'destroy'])->name('comments.destroy');
+
+
 
 // Post Likes
 Route::post('/posts/{post}/likes/store', [PostLikeController::class, 'store'])->name('posts.likes.store');

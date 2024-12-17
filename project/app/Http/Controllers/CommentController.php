@@ -33,7 +33,7 @@ class CommentController extends Controller
         $post = Post::findOrFail($id);
         // Validate the input
         $validated = $request->validate([
-            'content' => 'required|string|max:500',
+            'content' => 'required|string|max:255',
             'previous_comment_id' => 'nullable|exists:comment,id',
         ]);
         // Create a new comment
@@ -43,7 +43,6 @@ class CommentController extends Controller
         $comment->post_id = $id; 
         $comment->user_id = auth()->id(); 
         $comment->previous_comment_id = $request->previous_comment_id;
-        
 
         $comment->save();
     
@@ -62,24 +61,61 @@ class CommentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $postId, string $commentId)
     {
-        //
+        $loguser = auth()->user();
+        $this->authorize('banned', $loguser);
+        
+        $post = Post::findOrFail($postId);
+        $comment = Comment::findOrFail($commentId);
+        $user = auth()->user();
+        
+        if($user->id !== $comment->user_id || !$user) {
+            abort(403, 'You do not have permission to edit this comment.');
+        }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $postId, string $commentId)
     {
-        //
+        $loguser = auth()->user();
+        $this->authorize('banned', $loguser);
+
+        $comment = Comment::findOrFail($commentId);
+    
+        $request->validate([
+            'content' => 'required|string|max:255',
+        ]);
+    
+        $comment->content = $request->input('content');
+        $comment->save();
+
+        if ($comment->user_id !== auth()->id()) {
+            return response()->json(['success' => false, 'message' => 'Unauthorized'], 403);
+        }
+    
+        return response()->json(['success' => true, 'content' => $comment->content]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $postId, string $commentId)
     {
-        //
+        $loguser = auth()->user();
+        $this->authorize('banned', $loguser);
+    
+        $comment = Comment::findOrFail($commentId);
+    
+        // Check if the authenticated user owns the comment
+        if ($comment->user_id !== auth()->id()) {
+            return response()->json(['success' => false, 'message' => 'Unauthorized'], 403);
+        }
+        
+        $comment->delete();
+    
+        return response()->json(['success' => true]);
     }
 }
