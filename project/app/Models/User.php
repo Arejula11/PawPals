@@ -10,6 +10,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use App\Http\Controllers\FileController;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Collection;
+
 
 class User extends Authenticatable
 {
@@ -155,52 +160,48 @@ class User extends Authenticatable
         return $this->hasMany(Ban::class);
     }
 
-    /**
-     * Get the notifications for the user.
-     */
-    public function notifications(): HasMany
+     // Relación general con todas las notificaciones
+     public function notifications(): HasMany
+     {
+         return $this->hasMany(Notification::class);
+     }
+ 
+     // Notificaciones de usuario
+     public function userNotifications(): HasMany
+     {
+         return $this->hasMany(Notification::class)->where('type', 'user');
+     }
+ 
+     // Notificaciones de publicaciones
+     public function postNotifications(): HasMany
+     {
+         return $this->hasMany(Notification::class)->where('type', 'post');
+     }
+ 
+     // Notificaciones de comentarios
+     public function commentNotifications(): HasMany
+     {
+         return $this->hasMany(Notification::class)->where('type', 'comment');
+     }
+ 
+     // Notificaciones del propietario del grupo
+     public function groupOwnerNotifications(): HasMany
+     {
+         return $this->hasMany(Notification::class)->where('type', 'group_owner');
+     }
+ 
+     // Notificaciones de miembros del grupo
+    public function groupMemberNotifications()
     {
-        return $this->hasMany(Notification::class);
-    }
+        Log::info("groupMemberNotifications");
 
-    /**
-     * Get the user notifications related to the user.
-     */
-    public function userNotifications(): HasMany
-    {
-        return $this->hasMany(UserNotification::class, 'trigger_user_id');
-    }
-
-    /**
-     * Get the post notifications related to the user.
-     */
-    public function postNotifications(): HasMany
-    {
-        return $this->hasMany(PostNotification::class, 'trigger_post_id');
-    }
-
-    /**
-     * Get the comment notifications related to the user.
-     */
-    public function commentNotifications(): HasMany
-    {
-        return $this->hasMany(CommentNotification::class, 'trigger_comment_id');
-    }
-
-    /**
-     * Get the group owner notifications related to the user.
-     */
-    public function groupOwnerNotifications(): HasMany
-    {
-        return $this->hasMany(GroupOwnerNotification::class, 'trigger_group_id');
-    }
-
-    /**
-     * Get the group member notifications related to the user.
-     */
-    public function groupMemberNotifications(): HasMany
-    {
-        return $this->hasMany(GroupMemberNotification::class, 'trigger_group_id');
+        // Realizamos el join entre las tablas 'notification' y 'group_member_notification'
+        $notifications = DB::table('notification')
+            ->join('group_member_notification', 'notification.id', '=', 'group_member_notification.notification_id')
+            ->where('notification.user_id', $this->id)
+            ->select('notification.*');
+        Log::info($notifications->get());  
+        return $notifications;
     }
 
     /**

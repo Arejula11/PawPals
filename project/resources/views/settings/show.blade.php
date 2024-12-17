@@ -34,6 +34,7 @@
             <!-- Change privacity -->
             <div class="bento-item">
                 <h2>Change Profile Privacy</h2>
+                <p>Public Profile</p>
                 <form action="{{ route('settings.users.public', ['id' => Auth::user()->id ]) }}" method="POST">
                     @csrf
                     @method('PUT')

@@ -20,6 +20,8 @@ use App\Http\Controllers\FollowController;
 use App\Http\Controllers\BanController;
 use App\Http\Controllers\AppealController;
 use App\Http\Controllers\StaticController;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\GroupMemberNotificationController;
 
 
 /*
@@ -173,3 +175,6 @@ Route::controller(StaticController::class)->group(function () {
     Route::post('/contact', 'sendContact')->name('static.contact.send'); // Show contact
     Route::get('/faq', 'showFAQ')->name('static.faw'); // Show FAQ
 });
+
+Route::get('/notifications', [NotificationController::class, 'index'])->name('notification.index');
+

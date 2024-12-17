@@ -1,0 +1,88 @@
+h1{
+    color: #9b4dca;
+    text-align: center;
+    font-size: 40px;
+    margin-top: 5px;
+}
+
+
+.notification-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 5px;
+    padding: 5px;
+    margin-top: -25px;
+}
+
+.notification-box {
+    margin-top: 20px;
+    width: 570px;
+    height: 390px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.notification-box h2 {
+    text-align: center;
+    background-color: #9b4dca;
+    color: white;
+    margin: 0;
+    padding: 10px;
+    font-size: 18px;
+}
+
+.notification-content {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 10px;
+}
+
+.notification {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #fdfdfd; /* Fondo claro para diferenciar */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    border: 1px solid #eee; /* Borde suave */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.notification:hover {
+    transform: translateY(-2px); /* Efecto de elevación al pasar el mouse */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Sombra más intensa */
+}
+
+.notification p {
+    margin: 0;
+    padding: 5px 0;
+    line-height: 1.5;
+}
+
+.notification p:first-child {
+    font-size: 16px; /* Descripción más prominente */
+    font-weight: 500;
+    color: #333;
+}
+
+.notification p:last-child {
+    font-size: 14px; /* Fecha más pequeña */
+    font-weight: 400;
+    color: #777;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.notification p:last-child::before {
+    content: "📅"; /* Icono de calendario */
+    font-size: 14px;
+}
+

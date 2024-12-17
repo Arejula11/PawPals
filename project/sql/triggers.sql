@@ -182,13 +182,25 @@ CREATE FUNCTION notify_follow_request()
 RETURNS TRIGGER AS 
 $BODY$
 BEGIN
-    -- Insert a notification for the user being followed
-    INSERT INTO notification (description, date, user_id)
-    VALUES ('You have a new follow request!', CURRENT_DATE, NEW.user2_id);
+    -- Check if the user is public
+    IF NOT (SELECT is_public FROM users WHERE id = NEW.user2_id) THEN
+        -- Insert a notification for the user being requested followed
+        INSERT INTO notification (description, date, user_id)
+        VALUES ('You have a new follow request!', CURRENT_DATE, NEW.user2_id);
 
-    -- Insert user-specific notification
-    INSERT INTO user_notification (notification_id, trigger_user_id, user_notification_type)
-    VALUES (currval('notification_id_seq'), NEW.user1_id, 'follow_request');
+        -- Insert user-specific notification
+        INSERT INTO user_notification (notification_id, trigger_user_id, user_notification_type)
+        VALUES (currval('notification_id_seq'), NEW.user1_id, 'follow_request');
+    ELSE
+        -- Insert a notification for the user being requested followed
+        INSERT INTO notification (description, date, user_id)
+        VALUES ('You have a new follower!', CURRENT_DATE, NEW.user2_id);
+
+        -- Insert user-specific notification
+        INSERT INTO user_notification (notification_id, trigger_user_id, user_notification_type)
+        VALUES (currval('notification_id_seq'), NEW.user1_id, 'start_following');
+       
+    END IF;
     
     RETURN NEW;
 END;
@@ -216,6 +228,14 @@ BEGIN
         -- Insert group-owner-specific notification
         INSERT INTO group_owner_notification (notification_id, trigger_group_id, group_owner_notification_type)
         VALUES (currval('notification_id_seq'), NEW.group_id, 'join_request');
+    ELSE
+        -- Insert a notification for the user who requested to join the group
+        INSERT INTO notification (description, date, user_id)
+        VALUES ('A user has join the group!', CURRENT_DATE, (SELECT owner_id FROM groups WHERE id = NEW.group_id));
+
+        -- Insert user-specific notification
+        INSERT INTO group_owner_notification (notification_id, trigger_group_id, group_owner_notification_type)
+        VALUES (currval('notification_id_seq'), NEW.group_id, 'new_user_join');
     END IF;
 
     RETURN NEW;
@@ -231,26 +251,30 @@ CREATE TRIGGER group_join_request_notification
 
 ----------------------------------------
 -- New message notification
-CREATE FUNCTION notify_group_message() 
+CREATE OR REPLACE FUNCTION notify_group_message() 
 RETURNS TRIGGER AS 
 $BODY$
+DECLARE
+    notif_id BIGINT; -- Variable to store the generated notification_id
 BEGIN
     -- Insert a notification for each group member except the sender
-    INSERT INTO notification (description, date, user_id)
-    SELECT 'New message in your group.', CURRENT_DATE, user_id
-    FROM group_participant
-    WHERE group_id = NEW.group_id AND user_id != NEW.sender_id;
+    FOR notif_id IN
+        INSERT INTO notification (description, date, user_id)
+        SELECT 'New message in your group.', CURRENT_DATE, user_id
+        FROM group_participant
+        WHERE group_id = NEW.group_id AND user_id != NEW.sender_id
+        RETURNING id -- Return the notification_id for each inserted row
+    LOOP
+        -- Insert group-member-specific notification
+        INSERT INTO group_member_notification (notification_id, trigger_group_id, group_member_notification_type)
+        VALUES (notif_id, NEW.group_id, 'new_message');
+    END LOOP;
 
-    -- Insert group-member-specific notification
-    INSERT INTO group_member_notification (notification_id, trigger_group_id, group_member_notification_type)
-    SELECT currval('notification_id_seq'), NEW.group_id, 'new_message'
-    FROM group_participant
-    WHERE group_id = NEW.group_id AND user_id != NEW.sender_id;
-    
     RETURN NEW;
 END;
 $BODY$
 LANGUAGE plpgsql;
+
 
 CREATE TRIGGER group_message_notification
     AFTER INSERT ON message
