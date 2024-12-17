@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
@@ -147,8 +146,6 @@ class UserController extends Controller
                                                     ->where('description', 'Your follow request has been accepted!')
                                                     ->where('date', date('Y-m-d H:i:s'))
                                                     ->first()->id;
-            Log::info("notif");
-            Log::info($notificationID);
 
             $userNotifiaction = new \App\Models\UserNotification([
                 'notification_id' => $notificationID,
