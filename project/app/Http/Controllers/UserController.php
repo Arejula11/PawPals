@@ -282,7 +282,13 @@ class UserController extends Controller
         $validatedData = $request->validate([
             'old' => 'required|string|min:8',
             'new' => 'required|string|min:8',
+            'repeat' => 'required|string|min:8',
         ]);
+
+        if ( $validatedData['new'] != $validatedData['repeat'] ) {
+            return redirect()->route('settings.show', $id)->with('error', 'Passwords did not match.');
+        }
+
         $user = User::findOrFail($id);
 
         if (Hash::check($validatedData['old'], $user->password)) {
