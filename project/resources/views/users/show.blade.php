@@ -14,9 +14,36 @@
             <h1 class="username">{{ $user->username }}</h1>
             <h3>{{ $user->firstname }} {{ $user->surname }}</h2>
             <h3>{{ $user->type}}</h2>
-            <div class="follower-stats">
-                <span><strong> {{ $user->followers()->count() }}</strong> Followers</span>
-                <span><strong>{{ $user->follows()->count() }}</strong> Following</span>
+            <div class="follower-stats" id="followers-toggle">
+                <span id="followers-count" style="cursor: pointer;"><strong>{{ $user->followers()->count() }}</strong> Followers</span>
+                <span id="follows-count" style="cursor: pointer;"><strong>{{ $user->follows()->count() }}</strong> Following</span>
+                <span id="posts-count" style="cursor: pointer;"><strong>{{ count($postImages) }}</strong> Posts</span>
+                <div class="my-followers" id="followers-list">
+                    @foreach ($user->followers as $userfollower)
+                        <a href="{{ route('users.show', $userfollower->id) }}" class="user-link-profile">
+                            <img src="{{ asset('./profile/' . ($userfollower->profile_picture ?? './profile/default.png')) }}" 
+                                alt="{{ $userfollower->firstname }}'s profile image" 
+                                class="profile-image-profile" />
+                            <div class="user-info-profile">
+                                <span class="first-name-follower">{{ $userfollower->firstname ?? 'Anonymous' }}</span>
+                                <span class="username-follower">@ {{ $userfollower->username ?? 'unknown' }}</span>
+                            </div>
+                        </a>
+                    @endforeach
+                </div>
+                <div class="my-follows" id="follow-list">
+                    @foreach ($user->follows as $userfollow)
+                        <a href="{{ route('users.show', $userfollow->id) }}" class="user-link-profile">
+                            <img src="{{ asset('./profile/' . ($userfollow->profile_picture ?? './profile/default.png')) }}" 
+                                alt="{{ $userfollow->firstname }}'s profile image" 
+                                class="profile-image-profile" />
+                            <div class="user-info-profile">
+                                <span class="first-name-follower">{{ $userfollow->firstname ?? 'Anonymous' }}</span>
+                                <span class="username-follower">@ {{ $userfollow->username ?? 'unknown' }}</span>
+                            </div>
+                        </a>
+                    @endforeach
+                </div>
             </div>
             <span><strong>About me:</strong></span>
             <p class="profile-description">{{ $user->bio_description }}</p>
@@ -24,7 +51,7 @@
                 <a href="{{ route('users.update', $user->id) }}" class="btn btn-primary">Edit Profile</a>
             @else
                 @if ($followStatus === 'pending')
-                    <button class="btn btn-secondary" disabled>Request Sent</button>
+                    <button id="cancel-btn" class="btn btn-secondary">Request Sent</button>
                 @elseif ($followStatus === 'accepted')
                     <button id="following-btn" class="btn btn-success">Following</button>
                 @else
@@ -61,19 +88,33 @@
         </div>
     </div>
 
+    <!-- Cancel Request Modal -->
+    <div id="cancel-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <p>Would you like to cancel the follow request?</p>
+            <div class="modal-actions">
+                <button id="cancel-yes" class="btn btn-danger">Yes</button>
+                <button id="cancel-no" class="btn btn-secondary">No</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Body -->
     <div class="profile-body">
         <!-- Left column (user's posts) -->
         <div class="posts">
             <h2>Posts</h2>
-            <div class="post-gallery-show">
-                @foreach ($postImages as $image)
-                    <div class="post-item-show">
-                        <img src="{{ asset($image) }}" alt="Post Image">
-                    </div>
-                @endforeach
-            </div>
-            
+            @if(auth()->user()->follows->contains($user) || $user->is_public)
+                <div class="post-gallery-show">
+                    @foreach ($postImages as $image)
+                        <div class="post-item-show">
+                            <img src="{{ asset($image) }}" alt="Post Image">
+                        </div>
+                    @endforeach
+                </div>
+            @else
+                <p>This profile is private</p>
+            @endif
         </div>
         </div>
 
@@ -99,6 +140,11 @@
         const unfollowYesBtn = document.getElementById('unfollow-yes');
         const unfollowNoBtn = document.getElementById('unfollow-no');
 
+        const cancelBtn = document.getElementById('cancel-btn');
+        const cancelmodal = document.getElementById('cancel-modal');
+        const cancelYesBtn = document.getElementById('cancel-yes');
+        const cancelNoBtn = document.getElementById('cancel-no');
+
         // Create and add overlay element
         const overlay = document.createElement('div');
         overlay.classList.add('overlay');
@@ -114,6 +160,15 @@
             }, 10);
         }
 
+        function showModal2() {
+            cancelmodal.style.display = 'block';
+            overlay.style.display = 'block';
+            setTimeout(() => {
+                cancelmodal.style.opacity = '1';
+                cancelmodal.style.transform = 'translate(-50%, -50%) scale(1)';
+            }, 10);
+        }
+
         // Function to hide modal with animation
         function hideModal() {
             modal.style.opacity = '0';
@@ -124,11 +179,22 @@
             }, 300);
         }
 
+        function hideModal2() {
+            cancelmodal.style.opacity = '0';
+            cancelmodal.style.transform = 'translate(-50%, -50%) scale(0.8)';
+            setTimeout(() => {
+                cancelmodal.style.display = 'none';
+                overlay.style.display = 'none';
+            }, 300);
+        }
+
         // Show modal when "Following" button is clicked
         followingBtn?.addEventListener('click', showModal);
+        cancelBtn?.addEventListener('click', showModal2);
 
         // Hide modal on "No" click
         unfollowNoBtn.addEventListener('click', hideModal);
+        cancelNoBtn.addEventListener('click', hideModal2);
 
         // Handle "Yes" action
         unfollowYesBtn.addEventListener('click', () => {
@@ -151,6 +217,38 @@
                 }
             });
         });
+
+        cancelYesBtn.addEventListener('click', () => {
+            fetch("{{ route('follow.remove') }}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({
+                    user1_id: {{ Auth::id() }},
+                    user2_id: {{ $user->id }}
+                })
+            }).then(response => {
+                if (response.ok) {
+                    window.location.reload();
+                } else {
+                    alert('Failed to unfollow. Please try again.');
+                    hideModal2();
+                }
+            });
+        });
     });
+
+    document.getElementById('followers-count').addEventListener('click', () => {
+        const followersList = document.getElementById('followers-list');
+        followersList.style.display = (followersList.style.display === 'block') ? 'none' : 'block';
+    });
+
+    document.getElementById('follows-count').addEventListener('click', () => {
+        const followsList = document.getElementById('follow-list');
+        followsList.style.display = (followsList.style.display === 'block') ? 'none' : 'block';
+    });
+
 </script>
 @endsection
