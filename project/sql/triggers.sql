@@ -182,13 +182,25 @@ CREATE FUNCTION notify_follow_request()
 RETURNS TRIGGER AS 
 $BODY$
 BEGIN
-    -- Insert a notification for the user being followed
-    INSERT INTO notification (description, date, user_id)
-    VALUES ('You have a new follow request!', CURRENT_DATE, NEW.user2_id);
+    -- Check if the user is public
+    IF NOT (SELECT is_public FROM users WHERE id = NEW.user2_id) THEN
+        -- Insert a notification for the user being requested followed
+        INSERT INTO notification (description, date, user_id)
+        VALUES ('You have a new follow request!', CURRENT_DATE, NEW.user2_id);
 
-    -- Insert user-specific notification
-    INSERT INTO user_notification (notification_id, trigger_user_id, user_notification_type)
-    VALUES (currval('notification_id_seq'), NEW.user1_id, 'follow_request');
+        -- Insert user-specific notification
+        INSERT INTO user_notification (notification_id, trigger_user_id, user_notification_type)
+        VALUES (currval('notification_id_seq'), NEW.user1_id, 'follow_request');
+    ELSE
+        -- Insert a notification for the user being requested followed
+        INSERT INTO notification (description, date, user_id)
+        VALUES ('You have a new follower!', CURRENT_DATE, NEW.user2_id);
+
+        -- Insert user-specific notification
+        INSERT INTO user_notification (notification_id, trigger_user_id, user_notification_type)
+        VALUES (currval('notification_id_seq'), NEW.user1_id, 'start_following');
+       
+    END IF;
     
     RETURN NEW;
 END;
