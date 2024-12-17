@@ -14,6 +14,7 @@
         </div>
 
         <div class="icons">
+            @if (Auth::check())
             <span class="like-button"
                 data-post-id="{{ $post->id }}"
                 data-liked="{{ Auth::user()->likesPost($post) ? 'true' : 'false' }}">
@@ -22,7 +23,15 @@
                 @else
                     <i class="far fa-heart"></i> <span class="like-count">{{ $post->likes()->count() }}</span>
                 @endif
+            @else
+            <span class="like-button"
+                data-post-id="{{ $post->id }}"
+                data-liked="false">
+                <i class="far fa-heart"></i> <span class="like-count">{{ $post->likes()->count() }}</span>
+            @endif
             </span>
+            
+
             <a href="{{ route('posts.show', $post->id) }}">
                 <span class="fas fa-comment"> {{ $post->comments->count() }}</span>
             </a>

@@ -104,7 +104,7 @@
         <!-- Left column (user's posts) -->
         <div class="posts">
             <h2>Posts</h2>
-            @if(auth()->user()->follows->contains($user) || $user->is_public)
+            @if(auth()->user()->follows->contains($user) || $user->is_public || auth()->id() === $user->id)
                 <div class="post-gallery-show">
                     @foreach ($postImages as $postImage)
                         <div class="post-item-show">

@@ -76,6 +76,7 @@ Route::controller(PostController::class)->group(function () {
     Route::delete('/posts/{id}', 'destroy')->name('posts.destroy'); // Delete a specific post
 });
 
+//Comments
 Route::controller(CommentController::class)->group(function () {
     Route::post('/posts/{id}/comments', 'store')->name('posts.comments.store'); // Store a new comment on a post
     Route::get('/posts/{post}/comments/{comment}/id', 'edit')->name('posts.comments.edit'); // Edit your comment on a post
@@ -96,6 +97,7 @@ Route::delete('/posts/{post}/comments/{comment}/likes/destroy', [CommentLikeCont
 Route::post('/posts/{post_id}/tags/{user_id}', [PostTagController::class, 'store'])->name('post.tags.store');
 Route::delete('/posts/{post_id}/tags/{user_id}', [PostTagController::class, 'destroy'])->name('post.tags.destroy');
 
+//Groups
 Route::delete('/groups/{group}/participants/{user}', [GroupController::class, 'removeParticipant'])->name('groups.participants.remove');
 Route::controller(GroupController::class)->group(function () {
     Route::get('/groups/search', 'search')->name('groups.search'); // Search for groups
@@ -109,15 +111,14 @@ Route::controller(GroupController::class)->group(function () {
     Route::get('/groups/{id}', 'show')->name('groups.show'); // Group details
     Route::post('/groups/{id}/messages/store', [GroupController::class, 'storeMessage'])->name('groups.messages.store');
 });
+Route::post('/update-message', [MessageController::class, 'updateMessage']);
 
 // Users profile
 Route::get('/user/{id}', [UserController::class, 'show'])->name('users.show');
 Route::get('/user/edit/{id}', [UserController::class, 'edit'])->name('users.edit');
 Route::put('/user/edit/{id}', [UserController::class, 'update'])->name('users.update');
 
-//Route::post('/file/upload', [FileController::class, 'upload']);
-
-
+// Admin
 Route::get('admin/users/{id}', [AdminController::class, 'showUser'])->name('admin.users.show');
 Route::get('admin/', [AdminController::class, 'home'])->name('admin.home');
 Route::get('admin/user/create', [AdminController::class, 'create'])->name('admin.users.create');
@@ -145,25 +146,22 @@ Route::get('admin/comment/{id}', [AdminController::class, 'showComment'])->name(
 Route::put('admin/comment/{id}', [AdminController::class, 'updateComment'])->name('admin.comments.edit');
 Route::delete('admin/comment/{id}', [AdminController::class, 'destroyComment'])->name('admin.comments.delete');
 
-
-Route::post('/update-message', [MessageController::class, 'updateMessage']);
-
+// Follow requests
 Route::post('/follow', [UserController::class, 'follow'])->name('follow.send');
 Route::get('/requests', [UserController::class, 'checkRequests'])->name('requests.show');
 Route::post('follow/accept/{user1_id}/{user2_id}', [UserController::class, 'accept'])->name('follow.accept');
 Route::post('follow/reject/{user1_id}/{user2_id}', [UserController::class, 'reject'])->name('follow.reject');
 Route::post('/follow/remove', [UserController::class, 'unfollow'])->name('follow.remove');
 
-
+// Settings
 Route::get('/settings', [UserController::class, 'settings'])->name('settings.show');
 Route::put('/settings/changePassword/{id}', [UserController::class, 'updatePassword'])->name('user.updatePassword');
 Route::put('/settings/user/delete/{id}', [UserController::class, 'deleteUser'])->name('settings.users.delete');
 Route::put('/settings/user/public/{id}', [UserController::class, 'privacity'])->name('settings.users.public');
 
-
+// Appeals and bans
 Route::get('/appeal', [AppealController::class, 'create'])->name('appeal.create');
 Route::post('/appeal', [AppealController::class, 'store'])->name('appeal.store');
-
 Route::get('/banned', function () {
     return view('banned.show');
 })->name('banned.show');
@@ -172,7 +170,7 @@ Route::get('/banned', function () {
 Route::controller(StaticController::class)->group(function () {
     Route::get('/about', 'showAbout')->name('static.about'); // Show about us
     Route::get('/contact', 'showContact')->name('static.contact'); // Show contact
-    Route::post('/contact', 'sendContact')->name('static.contact.send'); // Show contact
+    Route::post('/contact', 'sendContact')->name('static.contact.send'); // Send contact form
     Route::get('/faq', 'showFAQ')->name('static.faw'); // Show FAQ
 });
 
