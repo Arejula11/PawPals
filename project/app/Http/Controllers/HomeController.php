@@ -14,9 +14,11 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        # $this->authorize('banned', User::class);
-
         $loggedInUser = auth()->user();
+        if ($loggedInUser) {
+            $this->authorize('banned', User::class);
+        }
+
         $pendingRequests = [];
         $pendingRequestsCount = 0;
 
