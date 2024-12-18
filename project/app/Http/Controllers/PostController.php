@@ -49,7 +49,7 @@ class PostController extends Controller
     
         $validated = $request->validate([
         'description' => 'required|string|max:500',
-        'post_picture' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        'post_picture' => 'required|image|mimes:jpg,jpeg,png|max:2048',
         'tagged_users' => 'nullable|string',
         ]);
         
