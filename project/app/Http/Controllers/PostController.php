@@ -16,7 +16,9 @@ class PostController extends Controller
     public function index()
     {
         $loguser = auth()->user();
-        $this->authorize('banned', $loguser);
+        if ($loguser) {
+            $this->authorize('banned', $loguser);
+        }
         $userId = auth()->id();
             
         $posts = Post::with('user')
@@ -87,7 +89,9 @@ class PostController extends Controller
     public function show(string $id)
     {
         $loguser = auth()->user();
-        $this->authorize('banned', $loguser);
+        if ($loguser) {
+            $this->authorize('banned', $loguser);
+        }
         $post = Post::with('user')->findOrFail($id);
         $user = auth()->user();
 
