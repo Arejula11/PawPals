@@ -26,7 +26,7 @@ html, body {
 
 body {
   background-color: #ffffff;
-  color: #9b4dca;
+  color: #ef9105;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -45,7 +45,7 @@ main > header {
   display: grid;
   grid-template-columns: 1fr auto auto;
   align-items: center;
-  background-color: #d2afe7;
+  background-color: #fabd72;
   padding: 1em;
   margin: 1em;
   margin-bottom: 0;
@@ -71,7 +71,7 @@ body > p {
 #content > form {
   margin: 0 auto;
   padding: 1em;
-  border: 1px solid #d2afe7;
+  border: 1px solid #fabd72;
   width: 100%;
 }
 #content > form .error {
@@ -142,15 +142,15 @@ body > p {
  }
  
 a.button.button-outline {
-  color: #9b4dca;
+  color: #ef9105;
 }
 a {
-  color: #9b4dca;
+  color: #ef9105;
 }
 input[type=text]:focus,
 input[type=email]:focus,
 input[type=password]:focus {
-  border-color: #9b4dca;
+  border-color: #ef9105;
 }
 
 .column:first-child {
@@ -205,7 +205,7 @@ input[type=password]:focus {
   display: block;
   font-size: 1.5rem;
   font-weight: bold;
-  color: #6a1b9a;
+  color: #d18800;
   margin-bottom: 8px;
 }
 
@@ -214,7 +214,7 @@ input[type=password]:focus {
   width: 100%;
   padding: 10px;
   margin-bottom: 15px;
-  border: 1px solid #d2afe7;
+  border: 1px solid #fabd72;
   border-radius: 6px;
   font-size: 1.5rem;
   background-color: #f9f9f9;
@@ -223,8 +223,8 @@ input[type=password]:focus {
 
 .login-form input[type="email"]:focus,
 .login-form input[type="password"]:focus {
-  border-color: #9b4dca;
-  box-shadow: 0 0 8px rgba(155, 77, 202, 0.3);
+  border-color: #ef9105;
+  box-shadow: 0 0 8px rgba(255, 194, 97, 0.3);
   outline: none;
 }
 
@@ -232,7 +232,7 @@ input[type=password]:focus {
   display: block;
   width: 100%;
   padding: 12px 20px;
-  background-color: #9b4dca;
+  background-color: #ef9105;
   color: white;
   font-size: 1.2rem;
   font-weight: bold;
@@ -243,7 +243,7 @@ input[type=password]:focus {
 }
 
 .login-form button:hover {
-  background-color: #7b3aa4;
+  background-color: #d18800;
   transform: translateY(-2px);
 }
 
@@ -251,8 +251,8 @@ input[type=password]:focus {
   width: 100%;
   padding: 12px 20px;
   background-color: transparent;
-  border: 2px solid #9b4dca;
-  color: #9b4dca;
+  border: 2px solid #ef9105;
+  color: #ef9105;
   font-size: 1.2rem;
   font-weight: bold;
   border-radius: 6px;
@@ -263,9 +263,9 @@ input[type=password]:focus {
 }
 
 .login-form .button-outline:hover {
-  background-color: #9b4dca;
+  background-color: #ef9105;
   color: white;
-  border-color: #7b3aa4;
+  border-color: #d18800;
   transform: translateY(-2px);
 }
 
@@ -443,7 +443,7 @@ input[type=password]:focus {
   display: block;
   font-size: 1.5rem;
   font-weight: bold;
-  color: #6a1b9a;
+  color: #de9207;
   margin-bottom: 8px;
 }
 
@@ -456,7 +456,7 @@ input[type=password]:focus {
   width: 100%;
   padding: 10px;
   margin-bottom: 15px;
-  border: 1px solid #d2afe7;
+  border: 1px solid #de9207;
   border-radius: 6px;
   font-size: 1.5rem;
   background-color: #f9f9f9;
@@ -469,8 +469,8 @@ input[type=password]:focus {
 .register-form input[type="number"]:focus,
 .register-form select:focus,
 .register-form textarea:focus {
-  border-color: #9b4dca;
-  box-shadow: 0 0 8px rgba(155, 77, 202, 0.3);
+  border-color: #ef9105;
+  box-shadow: 0 0 8px rgba(219, 160, 23, 0.3);
   outline: none;
 }
 
@@ -478,7 +478,7 @@ input[type=password]:focus {
   display: block;
   width: 100%;
   padding: 12px 20px;
-  background-color: #9b4dca;
+  background-color: #ef9105;
   color: white;
   font-size: 1.2rem;
   font-weight: bold;
@@ -489,7 +489,7 @@ input[type=password]:focus {
 }
 
 .register-form button:hover {
-  background-color: #7b3aa4;
+  background-color: #d18800;
   transform: translateY(-2px);
 }
 
@@ -497,8 +497,8 @@ input[type=password]:focus {
   width: 100%;
   padding: 12px 20px;
   background-color: transparent;
-  border: 2px solid #9b4dca;
-  color: #9b4dca;
+  border: 2px solid #ef9105;
+  color: #ef9105;
   font-size: 1.2rem;
   font-weight: bold;
   border-radius: 6px;
@@ -509,9 +509,9 @@ input[type=password]:focus {
 }
 
 .register-form .button-outline:hover {
-  background-color: #9b4dca;
+  background-color: #ef9105;
   color: white;
-  border-color: #7b3aa4;
+  border-color: #d18800;
   transform: translateY(-2px);
 }
 
@@ -611,7 +611,7 @@ input[type=password]:focus {
 
 .group-search h1 {
   font-size: 2rem;
-  color: #6a1b9a;
+  color: #de9207;
   margin-bottom: 1em;
 }
 
@@ -621,7 +621,7 @@ input[type=password]:focus {
   gap: 1em;
   padding: 0 0 1em;
   margin: 0;
-  max-height: 500px;
+  max-height: 100%;
   overflow-y: auto;
   scrollbar-width: none;
 }
@@ -641,9 +641,9 @@ input[type=password]:focus {
   text-decoration: none;
   font-size: 1.2rem;
   font-weight: bold;
-  color: #9b4dca;
+  color: #ef9105;
   padding: 0.5em 1em;
-  border: 2px solid #9b4dca;
+  border: 2px solid #ef9105;
   border-radius: 8px;
   text-align: center;
   transition: all 0.3s ease;
@@ -652,7 +652,7 @@ input[type=password]:focus {
 }
 
 .group-search ul li a.group-link:hover {
-  background-color: #9b4dca;
+  background-color: #ef9105;
   color: #fff;
   z-index: 10;
 }
@@ -697,7 +697,7 @@ input[type=password]:focus {
 
 .group-header h1 {
   font-size: 2.2rem;
-  color: #4a148c;
+  color: #ef9105;
   margin-bottom: 0.5em;
   text-align: left;
 }
@@ -729,11 +729,11 @@ input[type=password]:focus {
 }
 
 .group-actions .edit-button {
-  background: #6a1b9a;
+  background: #ef9105;
 }
 
 .group-actions .edit-button:hover {
-  background: #4a148c;
+  background: #ef9105;
 }
 
 .crown-owner{
@@ -798,7 +798,7 @@ input[type=password]:focus {
 
 .group-details h2 {
   font-size: 1.7rem;
-  color: #6a1b9a;
+  color: #ef9105;
   margin-bottom: 1em;
   text-align: left;
 }
@@ -825,7 +825,7 @@ input[type=password]:focus {
   text-align: center;
   font-size: 1.3rem;
   font-weight: bold;
-  color: #4a148c;
+  color: #ef9105;
   height: 50px;
   display: flex;
   align-items: center;
@@ -910,7 +910,7 @@ h1 {
 .form-input:focus,
 .form-textarea:focus,
 .form-select:focus {
-  border-color: #4a148c;
+  border-color: #ef9105;
   outline: none;
 }
 
@@ -920,7 +920,7 @@ h1 {
 }
 
 .submit-button {
-  background-color: #6a1b9a;
+  background-color: #ef9105;
   color: white;
   padding: 12px 24px;
   border: none;
@@ -931,11 +931,11 @@ h1 {
 }
 
 .submit-button:hover {
-  background-color: #4a148c;
+  background-color: #ef9105;
 }
 
 .submit-button:active {
-  background-color: #4a148c;
+  background-color: #ef9105;
 }
 
 /* Main container */
@@ -1229,7 +1229,7 @@ form {
   padding: 10px 15px;
   text-decoration: none;
   font-size: 14px;
-  color: #6a1b9a; /* Default link color */
+  color: #ef9105; /* Default link color */
   border: 1px solid #d1c4e9; /* Border for buttons */
   border-radius: 5px; /* Rounded corners */
   transition: background-color 0.3s, color 0.3s; /* Smooth hover effect */
@@ -1237,15 +1237,15 @@ form {
 }
 
 .pagination-container .pagination a:hover {
-  background-color: #6a1b9a; /* Purple background on hover */
+  background-color: #ef9105; /* Purple background on hover */
   color: white; /* White text on hover */
 }
 
 .pagination-container .pagination .active span {
-  background-color: #6a1b9a; /* Purple background for active page */
+  background-color: #ef9105; /* Purple background for active page */
   color: white; /* White text for active page */
   font-weight: bold; /* Bold font for active page */
-  border: 1px solid #6a1b9a; /* Same color as background */
+  border: 1px solid #ef9105; /* Same color as background */
   cursor: default; /* No pointer cursor for active page */
 }
 
@@ -1260,12 +1260,12 @@ form {
 .pagination-container .pagination li span[aria-hidden="true"] {
   font-size: 18px; /* Larger font for arrows */
   padding: 10px; /* Padding for spacing */
-  color: #6a1b9a; /* Default arrow color */
+  color: #ef9105; /* Default arrow color */
 }
 
 .pagination-container .pagination li a[rel="prev"]:hover,
 .pagination-container .pagination li a[rel="next"]:hover {
-  background-color: #6a1b9a; /* Purple background on hover */
+  background-color: #ef9105; /* Purple background on hover */
   color: white; /* White arrows on hover */
 }
 

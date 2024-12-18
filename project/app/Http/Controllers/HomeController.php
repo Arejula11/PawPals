@@ -31,13 +31,13 @@ class HomeController extends Controller
             $posts = Post::with('user')
                 ->where('is_public', true) 
                 ->orderBy('creation_date', 'desc')
-                ->paginate(10);
+                ->paginate(5);
         } elseif ($filter === 'following' && $loggedInUser) {
             $followedUserIds = $loggedInUser->follows()->pluck('id'); 
             $posts = Post::with('user')
                 ->whereIn('user_id', $followedUserIds)
                 ->orderBy('creation_date', 'desc')
-                ->paginate(10);
+                ->paginate(5);
         } else {
             $posts = collect(); 
         }

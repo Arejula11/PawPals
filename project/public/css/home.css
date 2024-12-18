@@ -37,7 +37,7 @@
 .post-item-home img {
     width: 100%;
     height: auto;
-    border: 2px outset #9b4dca; 
+    border: 2px outset #ef9105; 
     border-radius: 20px; 
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
     align-self: center;
@@ -96,7 +96,7 @@
 }
 
 .show-tagged-users-icon {
-    color: #9b4dca; 
+    color: #ef9105; 
     cursor: pointer;
     transition: color 0.3s ease;
 }
@@ -106,7 +106,7 @@
 }
 
 .like-button {
-    color: #9b4dca; 
+    color: #ef9105; 
     cursor: pointer;
     transition: color 0.3s ease;
 }
@@ -176,9 +176,9 @@
 .toggle-button {
     padding: 10px 20px;
     font-size: 16px;
-    border: 1px solid #9b4dca;
+    border: 1px solid #ef9105;
     background-color: white;
-    color: #9b4dca;
+    color: #ef9105;
     border-radius: 5px;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -186,7 +186,7 @@
 }
 
 .toggle-button.active {
-    background-color: #9b4dca;
+    background-color: #ef9105;
     color: white;
     cursor: not-allowed;
     pointer-events: none;

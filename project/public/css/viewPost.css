@@ -87,7 +87,7 @@ body {
 .edit-comment{
     height: auto;
     width: auto;
-    color: #9b4dca;
+    color: #ef9105;
     border: 0;
     background-color: transparent;
     padding: 5px;
@@ -155,7 +155,7 @@ body {
     overflow-y: auto;
     overflow-x: hidden;
     scrollbar-width: thin; 
-    scrollbar-color: #9b4dca #f0f0f0;
+    scrollbar-color: #ef9105 #f0f0f0;
     border: 1px solid #ccc;
     border-bottom: 1px solid gray;
     border-right: 1px solid gray;
@@ -177,7 +177,7 @@ body {
     overflow-y: auto; 
     overflow-x: hidden; 
     scrollbar-width: medium; 
-    scrollbar-color: #9b4dca #f0f0f0; 
+    scrollbar-color: #ef9105 #f0f0f0; 
 }
 
 .comment {
@@ -195,7 +195,7 @@ body {
 .comment span.user {
     padding: 0;
     font-weight: bold;
-    color: #9b4dca; 
+    color: #ef9105; 
 }
 
 .comment p {
@@ -205,7 +205,7 @@ body {
     overflow-y: auto;
     overflow-x: hidden;
     scrollbar-width: thin; 
-    scrollbar-color: #9b4dca #f0f0f0; 
+    scrollbar-color: #ef9105 #f0f0f0; 
     max-height: 100px;
 }
 
@@ -218,7 +218,7 @@ body {
 }
 
 .image-info::-webkit-scrollbar-thumb {
-    background-color: #9b4dca; 
+    background-color: #ef9105; 
     border-radius: 10px; 
     border: 2px solid #f0f0f0; 
 }
@@ -243,13 +243,13 @@ body {
 }
 
 .comment-input form textarea:focus {
-    outline: 2px solid #9b4dca;
+    outline: 2px solid #ef9105;
     box-shadow: 0 0 5px rgba(155, 77, 202, 0.5);
 }
 
 .comment-input form button {
     padding: 8px 12px;
-    background-color: #9b4dca;
+    background-color: #ef9105;
     color: white;
     font-size: 0.9rem;
     border: none;
@@ -299,7 +299,7 @@ body {
 
 .show-tagged-users-icon {
     font-size: 1.5rem;
-    color: #9b4dca; 
+    color: #ef9105; 
     cursor: pointer;
     transition: color 0.3s ease;
 }
@@ -366,14 +366,14 @@ body {
     padding: 5px;
     height: 10px;
     width: auto;
-    color: #9b4dca;
+    color: #ef9105;
     background-color: transparent;
     border: none;
 }
 
 .button-sc:hover {
     color: white;
-    background-color: #9b4dca;
+    background-color: #ef9105;
 }
 
 .button-delete {

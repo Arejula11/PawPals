@@ -1,7 +1,7 @@
 h1 {
     font-size: 30px;
     font-weight:normal;
-    color: #9b4dca;
+    color: #ef9105;
     text-align: center;
 }
 
@@ -54,7 +54,7 @@ body {
 
 .bento-item h2 {
     margin-bottom: 1.5rem;
-    color: #9b4dca;
+    color: #ef9105;
 }
 
 .bento-item form {
@@ -92,12 +92,12 @@ button.btn {
 }
 
 button.btn-primary {
-    background-color: #9b4dca;
+    background-color: #ef9105;
     transition: background-color 0.2s;
 }
 
 button.btn-primary:hover {
-    background-color: #9b4dca;
+    background-color: #ef9105;
 }
 
 button.btn-danger {

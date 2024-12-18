@@ -3,7 +3,7 @@
 @section('content')
 <div class="register-part">
     <div class="register-container">
-        <h1 style="color: #9b4dca; font-size: 36px; font-weight: bold;">PetPawls</h1>
+        <h1 style="color: #ef9105; font-size: 36px; font-weight: bold;">PetPawls</h1>
         <form method="POST" action="{{ route('admin.register') }}" class="register-form" enctype="multipart/form-data">
             {{ csrf_field() }}
             <label for="username">Username</label>
