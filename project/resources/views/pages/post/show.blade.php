@@ -92,15 +92,16 @@
             @endforeach
         </section>
 
-        <section class="comment-input">
-            <form action="{{ route('posts.comments.store', ['id' => $post->id]) }}" method="POST" enctype="multipart/form-data">
-                @csrf
-                <input type="hidden" id="reply-to" name="previous_comment_id" value="">
-                <textarea id="comment-box" name="content" placeholder="Add new comment..." rows="1" required></textarea>
-                <button type="submit"> Post </button>    
-            </form>
-        </section>
-
+        @auth
+            <section class="comment-input">
+                <form action="{{ route('posts.comments.store', ['id' => $post->id]) }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <input type="hidden" id="reply-to" name="previous_comment_id" value="">
+                    <textarea id="comment-box" name="content" placeholder="Add new comment..." rows="1" required></textarea>
+                    <button type="submit"> Post </button>    
+                </form>
+            </section>
+        @endauth
     </section>
 </div>
 @endsection
