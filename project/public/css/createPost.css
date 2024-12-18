@@ -97,10 +97,6 @@
     font-weight: bold;
 }
 
-.tagged-user button:hover {
-    color: #ff5252; 
-}
-
 .button-update {
     display: flex;
     justify-content: center;
@@ -127,6 +123,7 @@
     height: auto;
     width: auto;
     padding: 10px;
+    background-color: red;
 }
 
 body .container-post .search-part {
