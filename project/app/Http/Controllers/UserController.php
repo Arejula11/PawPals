@@ -14,7 +14,9 @@ class UserController extends Controller
     public function index()
     {
         $loguser = auth()->user();
-        $this->authorize('banned', $loguser);
+        if ($loguser) {
+            $this->authorize('banned', $loguser);
+        }
         $users = User::all();
         return view('users.index', compact('users'));
     }
@@ -55,7 +57,9 @@ class UserController extends Controller
     public function show(string $id)
     {
         $loguser = auth()->user();
-        $this->authorize('banned', $loguser);
+        if ($loguser) {
+            $this->authorize('banned', $loguser);
+        }
         $user = User::findOrFail($id);
 
         if (!$user->is_public && !auth()->check()) {

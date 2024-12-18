@@ -25,7 +25,9 @@ class SearchController extends Controller
     public function searchUsers(Request $request)
     {
         $loguser = auth()->user();
+        if ($loguser) {
         $this->authorize('banned', $loguser);
+        }
         $request->validate([
             'query' => 'nullable|string|min:2',
             'type'  => 'nullable|string',

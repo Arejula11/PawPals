@@ -64,6 +64,7 @@ class UserPolicy
      */
     public function banned(User $user): bool
     {
+           
         if ($user->isBanned()) {
             Log::info('User is banned');
             throw new \App\Exceptions\PolicyAuthorizationException('UserPolicy', 'update', 'You are banned.');
