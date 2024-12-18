@@ -33,7 +33,7 @@
                 @include('pages.post-list', ['post' => $post])
             @endforeach
             <div class="pagination-container">
-                {{ $posts->links() }}
+                {{ $posts->appends(request()->query())->links() }}
             </div>
         </div>
     </div>

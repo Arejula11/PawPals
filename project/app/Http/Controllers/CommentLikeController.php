@@ -8,17 +8,26 @@ use App\Models\CommentLike;
 
 class CommentLikeController extends Controller
 {
-    public function store(string $post, string $comment) {
-        
+    public function store(string $postId, string $commentId) {
+        $userId = auth()->id();
+        $comment = Comment::findOrFail($commentId);
+
+        if ($comment->user_id == $userId) {
+            return response()->json([
+                'success' => false,
+                'message' => 'You cannot like your own post.'
+            ], 403) ;
+        }
+
         $like = CommentLike::firstOrCreate([
-            'user_id' => auth()->id(),
-            'comment_id' => $comment,
+            'user_id' => $userId,
+            'comment_id' => $commentId,
         ]);
 
         return response()->json([
             'success' => true,
             'message' => 'Like added successfully!',
-            'likeCount' => Comment::findOrFail($comment)->likes()->count(),
+            'likeCount' => $comment->likes()->count(),
         ]);
     }
 

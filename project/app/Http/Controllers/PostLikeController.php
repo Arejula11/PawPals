@@ -10,6 +10,15 @@ use App\Models\PostLike;
 class PostLikeController extends Controller
 {
     public function store(string $id) {
+        $userId = auth()->id();
+        $post = Post::findOrFail($id);
+    
+        if ($post->user_id == $userId) {
+            return response()->json([
+                'success' => false,
+                'message' => 'You cannot like your own post.'
+            ], 403) ;
+        }
         
         $like = new PostLike();
         $like->user_id = auth()->id();
@@ -20,7 +29,7 @@ class PostLikeController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Like added successfully!',
-            'likeCount' => Post::findOrFail($id)->likes()->count(),
+            'likeCount' => $post->likes()->count(),
         ]);
     }
 
