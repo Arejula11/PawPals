@@ -40,7 +40,7 @@
 </div>
 
 @if (Auth::check())
-
+@if (Auth::check() && !Auth::user()->is_public)
 <form action="{{ route('requests.show') }}" method="GET" style="position: absolute; top: 15px; right: 70px;">
     <button type="button" style="background-color:white; border:none">
         <img src="/images/follow.png" alt="Follow Requests" class="requests-follow">
@@ -75,7 +75,7 @@
         @endforeach
     </div>
 </div>
-
+@endif
 
 <div class="profile-picture" style="position: absolute; top: 10px; right: 10px;">
     <a href="{{ route('users.show', ['id' => Auth::user()->id]) }}">
