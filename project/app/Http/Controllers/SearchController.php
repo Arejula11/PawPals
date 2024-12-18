@@ -13,7 +13,9 @@ class SearchController extends Controller
     public function index()
     {
         $loguser = auth()->user();
-        $this->authorize('banned', $loguser);
+        if ($loguser) {
+            $this->authorize('banned', $loguser);
+        }
         return view('pages.search');
     }
 
