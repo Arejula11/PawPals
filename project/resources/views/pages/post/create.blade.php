@@ -20,14 +20,6 @@
             <input type="file" id="post_picture" name="post_picture" class="form-control">
         </div>
 
-        <div class="privacy">  
-            <label for="is_public" class="form-label">Is Public:</label>
-            <select name="is_public" id="is_public" class="form-select">
-                <option value="1">Yes</option>
-                <option value="0">No</option>
-            </select>
-        </div>
-
         <label for="tagged_users" class="form-label">Tagged Users:</label>
         <div class="tagged">
             <div id="tagged-users-list" class="tagged-users">

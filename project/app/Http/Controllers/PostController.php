@@ -48,14 +48,13 @@ class PostController extends Controller
         $validated = $request->validate([
         'description' => 'required|string|max:500',
         'post_picture' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-        'is_public' => 'required|boolean',
         'tagged_users' => 'nullable|string',
         ]);
-
+        
         $post = new Post($validated);
         $post->description = $request->description;
         $post->creation_date = now();
-        $post->is_public = $request->is_public;
+        $post->is_public = $loguser->is_public;
         $post->user_id = auth()->id();
 
         if ($request->hasFile('post_picture')) {

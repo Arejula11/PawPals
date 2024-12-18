@@ -621,7 +621,7 @@ input[type=password]:focus {
   gap: 1em;
   padding: 0 0 1em;
   margin: 0;
-  max-height: 500px;
+  max-height: 100%;
   overflow-y: auto;
   scrollbar-width: none;
 }
