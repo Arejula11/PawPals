@@ -2,10 +2,10 @@
 
 @section('content')
 <div class="login-part">
-    <img src="{{ asset('images/pet_owner_photo.jpg') }}" alt="" class="login-img img-dog">
-    <img src="{{ asset('images/cat_owner_photo.jpg') }}" alt="" class="login-img img-cat">
-    <img src="{{ asset('images/parrot_owner_photo.jpg') }}" alt="" class="login-img img-parrot">
-    <img src="{{ asset('images/bird_owner_photo.jpg') }}" alt="" class="login-img img-bird">
+    <img src="{{ asset('images/pet_owner_photo.jpg') }}" alt="Pet_owner" class="login-img img-dog">
+    <img src="{{ asset('images/cat_owner_photo.jpg') }}" alt="Cat_owner" class="login-img img-cat">
+    <img src="{{ asset('images/parrot_owner_photo.jpg') }}" alt="Parrot_owner" class="login-img img-parrot">
+    <img src="{{ asset('images/bird_owner_photo.jpg') }}" alt="Bird_owner" class="login-img img-bird">
     <div class="login-container" style="background-image: url('{{ asset('images/paws_photo.jpg') }}');">
         
         <form method="POST" action="{{ route('login') }}" class="login-form">

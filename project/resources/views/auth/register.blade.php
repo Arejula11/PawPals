@@ -2,10 +2,10 @@
 
 @section('content')
 <div class="register-part">
-    <img src="{{ asset('images/pet_owner_photo.jpg') }}" alt="" class="register-img img-dog">
-    <img src="{{ asset('images/cat_owner_photo.jpg') }}" alt="" class="register-img img-cat">
-    <img src="{{ asset('images/parrot_owner_photo.jpg') }}" alt="" class="register-img img-parrot">
-    <img src="{{ asset('images/bird_owner_photo.jpg') }}" alt="" class="register-img img-bird">
+    <img src="{{ asset('images/pet_owner_photo.jpg') }}" alt="Pet_owner" class="register-img img-dog">
+    <img src="{{ asset('images/cat_owner_photo.jpg') }}" alt="Cat_owner" class="register-img img-cat">
+    <img src="{{ asset('images/parrot_owner_photo.jpg') }}" alt="Parrot_owner" class="register-img img-parrot">
+    <img src="{{ asset('images/bird_owner_photo.jpg') }}" alt="Bird_owner" class="register-img img-bird">
     <div class="register-container" style="background-image: url('{{ asset('images/paws_photo.jpg') }}');">
         <form method="POST" action="{{ route('register') }}" class="register-form" enctype="multipart/form-data">
             {{ csrf_field() }}
