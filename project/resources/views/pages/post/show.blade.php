@@ -98,7 +98,8 @@
                     @csrf
                     <input type="hidden" id="reply-to" name="previous_comment_id" value="">
                     <textarea id="comment-box" name="content" placeholder="Add new comment..." rows="1" required></textarea>
-                    <button type="submit"> Post </button>    
+                    <button type="submit"> Post </button>  
+                    <label for="comment"></label>  
                 </form>
             </section>
         @endauth

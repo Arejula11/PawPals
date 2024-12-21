@@ -36,6 +36,7 @@
                     @csrf
                     @method('PUT')
                     <div class="action-item deleted">
+                        <label for="submit"></label>
                         <button type="submit">Delete</button>
                     </div>
                 </form>

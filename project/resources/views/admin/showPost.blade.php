@@ -29,6 +29,7 @@
                     <form action="{{ route('admin.posts.update', $post->id) }}" method="POST" class="edit-form">
                         @csrf
                         @method('PUT')
+                        <label for="description"></label>
                         <input name="description" value="{{ $post->description }}">
                         <button type="submit" class="btn edit-btn">Edit</button>
                     </form>
@@ -41,6 +42,7 @@
                     <form action="{{ route('admin.posts.delete', $post->id) }}" method="POST" style="display: inline-block;">
                         @csrf
                         @method('DELETE')
+                        <label for="delete"></label>
                         <button type="submit" class="btn delete-btn">Delete</button>
                     </form>
                 </div>

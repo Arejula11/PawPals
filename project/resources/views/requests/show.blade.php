@@ -17,6 +17,7 @@
                     <button type="submit" class="request-decline">
                         <img src="/images/decline.png" alt="Follow declined">
                     </button>
+                    <label for="decline"></label>
                 </form>
             </div>
         @endforeach

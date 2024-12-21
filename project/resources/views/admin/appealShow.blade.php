@@ -17,6 +17,7 @@
     <form action="{{ route('admin.appeal.update', $appeal->id) }}" method="POST">
         @csrf
         @method('PUT')
+        <label for="submit"></label>
         <button type="submit" class="appeal-active {{ $appeal->status ? 'active' : 'inactive' }}">
             {{ $appeal->status ? 'Accepted' : 'Declined' }}
         </button>

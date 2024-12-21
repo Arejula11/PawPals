@@ -52,6 +52,7 @@
                         <option value="1" {{ $user->is_public ? 'selected' : '' }}>Yes</option>
                         <option value="0" {{ !$user->is_public ? 'selected' : '' }}>No</option>
                     </select>
+                    <label for="edit"></label>
                     <button type="submit" class="btn btn-primary" style="margin-top: 78px;">Change</button>
                 </form>
             </div>
@@ -62,6 +63,7 @@
                 <form action="{{ route('settings.users.delete', ['id' => Auth::user()->id ]) }}" method="POST">
                     @csrf
                     @method('PUT')
+                    <label for="delete"></label>
                     <button type="submit" class="btn btn-danger">Delete</button>
                 </form>
             </div>

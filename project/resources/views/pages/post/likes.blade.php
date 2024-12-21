@@ -22,6 +22,7 @@
         <form action=" {{ route('register') }} " method="POST">
             @csrf
             <span class="far fa-heart" onclick="submitLike(event)"> {{ $post->likes()->count() }} </span> 
+            <label for="like"></label>
         </form>
     @endguest
     

@@ -34,6 +34,7 @@
                 <form action="{{ route('admin.groups.delete', $group->id) }}" method="POST" style="margin: 0; padding: 0; display: inline;">
                     @csrf
                     @method('DELETE')
+                    <label for="delete"></label>
                     <div class="action-item deleted">
                         <button type="submit">Delete</button>
                     </div>
