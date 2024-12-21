@@ -105,21 +105,7 @@
             </div>
         </main>
 
-        <!-- Footer -->
-        <footer style="background: ">
-            <div>
-                <small>
-                    <a href="/about" class="footer-link">About</a>
-                    |
-                    <a href="/contact" class="footer-link">Contact</a>
-                    |
-                    <a href="/faq" class="footer-link">FAQ & Help</a>
-                </small>
-            </div>
-            <div>
-                <small>© 2024 PetPawls. All rights reserved.</small>
-            </div>
-        </footer>
+        
 
         @yield('scripts')
 

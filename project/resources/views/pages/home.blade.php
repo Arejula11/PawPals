@@ -35,7 +35,61 @@
             <div class="pagination-container">
                 {{ $posts->appends(request()->query())->links() }}
             </div>
+
+            @if (count($posts) == 0)
+
+                <!-- Footer -->
+                <footer style=" width:240%; margin-left:-10px; margin-top:700px; margin-bottom:-100px background: ">
+                    <div>
+                        <small>
+                            <a href="/about" class="footer-link">About</a>
+                                |
+                            <a href="/contact" class="footer-link">Contact</a>
+                                |
+                            <a href="/faq" class="footer-link">FAQ & Help</a>
+                        </small>
+                    </div>
+                    <div>
+                        <small>© 2024 PetPawls. All rights reserved.</small>
+                    </div>
+                </footer>
+            @elseif ( count($posts) < 3)
+                <!-- Footer -->
+                <footer style=" width:240%; margin-left:-10px; margin-top:350px; margin-bottom:-100px background: ">
+                    <div>
+                        <small>
+                            <a href="/about" class="footer-link">About</a>
+                                |
+                            <a href="/contact" class="footer-link">Contact</a>
+                                |
+                            <a href="/faq" class="footer-link">FAQ & Help</a>
+                        </small>
+                    </div>
+                    <div>
+                        <small>© 2024 PetPawls. All rights reserved.</small>
+                    </div>
+                </footer>
+            @else 
+                <!-- Footer -->
+                <footer style="margin-top:10px; width:240%; margin-left:-10px; background: ">
+                        <div>
+                            <small>
+                                <a href="/about" class="footer-link">About</a>
+                                    |
+                                <a href="/contact" class="footer-link">Contact</a>
+                                    |
+                                <a href="/faq" class="footer-link">FAQ & Help</a>
+                            </small>
+                        </div>
+                        <div>
+                            <small>© 2024 PetPawls. All rights reserved.</small>
+                        </div>
+                    </footer>
+
+            @endif
+
         </div>
+        
     </div>
 </div>
 
