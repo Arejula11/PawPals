@@ -13,53 +13,53 @@
         <form method="POST" action="{{ route('register') }}" class="register-form" enctype="multipart/form-data">
             {{ csrf_field() }}
             
-            <label for="username">Username</label>
+            <label for="username">Username (required)</label>
             <input id="username" type="text" name="username" value="{{ old('username') }}" placeholder="Your new username" required autofocus>
             <span id="username-error" class="error" style="display: none;"></span>
             @if ($errors->has('username'))
                 <span class="error">{{ $errors->first('username') }}</span>
             @endif
 
-            <label for="firstname">First Name</label>
+            <label for="firstname">First Name (required)</label>
             <input id="firstname" type="text" name="firstname" value="{{ old('firstname') }}" placeholder="Your first name" required>
             <span id="firstname-error" class="error" style="display: none;"></span>
             @if ($errors->has('firstname'))
                 <span class="error">{{ $errors->first('firstname') }}</span>
             @endif
 
-            <label for="surname">Surname</label>
+            <label for="surname">Surname (required)</label>
             <input id="surname" type="text" name="surname" value="{{ old('surname') }}" placeholder="Your surname" required>
             <span id="surname-error" class="error" style="display: none;"></span>
             @if ($errors->has('surname'))
                 <span class="error">{{ $errors->first('surname') }}</span>
             @endif
 
-            <label for="email">E-Mail Address</label>
+            <label for="email">E-Mail Address (required)</label>
             <input id="email" type="email" name="email" value="{{ old('email') }}" placeholder="Your e-mail" required>
             <span id="email-error" class="error" style="display: none;"></span>
             @if ($errors->has('email'))
                 <span class="error">{{ $errors->first('email') }}</span>
             @endif
 
-            <label for="password">Password</label>
+            <label for="password">Password (required)</label>
             <input id="password" type="password" name="password" placeholder="Your new password" required>
             <span id="password-error" class="error" style="display: none;"></span>
             @if ($errors->has('password'))
                 <span class="error">{{ $errors->first('password') }}</span>
             @endif
 
-            <label for="password-confirm">Confirm Password</label>
+            <label for="password-confirm">Confirm Password (required)</label>
             <input id="password-confirm" type="password" name="password_confirmation" placeholder="Reapeat your password" required>
             <span id="password-confirm-error" class="error" style="display: none;"></span>
 
-            <label for="bio_description">Bio Description</label>
+            <label for="bio_description">Bio Description (required)</label>
             <textarea id="bio_description" name="bio_description" placeholder="Your bio description">{{ old('bio_description') }}</textarea>
             <span id="bio_description-error" class="error" style="display: none;"></span>
             @if ($errors->has('bio_description'))
                 <span class="error">{{ $errors->first('bio_description') }}</span>
             @endif
 
-            <label for="type">Profile Type</label>
+            <label for="type">Profile Type (required)</label>
             <select id="type" name="type" required>
                 <option value="">Select your profile type</option>
                 <option value="pet owner" {{ old('type') == 'pet owner' ? 'selected' : '' }}>Pet Owner</option>                <option value="veterinarian" {{ old('type') == 'veterinarian' ? 'selected' : '' }}>Veterinarian</option>
