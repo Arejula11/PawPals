@@ -1,11 +1,9 @@
 @extends('layouts.app')
-@section('head')
-    <title>About Page</title>
-@endsection
 
 @section('head')
 
 <link href="{{ asset('css/static.css') }}" rel="stylesheet">
+<title>About Page</title>
 
 @endsection
 

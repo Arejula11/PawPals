@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('head')
     <link href="{{ asset('css/createPost.css') }}" rel="stylesheet">
+    <title>Create Post</title>
 @endsection
 
 @section('content')
