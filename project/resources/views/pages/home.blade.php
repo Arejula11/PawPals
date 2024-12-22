@@ -40,7 +40,7 @@
             @if (count($posts) == 0)
 
                 <!-- Footer -->
-                <footer style=" width:240%; margin-left:-10px; margin-top:700px; margin-bottom:-100px background: ">
+                <footer style=" width:240%; margin-left:-10px; margin-top:700px; margin-bottom:-100px ">
                     <div>
                         <small>
                             <a href="/about" class="footer-link">About</a>
@@ -56,7 +56,7 @@
                 </footer>
             @elseif ( count($posts) < 3)
                 <!-- Footer -->
-                <footer style=" width:240%; margin-left:-10px; margin-top:350px; margin-bottom:-100px background: ">
+                <footer style=" width:240%; margin-left:-10px; margin-top:350px; margin-bottom:-100px">
                     <div>
                         <small>
                             <a href="/about" class="footer-link">About</a>
@@ -72,7 +72,7 @@
                 </footer>
             @else 
                 <!-- Footer -->
-                <footer style="margin-top:10px; width:240%; margin-left:-10px; background: ">
+                <footer style="margin-top:10px; width:240%; margin-left:-10px;">
                         <div>
                             <small>
                                 <a href="/about" class="footer-link">About</a>

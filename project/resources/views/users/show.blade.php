@@ -12,8 +12,8 @@
         <img src="{{ $user->getProfilePicture()  }}" alt="Profile Picture" class="profile-image">
         <div class="user-info">
             <h1 class="username">{{ $user->username }}</h1>
-            <h3>{{ $user->firstname }} {{ $user->surname }}</h2>
-            <h3>{{ $user->type}}</h2>
+            <h3>{{ $user->firstname }} {{ $user->surname }}</h3>
+            <h3>{{ $user->type}}</h3>
             <div class="follower-stats" id="followers-toggle">
                 <span id="followers-count" style="cursor: pointer;"><strong>{{ $user->followers()->count() }}</strong> Followers</span>
                 <span id="follows-count" style="cursor: pointer;"><strong>{{ $user->follows()->count() }}</strong> Following</span>
@@ -117,7 +117,6 @@
             @else
                 <p>This profile is private</p>
             @endif
-        </div>
         </div>
 
         <!-- Right column (groups) -->
