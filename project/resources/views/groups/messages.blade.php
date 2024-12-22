@@ -1,4 +1,7 @@
 @extends('layouts.app')
+@section('head')
+    <title>Messages in {{ $group->name }}</title>
+@endsection
 
 @section('content')
 <div class="group-messages">

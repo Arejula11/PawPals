@@ -1,5 +1,7 @@
 @extends('layouts.app')
-
+@section('head')
+    <title>Edit My Group</title>
+@endsection
 @section('content')
 <div class="edit-group">
     <h1>Edit Group</h1>

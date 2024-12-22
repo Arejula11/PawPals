@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('head')
-
+    <title>{{ $user->username }}'s Profile</title>
     <link href="{{ asset('css/viewProfile.css') }}" rel="stylesheet">
 @endsection
 

@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('head')
-    <!-- Include only the CSS for this view -->
+    <title>Create New Ban</title>
     <link href="{{ asset('css/ban.css') }}" rel="stylesheet">
 @endsection
 

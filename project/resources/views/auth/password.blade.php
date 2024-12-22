@@ -1,4 +1,7 @@
 @extends('layouts.app')
+@section('head')
+    <title>Recover Password</title>
+@endsection
 
 @section('content')
 <div class="password-reset">

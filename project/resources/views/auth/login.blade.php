@@ -1,4 +1,8 @@
 @extends('layouts.app')
+@section('head')
+    <title>Login</title>
+    
+@endsection
 
 @section('content')
 <div class="login-part">

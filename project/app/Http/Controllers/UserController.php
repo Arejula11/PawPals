@@ -321,7 +321,7 @@ class UserController extends Controller
         $user->password = null;
         $user->email = null;
         $user->bio_description = null;
-        $user->profile_picture = 'default.jpg';
+        $user->profile_picture = 'default.png';
         $user->is_public = false;
         $user->type = 'deleted';
         $user->save();
@@ -329,7 +329,7 @@ class UserController extends Controller
         if (auth()->user()->admin) {
             return redirect()->route('admin.home')->with('success', 'Profile updated successfully.');
         }else{
-            return redirect()->route('/logout', $id)->with('success', 'Profile updated successfully.');
+            return redirect()->route('logout', $id)->with('success', 'Profile updated successfully.');
         }
     }
 

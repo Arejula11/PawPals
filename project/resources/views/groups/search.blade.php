@@ -1,5 +1,7 @@
 @extends('layouts.app')
-
+@section('head')
+    <title>Search Groups</title>
+@endsection
 @section('content')
 <div class="group-search">
     <h1>Search for Groups</h1>

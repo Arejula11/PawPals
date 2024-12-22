@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('head')
-
+    <title>Change Password</title>
     <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
 @endsection
 

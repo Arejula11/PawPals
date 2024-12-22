@@ -1,5 +1,6 @@
 @extends('layouts.admin')
 @section('head')
+    <title>Show Comment</title>
     <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
 @endsection
 

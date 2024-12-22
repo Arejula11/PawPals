@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('head')
-    <!-- Include only the CSS for this view -->
+    <title>Show All Bans</title>
     <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
 @endsection
 

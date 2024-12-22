@@ -1,5 +1,6 @@
 @extends('layouts.admin')
 @section('head')
+    <title>User Manager</title>
     <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
 @endsection
 

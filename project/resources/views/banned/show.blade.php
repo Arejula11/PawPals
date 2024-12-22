@@ -1,5 +1,6 @@
 @extends('layouts.admin')
 @section('head')
+    <title>Appeal</title>
     <link href="{{ asset('css/banned.css') }}" rel="stylesheet">
 @endsection
 

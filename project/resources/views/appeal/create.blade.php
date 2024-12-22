@@ -1,5 +1,6 @@
 @extends('layouts.admin')
 @section('head')
+    <title>Create Appeal</title>
     <link href="{{ asset('css/appeal.css') }}" rel="stylesheet">
 @endsection
 

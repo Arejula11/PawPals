@@ -3,7 +3,7 @@
     $user = \App\Models\User::find($appeal->user_id);
 @endphp
 @section('head')
-    <!-- Include only the CSS for this view -->
+    <title> Show Appeal</title>
     <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
 @endsection
 

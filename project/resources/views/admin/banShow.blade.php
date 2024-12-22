@@ -3,7 +3,7 @@
     $user = \App\Models\User::find($ban->user_id);
 @endphp
 @section('head')
-    <!-- Include only the CSS for this view -->
+    <title>Show Ban</title>
     <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
 @endsection
 

@@ -1,4 +1,7 @@
 @extends('layouts.app')
+@section('head')
+    <title>Search Users</title>
+@endsection
 
 @section('content')
     <div class="search-part">

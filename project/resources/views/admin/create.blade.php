@@ -1,4 +1,8 @@
 @extends('layouts.admin')
+@section('head')
+    <title>Create New Admin</title>
+@endsection
+
 
 @section('content')
 <div class="register-part">

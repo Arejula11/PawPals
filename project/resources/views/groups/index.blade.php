@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('head')
+    <title>Groups</title>
+@endsection
+
 @section('content')
 <div class="groups-part">
     <div class="actions">

@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('head')
+    <title>Settings</title>
     <link href="{{ asset('css/settings.css') }}" rel="stylesheet">
 @endsection
 

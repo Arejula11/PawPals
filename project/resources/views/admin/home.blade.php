@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('head')
-    <!-- Include only the CSS for this view -->
+    <title>Admin Home</title>
     <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
 @endsection
 

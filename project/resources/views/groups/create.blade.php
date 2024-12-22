@@ -1,5 +1,7 @@
 @extends('layouts.app')
-
+@section('head')
+    <title>Create New Group</title>
+@endsection
 @section('content')
 <div class="create-group-container">
     <h1>Create a New Group</h1>

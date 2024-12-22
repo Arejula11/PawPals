@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('head')
-    <!-- Include only the CSS for this view -->
+    <title>Edit User Profile</title>
     <link href="{{ asset('css/editProfile.css') }}" rel="stylesheet">
 @endsection
 

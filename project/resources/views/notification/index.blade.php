@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('head')
+    <title>Notifications Center</title>
     <link href="{{ asset('css/notification.css') }}" rel="stylesheet">
 @endsection
 
