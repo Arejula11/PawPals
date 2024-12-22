@@ -244,7 +244,7 @@ body {
 
 .comment-input form textarea:focus {
     outline: 2px solid #ef9105;
-    box-shadow: 0 0 5px rgba(155, 77, 202, 0.5);
+    box-shadow: 0 0 5px rgba(239, 152, 20, 0.5);
 }
 
 .comment-input form button {
@@ -261,7 +261,7 @@ body {
 }
 
 .comment-input form button:hover {
-    background-color: #7e3ba8; 
+    background-color: #585451; 
 }
 
 .replies {
