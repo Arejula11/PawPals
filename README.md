@@ -3,7 +3,7 @@
 ## Overview
 PawPals is a social network designed for the pet community. It allows pet owners to connect, share daily pet activities, discuss pet care, and promote pet adoption and rescue. Developed over four months as part of the LBAW course at the University of Porto, this project showcases a server-side web application built using the Laravel PHP framework and PostgreSQL database.
 
-The final version of the platform can be accessed here: [PawPals Repository](https://gitlab.up.pt/lbaw/lbaw2425/lbaw24121).
+For more information you can check the Wiki.
 
 ## How to Run the Application with Docker
 To deploy the application using Docker, execute the following command:
